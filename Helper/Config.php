@@ -4,6 +4,7 @@ namespace Richdynamix\PersonalisedProducts\Helper;
 
 use \Magento\Framework\App\Config\ScopeConfigInterface as ScopeConfigInterface;
 use \Magento\Store\Model\ScopeInterface as ScopeInterface;
+use \Magento\Framework\App\Helper\Context as Context;
 
 /**
  * Class Config
@@ -36,12 +37,12 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Config constructor.
      * @param ScopeConfigInterface $scopeConfig
-     * @param ScopeInterface $scope
      */
-    public function __construct(ScopeConfigInterface $scopeConfig, ScopeInterface $scope)
+    public function __construct(ScopeConfigInterface $scopeConfig, Context $context)
     {
         $this->_scopeConfig = $scopeConfig;
-        $this->_storeScope = $scope::SCOPE_STORE;
+        $this->_storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+        parent::__construct($context);
     }
 
     /**
