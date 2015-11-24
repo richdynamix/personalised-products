@@ -11,7 +11,6 @@ use \Magento\Store\Model\ScopeInterface as ScopeInterface;
  */
 class Config extends \Magento\Framework\App\Helper\AbstractHelper
 {
-
     /**
      * @var ScopeConfigInterface
      */
@@ -22,35 +21,17 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      */
     protected $_storeScope;
 
-    /**
-     *
-     */
-    const XML_PATH_ENABLED = 'personalised_products/general/enabled';
-    /**
-     *
-     */
-    const XML_PATH_ACCESS_KEY = 'personalised_products/general/access_key';
-    /**
-     *
-     */
-    const XML_PATH_ENGINE_URL = 'personalised_products/general/engine_url';
-    /**
-     *
-     */
-    const XML_PATH_ENGINE_PORT = 'personalised_products/general/engine_port';
-    /**
-     *
-     */
-    const XML_PATH_EVENT_SERVER_URL = 'personalised_products/general/event_url';
-    /**
-     *
-     */
-    const XML_PATH_EVENT_SERVER_PORT = 'personalised_products/general/event_port';
-    /**
-     *
-     */
-    const XML_PATH_PRODUCT_COUNT = 'personalised_products/general/product_count';
-
+    const ENABLED = 'personalised_products/general/enabled';
+    const ACCESS_KEY = 'personalised_products/general/access_key';
+    const PRODUCT_COUNT = 'personalised_products/general/product_count';
+    const UPSELL_TEMPLATE_ENGINE_URL = 'personalised_products/upsell_template/engine_url';
+    const UPSELL_TEMPLATE_ENGINE_PORT = 'personalised_products/upsell_template/engine_port';
+    const UPSELL_TEMPLATE_SERVER_URL = 'personalised_products/upsell_template/event_url';
+    const UPSELL_TEMPLATE_SERVER_PORT = 'personalised_products/upsell_template/event_port';
+    const RANKING_TEMPLATE_ENGINE_URL = 'personalised_products/product_ranking/engine_url';
+    const RANKING_TEMPLATE_ENGINE_PORT = 'personalised_products/product_ranking/engine_port';
+    const RANKING_TEMPLATE_SERVER_URL = 'personalised_products/product_ranking/event_url';
+    const RANKING_TEMPLATE_SERVER_PORT = 'personalised_products/product_ranking/event_port';
 
     /**
      * Config constructor.
@@ -64,53 +45,19 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
+     * @param $itemPath
      * @return mixed
      */
-    public function isEnabled() {
-        return $this->scopeConfig->getValue(self::XML_PATH_ENABLED, $this->_storeScope);
+    public function getConfigItem($itemPath)
+    {
+        return $this->scopeConfig->getValue($itemPath, $this->_storeScope);
     }
 
     /**
      * @return mixed
      */
-    public function getAccessKey() {
-        return $this->scopeConfig->getValue(self::XML_PATH_ACCESS_KEY, $this->_storeScope);
+    public function isEnabled()
+    {
+        return $this->getConfigItem(self::ENABLED);
     }
-
-    /**
-     * @return mixed
-     */
-    public function getEngineUrl() {
-        return $this->scopeConfig->getValue(self::XML_PATH_ENGINE_URL, $this->_storeScope);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEnginePort() {
-        return $this->scopeConfig->getValue(self::XML_PATH_ENGINE_PORT, $this->_storeScope);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEventServerUrl() {
-        return $this->scopeConfig->getValue(self::XML_PATH_EVENT_SERVER_URL, $this->_storeScope);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEventServerPort() {
-        return $this->scopeConfig->getValue(self::XML_PATH_EVENT_SERVER_PORT, $this->_storeScope);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getProductCount() {
-        return $this->scopeConfig->getValue(self::XML_PATH_PRODUCT_COUNT, $this->_storeScope);
-    }
-
-
 }
