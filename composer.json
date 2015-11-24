@@ -1,6 +1,6 @@
 {
-  "name": "Richdynamix/Suggest",
-  "description": "Recommended products using PredictionIO Machine Learning",
+  "name": "Richdynamix/PersonalisedProducts",
+  "description": "Personalised products using PredictionIO Machine Learning",
   "type": "magento2-module",
   "version": "1.0.0",
   "license": [
@@ -16,7 +16,7 @@
     "map": [
       [
         "*",
-        "Richdynamix/Suggest"
+        "Richdynamix/PersonalisedProducts"
       ]
     ]
   },

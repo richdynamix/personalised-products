@@ -6,7 +6,7 @@
                 <resource id="Magento_Adminhtml::stores">
                     <resource id="Magento_Adminhtml::stores_settings">
                         <resource id="Magento_Adminhtml::config">
-                            <resource id="Richdynamix_Suggest::general_config" title="Suggest General Section" />
+                            <resource id="Richdynamix_PersonalisedProducts::general_config" title="Personalised Products General Section" />
                         </resource>
                     </resource>
                 </resource>

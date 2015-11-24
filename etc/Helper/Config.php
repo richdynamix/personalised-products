@@ -1,13 +1,13 @@
 <?php
 
-namespace Richdynamix\Suggest\Helper;
+namespace Richdynamix\PersonalisedProducts\Helper;
 
 use \Magento\Framework\App\Config\ScopeConfigInterface as ScopeConfigInterface;
 use \Magento\Store\Model\ScopeInterface as ScopeInterface;
 
 /**
  * Class Config
- * @package Richdynamix\Suggest\Helper
+ * @package Richdynamix\PersonalisedProducts\Helper
  */
 class Config extends \Magento\Framework\App\Helper\AbstractHelper
 {
@@ -25,31 +25,31 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      *
      */
-    const XML_PATH_ENABLED = 'suggest/general/enabled';
+    const XML_PATH_ENABLED = 'personalised_products/general/enabled';
     /**
      *
      */
-    const XML_PATH_ACCESS_KEY = 'suggest/general/access_key';
+    const XML_PATH_ACCESS_KEY = 'personalised_products/general/access_key';
     /**
      *
      */
-    const XML_PATH_ENGINE_URL = 'suggest/general/engine_url';
+    const XML_PATH_ENGINE_URL = 'personalised_products/general/engine_url';
     /**
      *
      */
-    const XML_PATH_ENGINE_PORT = 'suggest/general/engine_port';
+    const XML_PATH_ENGINE_PORT = 'personalised_products/general/engine_port';
     /**
      *
      */
-    const XML_PATH_EVENT_SERVER_URL = 'suggest/general/event_url';
+    const XML_PATH_EVENT_SERVER_URL = 'personalised_products/general/event_url';
     /**
      *
      */
-    const XML_PATH_EVENT_SERVER_PORT = 'suggest/general/event_port';
+    const XML_PATH_EVENT_SERVER_PORT = 'personalised_products/general/event_port';
     /**
      *
      */
-    const XML_PATH_PRODUCT_COUNT = 'suggest/general/product_count';
+    const XML_PATH_PRODUCT_COUNT = 'personalised_products/general/product_count';
 
 
     /**
