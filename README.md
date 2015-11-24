@@ -1,5 +1,7 @@
 # README #
 
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/a99262925dc04669a67b196a354d72aa)](https://www.codacy.com)
+
 This README would normally document whatever steps are necessary to get your application up and running.
 
 ### What is this repository for? ###
