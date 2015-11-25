@@ -60,9 +60,6 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
             $this->_addProductAttributesAndPrices($this->_itemCollection);
         }
 
-        /**
-         * Updating collection with desired items
-         */
         $this->_eventManager->dispatch(
             'catalog_product_upsell',
             ['product' => $product, 'collection' => $this->_itemCollection, 'limit' => null]
