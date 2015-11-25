@@ -50,6 +50,8 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
         $product = $this->_coreRegistry->registry('product');
 
         $collection = $this->_productFactory->create()->getCollection();
+
+        // todo filter collection from predictionio results
         $collection->addAttributeToFilter('entity_id', ['in', ['6', '7']]);
 
         $this->_itemCollection = $collection;
