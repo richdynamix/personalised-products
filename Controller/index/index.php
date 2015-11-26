@@ -41,6 +41,5 @@ class Index extends \Magento\Framework\App\Action\Action {
         $response = $engine->sendQuery(array('user'=> 'i1', 'num'=> 4));
         print_r($response);
 
-        die("here");
     }
 }
