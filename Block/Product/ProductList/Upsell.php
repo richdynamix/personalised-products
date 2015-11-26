@@ -36,7 +36,7 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
      * Upsell constructor.
      * @param Context $context
      * @param Cart $checkoutCart
-     * @param Visibility $catalogProductVisibility
+     * @param Visibility $productVisibility
      * @param Session $checkoutSession
      * @param Manager $moduleManager
      * @param ProductFactory $productFactory
@@ -46,7 +46,7 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
     public function __construct(
         Context $context,
         Cart $checkoutCart,
-        Visibility $catalogProductVisibility,
+        Visibility $productVisibility,
         Session $checkoutSession,
         Manager $moduleManager,
         ProductFactory $productFactory,
@@ -59,7 +59,7 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
         parent::__construct(
             $context,
             $checkoutCart,
-            $catalogProductVisibility,
+            $productVisibility,
             $checkoutSession,
             $moduleManager,
             $data
