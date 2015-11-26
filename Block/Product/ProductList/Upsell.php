@@ -11,12 +11,38 @@ use \Magento\Framework\Module\Manager as Manager;
 use Richdynamix\PersonalisedProducts\Helper\Config as Config;
 use \Magento\Catalog\Model\ProductFactory as ProductFactory;
 
+/**
+ * Rewrite product upsell block to switch out product collection
+ * for one returned from PredictionIO
+ *
+ * @category    Richdynamix
+ * @package     PersonalisedProducts
+ * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
 class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
 {
+    /**
+     * @var Config
+     */
     protected $_config;
 
+    /**
+     * @var ProductFactory
+     */
     protected $_productFactory;
 
+    /**
+     * Upsell constructor.
+     * @param Context $context
+     * @param Cart $checkoutCart
+     * @param Visibility $catalogProductVisibility
+     * @param Session $checkoutSession
+     * @param Manager $moduleManager
+     * @param ProductFactory $productFactory
+     * @param Config $config
+     * @param array $data
+     */
     public function __construct(
         Context $context,
         Cart $checkoutCart,
@@ -40,6 +66,9 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
         );
     }
 
+    /**
+     * @return $this
+     */
     protected function _prepareData()
     {
 
