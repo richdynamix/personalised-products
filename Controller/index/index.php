@@ -31,12 +31,7 @@ class Index extends \Magento\Framework\App\Action\Action {
 
     public function execute()
     {
-        $engineUrl = $this->_urls->sanatiseUrl(
-            $this->_config->getConfigItem(Config::UPSELL_TEMPLATE_ENGINE_URL),
-            $this->_config->getConfigItem(Config::UPSELL_TEMPLATE_ENGINE_PORT)
-        );
-
-        $engine = $this->_predictionIOFactory->create('engine', $engineUrl);
+        $engine = $this->_predictionIOFactory->create('engine');
 
         $response = $engine->sendQuery(array('user'=> 'i1', 'num'=> 4));
         print_r($response);
