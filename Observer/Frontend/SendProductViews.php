@@ -74,7 +74,6 @@ class SendProductViews implements ObserverInterface
         $product = $observer->getProduct();
 
         if ($this->_customerSession->isLoggedIn()) {
-
             $eventServer = $this->_predictionIOFactory->create('event');
             $eventServer->createEvent(array(
                 'event' => 'view',
@@ -84,9 +83,10 @@ class SendProductViews implements ObserverInterface
                 'targetEntityId' => $product->getId()
             ));
 
-        } else {
-            $this->_guestCustomers->setGuestCustomerProductView($product);
+            return;
         }
+
+        $this->_guestCustomers->setGuestCustomerProductView($product);
 
     }
 }
