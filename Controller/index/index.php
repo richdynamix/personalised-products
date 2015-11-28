@@ -2,39 +2,32 @@
 
 namespace Richdynamix\PersonalisedProducts\Controller\Index;
 
-use \Richdynamix\PersonalisedProducts\Model\PredictionIO\Factory;
-use \Richdynamix\PersonalisedProducts\Helper\Config as Config;
-use \Richdynamix\PersonalisedProducts\Helper\Urls;
+use \Magento\Framework\Session\SessionManager;
 
 class Index extends \Magento\Framework\App\Action\Action {
 
     protected $resultPageFactory;
 
-    protected $_predictionIOFactory;
-
-    protected $_urls;
-
-    protected $_config;
+    protected $_sessionManager;
 
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
-        Factory $predictionIOFactory,
-        Config $config,
-        Urls $urls
+        SessionManager $sessionManager
     )
     {
-        $this->_predictionIOFactory = $predictionIOFactory;
-        $this->_config = $config;
-        $this->_urls = $urls;
+        $this->_sessionManager = $sessionManager;
         parent::__construct($context);
     }
 
     public function execute()
     {
-        $engine = $this->_predictionIOFactory->create('engine');
 
-        $response = $engine->sendQuery(array('user'=> 'i1', 'num'=> 4));
-        print_r($response);
+        $guestProductViews = $this->_sessionManager->getGuestProductViews();
+        $guestProductViews[] = rand(1, 50);
+
+        $this->_sessionManager->setGuestProductViews($guestProductViews);
+
+        var_dump($guestProductViews);
 
     }
 }

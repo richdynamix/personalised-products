@@ -6,7 +6,7 @@ use \Magento\Framework\Event\Observer;
 use \Magento\Framework\Event\ObserverInterface;
 use \Richdynamix\PersonalisedProducts\Helper\Config;
 use \Magento\Customer\Model\Session as CustomerSession;
-use \Richdynamix\PersonalisedProducts\Model\PredictionIO\Factory;
+use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventServer;
 
 /**
  * Listen for sales order event and record the customer-buy-product action in
@@ -30,27 +30,30 @@ class SendProductPurchase implements ObserverInterface
     protected $_customerSession;
 
     /**
-     * @var Factory
+     * @var EventServer
      */
-    protected $_predictionIOFactory;
+    protected $_eventServer;
 
     /**
-     * SendProductViews constructor.
+     * SendProductPurchase constructor.
      * @param Config $config
      * @param CustomerSession $customerSession
-     * @param Factory $predictionIOFactory
+     * @param EventServer $eventServer
      */
     public function __construct(
         Config $config,
         CustomerSession $customerSession,
-        Factory $predictionIOFactory
+        EventServer $eventServer
     )
     {
         $this->_config = $config;
         $this->_customerSession = $customerSession;
-        $this->_predictionIOFactory = $predictionIOFactory;
+        $this->_eventServer = $eventServer;
     }
 
+    /**
+     * @param Observer $observer
+     */
     public function execute(Observer $observer)
     {
         if (!$this->_config->isEnabled()) {
@@ -66,17 +69,18 @@ class SendProductPurchase implements ObserverInterface
         }
     }
 
+    /**
+     * @param $productCollection
+     */
     private function _sendPurchaseEvent($productCollection)
     {
         foreach ($productCollection as $product) {
-            $eventServer = $this->_predictionIOFactory->create('event');
-            $eventServer->createEvent(array(
-                'event' => 'buy',
-                'entityType' => 'user',
-                'entityId' => $this->_customerSession->getCustomerId(),
-                'targetEntityType' => 'item',
-                'targetEntityId' => $product->getId()
-            ));
+            $this->_eventServer->saveCustomerBuyProduct(
+                $this->_customerSession->getCustomerId(),
+                $product->getId()
+            );
         }
+
+        return;
     }
 }
