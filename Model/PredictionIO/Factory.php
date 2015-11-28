@@ -50,7 +50,10 @@ class Factory
                 $this->_config->getConfigItem(Config::UPSELL_TEMPLATE_SERVER_URL),
                 $this->_config->getConfigItem(Config::UPSELL_TEMPLATE_SERVER_PORT)
             );
-            return new EventClient(Config::UPSELL_TEMPLATE_SERVER_ACCESS_KEY, $eventUrl);
+            return new EventClient(
+                $this->_config->getConfigItem(Config::UPSELL_TEMPLATE_SERVER_ACCESS_KEY),
+                $eventUrl
+            );
         } elseif ('engine' == $model) {
             $engineUrl = $this->_urls->sanatiseUrl(
                 $this->_config->getConfigItem(Config::UPSELL_TEMPLATE_ENGINE_URL),

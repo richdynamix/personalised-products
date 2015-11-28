@@ -1,7 +1,7 @@
 <?php
 namespace Richdynamix\PersonalisedProducts\Logger;
 
-class Logger extends \Monolog\Logger
+class PersonalisedProductsLogger extends \Monolog\Logger
 {
 
 }

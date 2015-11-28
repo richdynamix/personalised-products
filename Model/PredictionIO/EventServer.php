@@ -2,7 +2,7 @@
 
 namespace Richdynamix\PersonalisedProducts\Model\PredictionIO;
 
-use \Richdynamix\PersonalisedProducts\Logger\Logger;
+use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;
 use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventServerInterface;
 use \Richdynamix\PersonalisedProducts\Model\PredictionIO\Factory;
 
@@ -22,16 +22,16 @@ class EventServer implements EventServerInterface
     protected $_factory;
 
     /**
-     * @var Logger
+     * @var PersonalisedProductsLogger
      */
     protected $_logger;
 
     /**
      * EventServer constructor.
      * @param \Richdynamix\PersonalisedProducts\Model\PredictionIO\Factory $factory
-     * @param Logger $logger
+     * @param PersonalisedProductsLogger $logger
      */
-    public function __construct(Factory $factory, Logger $logger)
+    public function __construct(Factory $factory, PersonalisedProductsLogger $logger)
     {
         $this->_factory = $factory;
         $this->_logger = $logger;

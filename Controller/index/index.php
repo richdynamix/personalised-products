@@ -12,22 +12,31 @@ class Index extends \Magento\Framework\App\Action\Action {
 
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
-        SessionManager $sessionManager
+        SessionManager $sessionManager,
+        \Magento\Catalog\Model\ProductFactory $productFactory,
+        \Magento\Customer\Model\CustomerFactory $customerFactory
     )
     {
         $this->_sessionManager = $sessionManager;
+        $this->_productFactory = $productFactory;
+        $this->_customerFactory = $customerFactory;
         parent::__construct($context);
     }
 
     public function execute()
     {
 
-        $guestProductViews = $this->_sessionManager->getGuestProductViews();
-        $guestProductViews[] = rand(1, 50);
+        $customer = $this->_customerFactory->create();
+        $collection = $customer->getCollection();
+//            ->addFieldToSelect('entity_id')
+//            ->getItems();
+//            ->addFieldToFilter('entity_id', 2)
 
-        $this->_sessionManager->setGuestProductViews($guestProductViews);
+//            ->addAttributeToSelect('name')
+//            ->addAttributeToFilter('sku', ['eq' => 'st1'])
+//            ->loadData(true);
 
-        var_dump($guestProductViews);
+        var_dump($collection->getAllIds());
 
     }
 }
