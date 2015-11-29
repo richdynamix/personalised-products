@@ -10,7 +10,7 @@ use \Symfony\Component\Config\Definition\Exception\Exception;
 abstract class AbstractProductCommand extends Command
 {
 
-    CONST CATALOG_SEARCH_VISIBILITY = 4;
+    const CATALOG_SEARCH_VISIBILITY = 4;
 
     protected $_productFactory;
 
@@ -28,7 +28,6 @@ abstract class AbstractProductCommand extends Command
         $collectionCount = count($collection);
         $sentProductCount = 0;
         foreach ($collection as $productId) {
-
             $sentProduct = $this->_eventServer->saveProductData(
                 $productId,
                 $this->_getProductCategoryCollection($productId)
