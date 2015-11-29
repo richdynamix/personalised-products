@@ -4,8 +4,6 @@ namespace Richdynamix\PersonalisedProducts\Model\PredictionIO;
 
 use \predictionio\EventClient;
 use \predictionio\EngineClient;
-use \Richdynamix\PersonalisedProducts\Helper\Config;
-use \Richdynamix\PersonalisedProducts\Helper\Urls;
 
 /**
  * PredictionIO factory to return ready to use engine or event server objects
@@ -17,49 +15,12 @@ use \Richdynamix\PersonalisedProducts\Helper\Urls;
  */
 class Factory
 {
-
-    /**
-     * @var Config
-     */
-    protected $_config;
-
-    /**
-     * @var Urls
-     */
-    protected $_urls;
-
-    /**
-     * Factory constructor.
-     * @param Config $config
-     * @param Urls $urls
-     */
-    public function __construct(Config $config, Urls $urls)
-    {
-        $this->_config = $config;
-        $this->_urls = $urls;
-    }
-
-    /**
-     * @param $model
-     * @return null|EngineClient|EventClient
-     */
-    public function create($model)
+    public function create($model, $entityUrl, $accessKey = null)
     {
         if ('event' == $model) {
-            $eventUrl = $this->_urls->sanatiseUrl(
-                $this->_config->getConfigItem(Config::UPSELL_TEMPLATE_SERVER_URL),
-                $this->_config->getConfigItem(Config::UPSELL_TEMPLATE_SERVER_PORT)
-            );
-            return new EventClient(
-                $this->_config->getConfigItem(Config::UPSELL_TEMPLATE_SERVER_ACCESS_KEY),
-                $eventUrl
-            );
+            return new EventClient($accessKey, $entityUrl);
         } elseif ('engine' == $model) {
-            $engineUrl = $this->_urls->sanatiseUrl(
-                $this->_config->getConfigItem(Config::UPSELL_TEMPLATE_ENGINE_URL),
-                $this->_config->getConfigItem(Config::UPSELL_TEMPLATE_ENGINE_PORT)
-            );
-            return new EngineClient($engineUrl);
+            return new EngineClient($entityUrl);
         }
 
         return null;

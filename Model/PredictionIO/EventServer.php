@@ -2,6 +2,8 @@
 
 namespace Richdynamix\PersonalisedProducts\Model\PredictionIO;
 
+use \Richdynamix\PersonalisedProducts\Helper\Config;
+use Richdynamix\PersonalisedProducts\Helper\Urls;
 use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;
 use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventServerInterface;
 use \Richdynamix\PersonalisedProducts\Model\PredictionIO\Factory;
@@ -26,15 +28,33 @@ class EventServer implements EventServerInterface
      */
     protected $_logger;
 
-    /**
-     * EventServer constructor.
-     * @param \Richdynamix\PersonalisedProducts\Model\PredictionIO\Factory $factory
-     * @param PersonalisedProductsLogger $logger
-     */
-    public function __construct(Factory $factory, PersonalisedProductsLogger $logger)
+    protected $_config;
+
+    protected $_urls;
+
+    protected $_eventServer;
+
+    public function __construct(
+        Factory $factory,
+        PersonalisedProductsLogger $logger,
+        Config $config,
+        Urls $urls
+    )
     {
         $this->_factory = $factory;
         $this->_logger = $logger;
+        $this->_config = $config;
+        $this->_urls = $urls;
+
+        $this->_eventServer = $this->_factory->create(
+            'event',
+            $this->_urls->buildUrl(
+                $this->_config->getConfigItem(Config::UPSELL_TEMPLATE_SERVER_URL),
+                $this->_config->getConfigItem(Config::UPSELL_TEMPLATE_SERVER_PORT)
+            ),
+            $this->_config->getConfigItem(Config::UPSELL_TEMPLATE_SERVER_ACCESS_KEY)
+        );
+
     }
 
     /**
@@ -81,7 +101,7 @@ class EventServer implements EventServerInterface
      */
     public function setOutOfStockItems(array $productIds)
     {
-        //todo add unaavailable items to event server
+        //todo add unavailable items to event server
     }
 
     /**
@@ -93,8 +113,7 @@ class EventServer implements EventServerInterface
     protected function _setCustomerToItemAction($action, $customerId, $productId)
     {
         try {
-            $eventServer = $this->_factory->create('event');
-            $eventServer->createEvent(array(
+            $this->_eventServer->createEvent(array(
                 'event' => $action,
                 'entityType' => 'user',
                 'entityId' => $customerId,
@@ -111,17 +130,9 @@ class EventServer implements EventServerInterface
 
     }
 
-    /**
-     * @param $entityType
-     * @param $entityId
-     * @param null $properties
-     * @return bool
-     */
     protected function _setEntity($entityType, $entityId, $properties = null)
     {
         try {
-            $eventServer = $this->_factory->create('event');
-
             $data = $this->_addProperties(
                 [
                     'event' => '$set',
@@ -130,7 +141,7 @@ class EventServer implements EventServerInterface
                 ],
                 $properties
             );
-            $eventServer->createEvent($data);
+            $this->_eventServer->createEvent($data);
             return true;
         } catch (\Exception $e) {
             $this->_logger->addCritical($e);
