@@ -9,8 +9,4 @@
         <observer name="send_catalog_controller_product_views"
                   instance="Richdynamix\PersonalisedProducts\Observer\Frontend\SendProductViews" />
     </event>
-    <event name="sales_order_place_after">
-        <observer name="send_sales_order_place_after"
-                  instance="Richdynamix\PersonalisedProducts\Observer\Frontend\SendProductPurchase" />
-    </event>
 </config>
