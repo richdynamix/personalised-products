@@ -14,39 +14,43 @@ class Index extends \Magento\Framework\App\Action\Action {
         \Magento\Framework\App\Action\Context $context,
         SessionManager $sessionManager,
         \Magento\Catalog\Model\ProductFactory $productFactory,
-        \Magento\Customer\Model\CustomerFactory $customerFactory
+        \Magento\Customer\Model\CustomerFactory $customerFactory,
+        \Magento\Sales\Model\OrderFactory $orderFactory
     )
     {
         $this->_sessionManager = $sessionManager;
         $this->_productFactory = $productFactory;
         $this->_customerFactory = $customerFactory;
+        $this->_orderFactory = $orderFactory;
         parent::__construct($context);
     }
 
     public function execute()
     {
 
-        $product = $this->_productFactory->create();
-        $collection = $product->getCollection()
-            ->addAttributeToFilter('visibility', 4);
+        $order = $this->_orderFactory->create();
+        $ordersCollection = $order->getCollection()
+            ->addFieldToSelect(['entity_id', 'customer_id'])
+            ->addFieldToFilter('state', ['eq' => 'complete'])
+            ->getData();
+//        ->loadData(true);
 
-        $products = [];
-        foreach ($collection->getAllIds() as $productId) {
-            $product = $this->_productFactory->create()->load($productId);
-            $products[$productId]['categories'] = $product->getCategoryIds();
+        print_r($ordersCollection);
+
+        $purchasedProducts = [];
+        foreach ($ordersCollection as $order) {
+
+            $order = $this->_orderFactory->create()->load($order['entity_id']);
+
+            $itemCollection = $order->getItemsCollection();
+
+            foreach ($itemCollection as $item) {
+                $purchasedProducts[$order['customer_id']][] = $item->getId();
+            }
+
         }
 
-
-        foreach ($products as $productId => $attributes) {
-
-            var_dump($productId);
-            var_dump($attributes['categories']);
-            exit;
-
-        }
-
-
-//        print_r($products);
+        print_r($purchasedProducts);
 
         exit;
 

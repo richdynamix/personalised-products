@@ -62,7 +62,6 @@ class SendProductPurchase implements ObserverInterface
 
         $order = $observer->getOrder();
         $productCollection = $order->getItemsCollection();
-
         if ($this->_customerSession->isLoggedIn()) {
             $this->_sendPurchaseEvent($productCollection);
             return;
