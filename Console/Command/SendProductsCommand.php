@@ -1,12 +1,13 @@
 <?php
 
 namespace Richdynamix\PersonalisedProducts\Console\Command;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputOption;
+
+use \Richdynamix\PersonalisedProducts\Console\Command\AbstractProductCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use \Symfony\Component\Config\Definition\Exception\Exception;
 
-class SendProductsCommand extends Command
+class SendProductsCommand extends AbstractProductCommand
 {
     protected function configure()
     {
@@ -17,6 +18,14 @@ class SendProductsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Not doing anything just yet!');
+        $collection = $this->_getProductCollection();
+        $output->writeln('Preparing to send '. count($collection) .' products');
+
+        try {
+            $sentCount = $this->_sendProductData($collection);
+            $output->writeln('Successfully sent '. $sentCount .' customers to the PredictionIO event server');
+        } catch (Exception $e) {
+            $output->writeln('Error: ' . $e->getMessage());
+        }
     }
 }

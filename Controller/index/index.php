@@ -26,17 +26,29 @@ class Index extends \Magento\Framework\App\Action\Action {
     public function execute()
     {
 
-        $customer = $this->_customerFactory->create();
-        $collection = $customer->getCollection();
-//            ->addFieldToSelect('entity_id')
-//            ->getItems();
-//            ->addFieldToFilter('entity_id', 2)
+        $product = $this->_productFactory->create();
+        $collection = $product->getCollection()
+            ->addAttributeToFilter('visibility', 4);
 
-//            ->addAttributeToSelect('name')
-//            ->addAttributeToFilter('sku', ['eq' => 'st1'])
-//            ->loadData(true);
+        $products = [];
+        foreach ($collection->getAllIds() as $productId) {
+            $product = $this->_productFactory->create()->load($productId);
+            $products[$productId]['categories'] = $product->getCategoryIds();
+        }
 
-        var_dump($collection->getAllIds());
+
+        foreach ($products as $productId => $attributes) {
+
+            var_dump($productId);
+            var_dump($attributes['categories']);
+            exit;
+
+        }
+
+
+//        print_r($products);
+
+        exit;
 
     }
 }
