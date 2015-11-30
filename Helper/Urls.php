@@ -11,7 +11,7 @@ class Urls
     {
     }
 
-    public function sanatiseUrl($url, $port)
+    public function buildUrl($url, $port)
     {
         // todo urls sanitser to ensure correct format
         return $url . ":" . $port;
