@@ -115,4 +115,12 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     {
         return $this->getConfigItem(self::ENABLED);
     }
+
+    /**
+     * @return mixed|string
+     */
+    public function getProductCount()
+    {
+        return $this->getConfigItem(self::PRODUCT_COUNT) ? $this->getConfigItem(self::PRODUCT_COUNT) : '4';
+    }
 }

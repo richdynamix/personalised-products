@@ -10,6 +10,8 @@ use \Magento\Checkout\Model\Session as Session;
 use \Magento\Framework\Module\Manager as Manager;
 use Richdynamix\PersonalisedProducts\Helper\Config as Config;
 use \Magento\Catalog\Model\ProductFactory as ProductFactory;
+use \Magento\Customer\Model\Session as CustomerSession;
+use \Richdynamix\PersonalisedProducts\Model\Frontend\Catalog\Product\ProductList\Upsell as PersonalisedUpsell;
 
 /**
  * Rewrite product upsell block to switch out product collection
@@ -22,27 +24,12 @@ use \Magento\Catalog\Model\ProductFactory as ProductFactory;
  */
 class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
 {
-    /**
-     * @var Config
-     */
     protected $_config;
 
-    /**
-     * @var ProductFactory
-     */
     protected $_productFactory;
 
-    /**
-     * Upsell constructor.
-     * @param Context $context
-     * @param Cart $checkoutCart
-     * @param Visibility $productVisibility
-     * @param Session $checkoutSession
-     * @param Manager $moduleManager
-     * @param ProductFactory $productFactory
-     * @param Config $config
-     * @param array $data
-     */
+    protected $_upsell;
+
     public function __construct(
         Context $context,
         Cart $checkoutCart,
@@ -51,11 +38,14 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
         Manager $moduleManager,
         ProductFactory $productFactory,
         Config $config,
+        PersonalisedUpsell $upsell,
+        CustomerSession $customerSession,
         array $data = []
     ) {
         $this->_config = $config;
         $this->_productFactory = $productFactory;
-
+        $this->_upsell = $upsell;
+        $this->_customerSession = $customerSession;
         parent::__construct(
             $context,
             $checkoutCart,
@@ -72,9 +62,13 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
     protected function _prepareData()
     {
 
-        if (!$this->_config->isEnabled()) {
+        if (!$this->_config->isEnabled() && $this->_customerSession->isLoggedIn()) {
             return parent::_prepareData();
         }
+
+//        $personalisedIds = $this->_upsell->getProductCollection($this->_customerSession->getCustomerId());
+//
+//        if ($personalisedIds[''])
 
         $product = $this->_coreRegistry->registry('product');
 

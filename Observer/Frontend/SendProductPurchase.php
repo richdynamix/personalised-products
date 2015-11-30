@@ -6,7 +6,7 @@ use \Magento\Framework\Event\Observer;
 use \Magento\Framework\Event\ObserverInterface;
 use \Richdynamix\PersonalisedProducts\Helper\Config;
 use \Magento\Customer\Model\Session as CustomerSession;
-use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventServer;
+use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventClient\Client;
 
 /**
  * Listen for sales order event and record the customer-buy-product action in
@@ -15,45 +15,26 @@ use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventServer;
  * @category    Richdynamix
  * @package     PersonalisedProducts
  * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class SendProductPurchase implements ObserverInterface
 {
-    /**
-     * @var Config
-     */
     protected $_config;
 
-    /**
-     * @var CustomerSession
-     */
     protected $_customerSession;
 
-    /**
-     * @var EventServer
-     */
     protected $_eventServer;
 
-    /**
-     * SendProductPurchase constructor.
-     * @param Config $config
-     * @param CustomerSession $customerSession
-     * @param EventServer $eventServer
-     */
     public function __construct(
         Config $config,
         CustomerSession $customerSession,
-        EventServer $eventServer
+        Client $eventClient
     )
     {
         $this->_config = $config;
         $this->_customerSession = $customerSession;
-        $this->_eventServer = $eventServer;
+        $this->_eventClient = $eventClient;
     }
 
-    /**
-     * @param Observer $observer
-     */
     public function execute(Observer $observer)
     {
         if (!$this->_config->isEnabled()) {
@@ -68,13 +49,10 @@ class SendProductPurchase implements ObserverInterface
         }
     }
 
-    /**
-     * @param $productCollection
-     */
     private function _sendPurchaseEvent($productCollection)
     {
         foreach ($productCollection as $product) {
-            $this->_eventServer->saveCustomerBuyProduct(
+            $this->_eventClient->saveCustomerBuyProduct(
                 $this->_customerSession->getCustomerId(),
                 $product->getId()
             );

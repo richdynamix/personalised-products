@@ -3,6 +3,8 @@
 namespace Richdynamix\PersonalisedProducts\Controller\Index;
 
 use \Magento\Framework\Session\SessionManager;
+use \Richdynamix\PersonalisedProducts\Model\Frontend\Catalog\Product\ProductList\Upsell as PersonalisedUpsell;
+use \Magento\Customer\Model\Session as CustomerSession;
 
 class Index extends \Magento\Framework\App\Action\Action {
 
@@ -15,45 +17,64 @@ class Index extends \Magento\Framework\App\Action\Action {
         SessionManager $sessionManager,
         \Magento\Catalog\Model\ProductFactory $productFactory,
         \Magento\Customer\Model\CustomerFactory $customerFactory,
-        \Magento\Sales\Model\OrderFactory $orderFactory
+        \Magento\Sales\Model\OrderFactory $orderFactory,
+        CustomerSession $customerSession,
+        PersonalisedUpsell $upsell
     )
     {
         $this->_sessionManager = $sessionManager;
         $this->_productFactory = $productFactory;
         $this->_customerFactory = $customerFactory;
         $this->_orderFactory = $orderFactory;
+        $this->_upsell = $upsell;
+        $this->_customerSession = $customerSession;
         parent::__construct($context);
     }
 
     public function execute()
     {
 
-        $order = $this->_orderFactory->create();
-        $ordersCollection = $order->getCollection()
-            ->addFieldToSelect(['entity_id', 'customer_id'])
-            ->addFieldToFilter('state', ['eq' => 'complete'])
-            ->addFieldToFilter('customer_id', array('neq' => 'NULL' ))
-            ->getData();
-//        ->loadData(true);
+//        $order = $this->_orderFactory->create();
+//        $ordersCollection = $order->getCollection()
+//            ->addFieldToSelect(['entity_id', 'customer_id'])
+//            ->addFieldToFilter('state', ['eq' => 'complete'])
+//            ->addFieldToFilter('customer_id', array('neq' => 'NULL' ))
+//            ->getData();
+////        ->loadData(true);
+//
+//        print_r($ordersCollection);
+//
+//        $purchasedProducts = [];
+//        foreach ($ordersCollection as $order) {
+//
+//            $order = $this->_orderFactory->create()->load($order['entity_id']);
+//
+//            $itemCollection = $order->getItemsCollection();
+//
+//            foreach ($itemCollection as $item) {
+//                $purchasedProducts[$order['customer_id']][] = $item->getId();
+//            }
+//
+//        }
+//
+//        print_r($purchasedProducts);
+//
+//        exit;
 
-        print_r($ordersCollection);
+        $personalisedIds = $this->_upsell->getProductCollection($this->_customerSession->getCustomerId());
 
-        $purchasedProducts = [];
-        foreach ($ordersCollection as $order) {
+        var_dump($personalisedIds['itemScores']);
 
-            $order = $this->_orderFactory->create()->load($order['entity_id']);
-
-            $itemCollection = $order->getItemsCollection();
-
-            foreach ($itemCollection as $item) {
-                $purchasedProducts[$order['customer_id']][] = $item->getId();
-            }
-
+        if ($personalisedIds['itemScores']) {
+            echo "empty";
         }
 
-        print_r($purchasedProducts);
 
-        exit;
+
+        print_r($this->_upsell->getProductCollection($this->_customerSession->getCustomerId()));
+
+
+
 
     }
 }

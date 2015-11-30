@@ -46,8 +46,12 @@ class Client implements EngineClientInterface
     public function sendQuery($customerId)
     {
         try {
-            $this->_engineClient->sendQuery(array('user'=> $customerId, 'num'=> Config::PRODUCT_COUNT));
-            return true;
+            return $this->_engineClient->sendQuery(
+                array(
+                    'user'=> $customerId,
+                    'num'=> (int) $this->_config->getProductCount()
+                )
+            );
         } catch (\Exception $e) {
             $this->_logger->addCritical($e);
         }
