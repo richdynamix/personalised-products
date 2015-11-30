@@ -6,7 +6,7 @@ use \Magento\Framework\Event\Observer;
 use \Magento\Framework\Event\ObserverInterface;
 use \Richdynamix\PersonalisedProducts\Helper\Config;
 use \Magento\Customer\Model\Session as CustomerSession;
-use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventServer;
+use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventClient\Client;
 use \Richdynamix\PersonalisedProducts\Model\Frontend\GuestCustomers;
 
 /**
@@ -17,54 +17,30 @@ use \Richdynamix\PersonalisedProducts\Model\Frontend\GuestCustomers;
  * @category    Richdynamix
  * @package     PersonalisedProducts
  * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class SendProductViews implements ObserverInterface
 {
-    /**
-     * @var Config
-     */
     protected $_config;
 
-    /**
-     * @var CustomerSession
-     */
     protected $_customerSession;
 
-    /**
-     * @var EventServer
-     */
-    protected $_eventServer;
+    protected $_eventClient;
 
-    /**
-     * @var GuestCustomers
-     */
     protected $_guestCustomers;
 
-    /**
-     * SendProductViews constructor.
-     * @param Config $config
-     * @param CustomerSession $customerSession
-     * @param EventServer $eventServer
-     * @param GuestCustomers $guestCustomers
-     */
     public function __construct(
         Config $config,
         CustomerSession $customerSession,
-        EventServer $eventServer,
+        Client $eventClient,
         GuestCustomers $guestCustomers
     )
     {
         $this->_config = $config;
         $this->_customerSession = $customerSession;
-        $this->_eventServer = $eventServer;
+        $this->_eventClient = $eventClient;
         $this->_guestCustomers = $guestCustomers;
     }
 
-    /**
-     * @param Observer $observer
-     * @return null
-     */
     public function execute(Observer $observer)
     {
         if (!$this->_config->isEnabled()) {
@@ -73,7 +49,7 @@ class SendProductViews implements ObserverInterface
 
         $product = $observer->getProduct();
         if ($this->_customerSession->isLoggedIn()) {
-            $this->_eventServer->saveCustomerViewProduct(
+            $this->_eventClient->saveCustomerViewProduct(
                 $this->_customerSession->getCustomerId(),
                 $product->getId()
             );

@@ -1,6 +1,6 @@
 <?php
 
-namespace Richdynamix\PersonalisedProducts\Model\PredictionIO;
+namespace Richdynamix\PersonalisedProducts\Model\PredictionIO\EventClient;
 
 /**
  * Interface EventClientInterface

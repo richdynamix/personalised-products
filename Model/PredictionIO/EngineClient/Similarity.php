@@ -2,14 +2,14 @@
 
 namespace Richdynamix\PersonalisedProducts\Model\PredictionIO\EngineClient;
 
-use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EngineClientInterface;
+use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EngineClient\SimilarityInterface;
 use \Richdynamix\PersonalisedProducts\Helper\Config;
 use Richdynamix\PersonalisedProducts\Helper\Urls;
 use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;
 use \Richdynamix\PersonalisedProducts\Model\PredictionIO\Factory;
 
 
-class Client implements EngineClientInterface
+class Similarity implements SimilarityInterface
 {
     protected $_factory;
 
@@ -36,23 +36,41 @@ class Client implements EngineClientInterface
         $this->_engineClient = $this->_factory->create(
             'engine',
             $this->_urls->buildUrl(
-                $this->_config->getConfigItem(Config::UPSELL_TEMPLATE_ENGINE_URL),
-                $this->_config->getConfigItem(Config::UPSELL_TEMPLATE_ENGINE_PORT)
+                $this->_config->getItem(Config::SIMILARITY_ENGINE_URL),
+                $this->_config->getItem(Config::SIMILARITY_ENGINE_PORT)
             )
         );
 
     }
 
-    public function sendQuery($customerId)
+    public function sendQuery(array $productIds, array $categories = [], array $whitelist = [], array $blacklist = [])
     {
         try {
-            $this->_engineClient->sendQuery(array('user'=> $customerId, 'num'=> Config::PRODUCT_COUNT));
-            return true;
+            $data = [
+
+              'items' => $productIds,
+              'num' => (int) $this->_config->getProductCount(Config::SIMILARITY_PRODUCT_COUNT),
+            ];
+
+            $this->_addProperties('categories', $data, $categories);
+            $this->_addProperties('whitelist', $data, $whitelist);
+            $this->_addProperties('blacklist', $data, $blacklist);
+
+            return $this->_engineClient->sendQuery($data);
         } catch (\Exception $e) {
             $this->_logger->addCritical($e);
         }
 
         return false;
 
+    }
+
+    protected function _addProperties($property, &$data, $propertyData)
+    {
+        if ($propertyData) {
+            $data[$property] = $propertyData;
+        }
+
+        return $this;
     }
 }

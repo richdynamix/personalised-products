@@ -26,66 +26,19 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      */
     protected $_storeScope;
 
-    /**
-     * On/Off switch for the module
-     */
     const ENABLED = 'personalised_products/general/enabled';
 
-    /**
-     * Determines the number of products to be returned from PredictionIO
-     */
-    const PRODUCT_COUNT = 'personalised_products/general/product_count';
+    const EVENT_SERVER_ACCESS_KEY = 'personalised_products/general/access_key';
 
-    /**
-     * UpSell (ecommerce) template engine URL
-     */
-    const UPSELL_TEMPLATE_ENGINE_URL = 'personalised_products/upsell_template/engine_url';
+    const EVENT_SERVER_URL = 'personalised_products/general/url';
 
-    /**
-     * UpSell (ecommerce) template engine port (default: 7070)
-     */
-    const UPSELL_TEMPLATE_ENGINE_PORT = 'personalised_products/upsell_template/engine_port';
+    const EVENT_SERVER_PORT = 'personalised_products/general/port';
 
-    /**
-     * UpSell (ecommerce) template event server's access key
-     */
-    const UPSELL_TEMPLATE_SERVER_ACCESS_KEY = 'personalised_products/upsell_template/access_key';
+    const SIMILARITY_ENGINE_URL = 'personalised_products/similarity_engine/url';
 
-    /**
-     * UpSell (ecommerce) template event server URL
-     */
-    const UPSELL_TEMPLATE_SERVER_URL = 'personalised_products/upsell_template/event_url';
+    const SIMILARITY_ENGINE_PORT = 'personalised_products/similarity_engine/port';
 
-    /**
-     * UpSell (ecommerce) template event server port (default: 8000)
-     */
-    const UPSELL_TEMPLATE_SERVER_PORT = 'personalised_products/upsell_template/event_port';
-
-    /**
-     * Product ranking template engine URL
-     */
-    const RANKING_TEMPLATE_ENGINE_URL = 'personalised_products/product_ranking/engine_url';
-
-    /**
-     * Product ranking template engine port (default: 7070)
-     */
-    const RANKING_TEMPLATE_ENGINE_PORT = 'personalised_products/product_ranking/engine_port';
-
-    /**
-     * Product ranking template event server's access key
-     */
-    const RANKING_TEMPLATE_SERVER_ACCESS_KEY = 'personalised_products/product_ranking/access_key';
-
-    /**
-     * Product ranking template event server URL
-     */
-    const RANKING_TEMPLATE_SERVER_URL = 'personalised_products/product_ranking/event_url';
-
-    /**
-     * Product ranking template event server port (default: 8000)
-     */
-    const RANKING_TEMPLATE_SERVER_PORT = 'personalised_products/product_ranking/event_port';
-
+    const SIMILARITY_PRODUCT_COUNT = 'personalised_products/similarity_engine/product_count';
 
     /**
      * Config constructor.
@@ -99,20 +52,18 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
         parent::__construct($context);
     }
 
-    /**
-     * @param $itemPath
-     * @return mixed
-     */
-    public function getConfigItem($itemPath)
+    public function getItem($itemPath)
     {
         return $this->scopeConfig->getValue($itemPath, $this->_storeScope);
     }
 
-    /**
-     * @return mixed
-     */
     public function isEnabled()
     {
-        return $this->getConfigItem(self::ENABLED);
+        return $this->getItem(self::ENABLED);
+    }
+
+    public function getProductCount($engineProductCount)
+    {
+        return $this->getItem($engineProductCount) ? $this->getItem($engineProductCount) : '4';
     }
 }
