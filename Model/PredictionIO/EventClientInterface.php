@@ -3,14 +3,13 @@
 namespace Richdynamix\PersonalisedProducts\Model\PredictionIO;
 
 /**
- * Interface EventServerInterface
+ * Interface EventClientInterface
  *
  * @category    Richdynamix
  * @package     PersonalisedProducts
  * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-interface EventServerInterface
+interface EventClientInterface
 {
 
     /**
