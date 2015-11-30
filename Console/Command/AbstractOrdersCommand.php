@@ -4,7 +4,7 @@ namespace Richdynamix\PersonalisedProducts\Console\Command;
 
 use \Symfony\Component\Console\Command\Command;
 use \Magento\Sales\Model\OrderFactory;
-use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventServer;
+use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventClient\Client;
 use \Symfony\Component\Config\Definition\Exception\Exception;
 
 abstract class AbstractOrdersCommand extends Command
@@ -12,14 +12,14 @@ abstract class AbstractOrdersCommand extends Command
 
     protected $_orderFactory;
 
-    protected $_eventServer;
+    protected $_eventClient;
 
     protected $_productCollection;
 
-    public function __construct(OrderFactory $orderFactory, EventServer $eventServer)
+    public function __construct(OrderFactory $orderFactory, Client $eventClient)
     {
         $this->_orderFactory = $orderFactory;
-        $this->_eventServer = $eventServer;
+        $this->_eventClient = $eventClient;
         parent::__construct();
     }
 
@@ -89,7 +89,7 @@ abstract class AbstractOrdersCommand extends Command
     protected function _sendPurchaseEvent($customerId, $products)
     {
         foreach ($products as $productId) {
-            if (!$this->_eventServer->saveCustomerBuyProduct($customerId, $productId)) {
+            if (!$this->_eventClient->saveCustomerBuyProduct($customerId, $productId)) {
                 return false;
             }
         }

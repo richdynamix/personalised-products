@@ -4,7 +4,7 @@ namespace Richdynamix\PersonalisedProducts\Console\Command;
 
 use \Symfony\Component\Console\Command\Command;
 use \Magento\Catalog\Model\ProductFactory;
-use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventServer;
+use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventClient\Client;
 use \Symfony\Component\Config\Definition\Exception\Exception;
 
 abstract class AbstractProductCommand extends Command
@@ -14,12 +14,12 @@ abstract class AbstractProductCommand extends Command
 
     protected $_productFactory;
 
-    protected $_eventServer;
+    protected $_eventClient;
 
-    public function __construct(ProductFactory $productFactory, EventServer $eventServer)
+    public function __construct(ProductFactory $productFactory, Client $eventClient)
     {
         $this->_productFactory = $productFactory;
-        $this->_eventServer = $eventServer;
+        $this->_eventClient = $eventClient;
         parent::__construct();
     }
 
@@ -28,7 +28,7 @@ abstract class AbstractProductCommand extends Command
         $collectionCount = count($collection);
         $sentProductCount = 0;
         foreach ($collection as $productId) {
-            $sentProduct = $this->_eventServer->saveProductData(
+            $sentProduct = $this->_eventClient->saveProductData(
                 $productId,
                 $this->_getProductCategoryCollection($productId)
             );
