@@ -5,7 +5,7 @@ namespace Richdynamix\PersonalisedProducts\Model\PredictionIO\EventClient;
 use \Richdynamix\PersonalisedProducts\Helper\Config;
 use Richdynamix\PersonalisedProducts\Helper\Urls;
 use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;
-use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventClientInterface;
+use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventClient\EventClientInterface;
 use \Richdynamix\PersonalisedProducts\Model\PredictionIO\Factory;
 
 /**
@@ -42,10 +42,10 @@ class Client implements EventClientInterface
         $this->_eventClient = $this->_factory->create(
             'event',
             $this->_urls->buildUrl(
-                $this->_config->getConfigItem(Config::UPSELL_TEMPLATE_SERVER_URL),
-                $this->_config->getConfigItem(Config::UPSELL_TEMPLATE_SERVER_PORT)
+                $this->_config->getItem(Config::EVENT_SERVER_URL),
+                $this->_config->getItem(Config::EVENT_SERVER_PORT)
             ),
-            $this->_config->getConfigItem(Config::UPSELL_TEMPLATE_SERVER_ACCESS_KEY)
+            $this->_config->getItem(Config::EVENT_SERVER_ACCESS_KEY)
         );
 
     }

@@ -62,20 +62,19 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
     protected function _prepareData()
     {
 
-        if (!$this->_config->isEnabled() && $this->_customerSession->isLoggedIn()) {
+        if (!$this->_config->isEnabled()) {
             return parent::_prepareData();
         }
 
-//        $personalisedIds = $this->_upsell->getProductCollection($this->_customerSession->getCustomerId());
-//
-//        if ($personalisedIds[''])
-
         $product = $this->_coreRegistry->registry('product');
+        $personalisedIds = $this->_upsell->getProductCollection([$product->getId()]);
+
+        if (!$personalisedIds) {
+            return parent::_prepareData();
+        }
 
         $collection = $this->_productFactory->create()->getCollection();
-
-        // todo filter collection from predictionio results
-        $collection->addAttributeToFilter('entity_id', ['in', ['6', '7']]);
+        $collection->addAttributeToFilter('entity_id', ['in', $personalisedIds]);
 
         $this->_itemCollection = $collection;
 

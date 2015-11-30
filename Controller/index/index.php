@@ -61,17 +61,9 @@ class Index extends \Magento\Framework\App\Action\Action {
 //
 //        exit;
 
-        $personalisedIds = $this->_upsell->getProductCollection($this->_customerSession->getCustomerId());
+        $personalisedIds = $this->_upsell->getProductCollection(['1', '2', '3', '4']);
 
-        var_dump($personalisedIds['itemScores']);
-
-        if ($personalisedIds['itemScores']) {
-            echo "empty";
-        }
-
-
-
-        print_r($this->_upsell->getProductCollection($this->_customerSession->getCustomerId()));
+        var_dump($personalisedIds);
 
 
 

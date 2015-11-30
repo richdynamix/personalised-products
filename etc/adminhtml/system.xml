@@ -16,6 +16,25 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Disabling this will revert to default upsell functionality</comment>
                 </field>
+                <field id="access_key" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Access Key</label>
+                </field>
+                <field id="url" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Event Server URL</label>
+                </field>
+                <field id="port" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Event Server Port</label>
+                </field>
+            </group>
+            <group id="similarity_engine" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Similarity Engine Template</label>
+                <comment>The similarity engine template is used for training data for product upsells</comment>
+                <field id="url" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Engine URL</label>
+                </field>
+                <field id="port" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Engine Port</label>
+                </field>
                 <field id="product_count" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Product Count</label>
                     <comment>Determine how many products to show.</comment>
@@ -24,45 +43,6 @@
                     <label>Filter on Categories</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Products returned will match current category</comment>
-                </field>
-            </group>
-            <group id="upsell_template" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
-                <label>Ecommerce Template</label>
-                <comment>The Ecommerce template is used for training data used for upsell and featured products</comment>
-                <field id="access_key" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Access Key</label>
-                </field>
-                <field id="event_url" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Event Server URL</label>
-                </field>
-                <field id="event_port" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Event Server Port</label>
-                </field>
-                <field id="engine_url" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Engine URL</label>
-                </field>
-                <field id="engine_port" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Engine Port</label>
-                </field>
-            </group>
-
-            <group id="product_ranking" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
-                <label>Product Ranking Template</label>
-                <comment>The Product Ranking template is used to determine the display order of categories and search result pages.</comment>
-                <field id="access_key" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Access Key</label>
-                </field>
-                <field id="event_url" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Event Server URL</label>
-                </field>
-                <field id="event_port" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Event Server Port</label>
-                </field>
-                <field id="engine_url" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Engine URL</label>
-                </field>
-                <field id="engine_port" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Engine Port</label>
                 </field>
             </group>
         </section>
