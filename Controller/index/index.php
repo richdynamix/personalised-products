@@ -32,6 +32,7 @@ class Index extends \Magento\Framework\App\Action\Action {
         $ordersCollection = $order->getCollection()
             ->addFieldToSelect(['entity_id', 'customer_id'])
             ->addFieldToFilter('state', ['eq' => 'complete'])
+            ->addFieldToFilter('customer_id', array('neq' => 'NULL' ))
             ->getData();
 //        ->loadData(true);
 
