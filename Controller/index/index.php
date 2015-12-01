@@ -34,39 +34,29 @@ class Index extends \Magento\Framework\App\Action\Action {
     public function execute()
     {
 
-//        $order = $this->_orderFactory->create();
-//        $ordersCollection = $order->getCollection()
-//            ->addFieldToSelect(['entity_id', 'customer_id'])
-//            ->addFieldToFilter('state', ['eq' => 'complete'])
-//            ->addFieldToFilter('customer_id', array('neq' => 'NULL' ))
-//            ->getData();
-////        ->loadData(true);
-//
-//        print_r($ordersCollection);
-//
-//        $purchasedProducts = [];
-//        foreach ($ordersCollection as $order) {
-//
-//            $order = $this->_orderFactory->create()->load($order['entity_id']);
-//
-//            $itemCollection = $order->getItemsCollection();
-//
-//            foreach ($itemCollection as $item) {
-//                $purchasedProducts[$order['customer_id']][] = $item->getId();
-//            }
-//
-//        }
-//
-//        print_r($purchasedProducts);
-//
-//        exit;
+        $product = $this->_productFactory->create();
+        $collection = $product->getCollection()
+            ->addAttributeToFilter('visibility', 4);
 
-        $personalisedIds = $this->_crosssell->getProductCollection(['1']);
+        var_dump($collection->getAllIds());
+//        return $collection->getAllIds();
 
-        var_dump($personalisedIds);
+        foreach ($collection->getAllIds() as $productId) {
+            $cats = $this->_getProductCategoryCollection($productId);
 
-
-
+            var_dump($cats);
+            exit;
+        }
 
     }
+
+        protected function _getProductCategoryCollection($productId)
+    {
+        // todo fix issue with session area not being set when filtering categories
+        $product = $this->_productFactory->create()->load($productId);
+        return $product->getCategoryIds();
+//        return [];
+    }
+
+
 }
