@@ -34,11 +34,6 @@ class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
      * @param \Magento\Quote\Model\Quote\Item\RelatedProducts $itemRelationsList
      * @param StockHelper $stockHelper
      * @param array $data
-     *
-     * @SuppressWarnings(PHPMD.LongVariable)
-     * @SuppressWarnings(PHPMD.ExcessivePublicCount)
-     * @SuppressWarnings(PHPMD.TooManyFields)
-     * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
      */
     public function __construct(
         Context $context,

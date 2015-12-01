@@ -42,11 +42,6 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
      * @param PersonalisedUpsell $upsell
      * @param CustomerSession $customerSession
      * @param array $data
-     *
-     * @SuppressWarnings(PHPMD.LongVariable)
-     * @SuppressWarnings(PHPMD.ExcessivePublicCount)
-     * @SuppressWarnings(PHPMD.TooManyFields)
-     * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
      */
     public function __construct(
         Context $context,

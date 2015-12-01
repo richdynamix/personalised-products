@@ -79,7 +79,7 @@ abstract class AbstractOrdersCommand extends Command
     protected function _getProductCount()
     {
         $productCount = 0;
-        foreach ($this->_productCollection as $customer => $products) {
+        foreach ($this->_productCollection as $products) {
             $productCount += count($products);
         }
 
