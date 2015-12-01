@@ -20,6 +20,26 @@ class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
 
     protected $_moduleManager;
 
+
+    /**
+     * Crosssell constructor.
+     * @param Context $context
+     * @param Config $config
+     * @param CrosssellModel $crosssell
+     * @param ProductFactory $productFactory
+     * @param Manager $moduleManager
+     * @param \Magento\Catalog\Model\Product\Visibility $productVisibility
+     * @param \Magento\Checkout\Model\Session $checkoutSession
+     * @param \Magento\Catalog\Model\Product\LinkFactory $productLinkFactory
+     * @param \Magento\Quote\Model\Quote\Item\RelatedProducts $itemRelationsList
+     * @param StockHelper $stockHelper
+     * @param array $data
+     *
+     * @SuppressWarnings(PHPMD.LongVariable)
+     * @SuppressWarnings(PHPMD.ExcessivePublicCount)
+     * @SuppressWarnings(PHPMD.TooManyFields)
+     * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+     */
     public function __construct(
         Context $context,
         Config $config,
@@ -48,11 +68,6 @@ class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
         );
     }
 
-    /**
-     * Get crosssell items
-     *
-     * @return array
-     */
     public function getItems()
     {
         if (!$this->_config->isEnabled()) {

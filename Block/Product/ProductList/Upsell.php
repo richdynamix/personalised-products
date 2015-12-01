@@ -29,6 +29,25 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
 
     protected $_upsell;
 
+
+    /**
+     * Upsell constructor.
+     * @param Context $context
+     * @param Cart $checkoutCart
+     * @param Visibility $productVisibility
+     * @param Session $checkoutSession
+     * @param Manager $moduleManager
+     * @param ProductFactory $productFactory
+     * @param Config $config
+     * @param PersonalisedUpsell $upsell
+     * @param CustomerSession $customerSession
+     * @param array $data
+     *
+     * @SuppressWarnings(PHPMD.LongVariable)
+     * @SuppressWarnings(PHPMD.ExcessivePublicCount)
+     * @SuppressWarnings(PHPMD.TooManyFields)
+     * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+     */
     public function __construct(
         Context $context,
         Cart $checkoutCart,
