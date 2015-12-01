@@ -11,15 +11,7 @@
     "php": "~5.5.0|~5.6.0",
     "magento/magento-composer-installer": "*",
     "predictionio/predictionio": "~0.8.2"
-  },
-  "extra": {
-    "map": [
-      [
-        "*",
-        "Richdynamix/PersonalisedProducts"
-      ]
-    ]
-  },
+  }
   "autoload": {
     "files": [ "registration.php" ],
     "psr-4": {
