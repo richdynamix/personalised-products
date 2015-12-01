@@ -29,20 +29,34 @@
             <group id="similarity_engine" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>Similarity Engine Template</label>
                 <comment>The similarity engine template is used for training data for product upsells</comment>
-                <field id="url" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="url" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Engine URL</label>
                 </field>
-                <field id="port" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="port" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Engine Port</label>
                 </field>
-                <field id="product_count" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="product_count" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Product Count</label>
                     <comment>Determine how many products to show.</comment>
                 </field>
-                <field id="use_categories" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="use_categories" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Filter on Categories</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Products returned will match current category</comment>
+                </field>
+            </group>
+            <group id="complementary_engine" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Complementary Purchase Engine Template</label>
+                <comment>The complementary purchase engine template is used for training data for cross sells</comment>
+                <field id="url" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Engine URL</label>
+                </field>
+                <field id="port" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Engine Port</label>
+                </field>
+                <field id="product_count" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product Count</label>
+                    <comment>Determine how many products to show.</comment>
                 </field>
             </group>
         </section>

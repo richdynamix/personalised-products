@@ -3,13 +3,13 @@
 namespace Richdynamix\PersonalisedProducts\Model\PredictionIO\EngineClient;
 
 /**
- * Interface SimilarityInterface
+ * Interface EngineInterface
  *
  * @category    Richdynamix
  * @package     PersonalisedProducts
  * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
-interface SimilarityInterface
+interface EngineInterface
 {
     public function sendQuery(
         array $productIds,
