@@ -20,7 +20,6 @@ use \Richdynamix\PersonalisedProducts\Model\Frontend\Catalog\Product\ProductList
  * @category    Richdynamix
  * @package     PersonalisedProducts
  * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
 {

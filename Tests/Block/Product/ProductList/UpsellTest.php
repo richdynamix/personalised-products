@@ -8,10 +8,9 @@
 
 namespace Richdynamix\PersonalisedProducts\Tests\Block\Product\ProductList;
 
-
 class UpsellTest extends \PHPUnit_Framework_TestCase
 {
-    public function testTrueIsTrue()
+    public function testIsEnabled()
     {
         $foo = true;
         $this->assertTrue($foo);
