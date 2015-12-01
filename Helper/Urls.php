@@ -6,14 +6,14 @@ class Urls
 {
     public function buildUrl($url, $port)
     {
-        return $this->_checkUrlScheme($url.'/') . ":" . $port;
+        return trim($this->_checkUrlScheme($url), '/') . ":" . $port;
     }
 
     protected function _checkUrlScheme($url)
     {
         $parsed = parse_url($url);
         if (empty($parsed['scheme'])) {
-            $url = 'http://' . trim($url, '/');
+            $url = 'http://' . $url;
         }
 
         return $url;
