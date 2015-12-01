@@ -4,7 +4,7 @@ namespace Richdynamix\PersonalisedProducts\Block\Checkout\Cart;
 
 use \Magento\Catalog\Block\Product\Context as Context;
 use \Richdynamix\PersonalisedProducts\Helper\Config as Config;
-use \Richdynamix\PersonalisedProducts\Model\Frontend\Catalog\Product\ProductList\Crosssell as CrosssellModel;
+use \Richdynamix\PersonalisedProducts\Model\Frontend\Checkout\Cart\Crosssell as CrosssellModel;
 use \Magento\Catalog\Model\ProductFactory as ProductFactory;
 use Magento\CatalogInventory\Helper\Stock as StockHelper;
 use \Magento\Framework\Module\Manager as Manager;

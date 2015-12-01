@@ -1,6 +1,6 @@
 <?php
 
-namespace Richdynamix\PersonalisedProducts\Model\Frontend\Catalog\Product\ProductList;
+namespace Richdynamix\PersonalisedProducts\Model\Frontend\Checkout\Cart;
 
 use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EngineClient\Complementary;
 use \Magento\Customer\Model\Session as CustomerSession;
