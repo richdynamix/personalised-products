@@ -21,7 +21,10 @@ build:
     # http://devcenter.wercker.com/docs/steps/index.html
   steps:
     - script:
-        name: echo
+        name: composer
         code: |
-          echo "hello world!"
+          composer install --prefer-source --no-interaction
+        name: tests
+        code: |
+          vendor/bin/phpunit Tests
 
