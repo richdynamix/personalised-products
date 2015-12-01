@@ -11,6 +11,8 @@ class Crosssell
 
     protected $_customerSession;
 
+    protected $_basketProducts;
+
     public function __construct(Complementary $complementaryEngine, CustomerSession $customerSession)
     {
         $this->_complementaryEngine = $complementaryEngine;
@@ -19,6 +21,7 @@ class Crosssell
 
     public function getProductCollection($productIds)
     {
+        $this->_basketProducts = $productIds;
         $products = $this->_complementaryEngine->sendQuery($productIds);
 
         if ($products['rules']) {
@@ -42,7 +45,9 @@ class Crosssell
     protected function _getProductIds($items, &$productIds)
     {
         foreach ($items as $item) {
-            $productIds[] = $item['item'];
+            if (!in_array($item['item'], $this->_basketProducts)) {
+                $productIds[] = $item['item'];
+            }
         }
 
         return $this;
