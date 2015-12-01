@@ -40,6 +40,14 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
 
     const SIMILARITY_PRODUCT_COUNT = 'personalised_products/similarity_engine/product_count';
 
+    const SIMILARITY_USE_CATEGORY_FILTER = 'personalised_products/similarity_engine/use_categories';
+
+    const COMPLEMENTARY_ENGINE_URL = 'personalised_products/complementary_engine/url';
+
+    const COMPLEMENTARY_ENGINE_PORT = 'personalised_products/complementary_engine/port';
+
+    const COMPLEMENTARY_PRODUCT_COUNT = 'personalised_products/complementary_engine/product_count';
+
     /**
      * Config constructor.
      * @param ScopeConfigInterface $scopeConfig
