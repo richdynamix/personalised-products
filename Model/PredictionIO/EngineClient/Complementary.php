@@ -9,7 +9,7 @@ use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;
 use \Richdynamix\PersonalisedProducts\Model\PredictionIO\Factory;
 
 
-class Similarity implements EngineInterface
+class Complementary implements EngineInterface
 {
     protected $_factory;
 
@@ -36,8 +36,8 @@ class Similarity implements EngineInterface
         $this->_engineClient = $this->_factory->create(
             'engine',
             $this->_urls->buildUrl(
-                $this->_config->getItem(Config::SIMILARITY_ENGINE_URL),
-                $this->_config->getItem(Config::SIMILARITY_ENGINE_PORT)
+                $this->_config->getItem(Config::COMPLEMENTARY_ENGINE_URL),
+                $this->_config->getItem(Config::COMPLEMENTARY_ENGINE_PORT)
             )
         );
 
@@ -48,13 +48,9 @@ class Similarity implements EngineInterface
         try {
             $data = [
 
-              'items' => $productIds,
-              'num' => (int) $this->_config->getProductCount(Config::SIMILARITY_PRODUCT_COUNT),
+                'items' => $productIds,
+                'num' => (int) $this->_config->getProductCount(Config::COMPLEMENTARY_PRODUCT_COUNT),
             ];
-
-            $this->_addProperties('categories', $data, $categories);
-            $this->_addProperties('whitelist', $data, $whitelist);
-            $this->_addProperties('blacklist', $data, $blacklist);
 
             return $this->_engineClient->sendQuery($data);
         } catch (\Exception $e) {
@@ -63,14 +59,5 @@ class Similarity implements EngineInterface
 
         return false;
 
-    }
-
-    protected function _addProperties($property, &$data, $propertyData)
-    {
-        if ($propertyData) {
-            $data[$property] = $propertyData;
-        }
-
-        return $this;
     }
 }
