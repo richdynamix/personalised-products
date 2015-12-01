@@ -4,17 +4,19 @@ namespace Richdynamix\PersonalisedProducts\Helper;
 
 class Urls
 {
-    /**
-     * Urls constructor.
-     */
-    public function __construct()
-    {
-    }
-
     public function buildUrl($url, $port)
     {
-        // todo urls sanitser to ensure correct format
-        return $url . ":" . $port;
+        return trim($this->_checkUrlScheme($url), '/') . ":" . $port;
+    }
+
+    protected function _checkUrlScheme($url)
+    {
+        $parsed = parse_url($url);
+        if (empty($parsed['scheme'])) {
+            $url = 'http://' . $url;
+        }
+
+        return $url;
     }
 
 }

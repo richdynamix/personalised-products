@@ -4,6 +4,7 @@ namespace Richdynamix\PersonalisedProducts\Console\Command;
 
 use \Symfony\Component\Console\Command\Command;
 use \Magento\Catalog\Model\ProductFactory;
+use \Magento\Framework\App\State as AppState;
 use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventClient\Client;
 use \Symfony\Component\Config\Definition\Exception\Exception;
 
@@ -16,10 +17,13 @@ abstract class AbstractProductCommand extends Command
 
     protected $_eventClient;
 
-    public function __construct(ProductFactory $productFactory, Client $eventClient)
+    public function __construct(ProductFactory $productFactory, Client $eventClient, AppState $appState)
     {
         $this->_productFactory = $productFactory;
         $this->_eventClient = $eventClient;
+        try {
+            $appState->setAreaCode('adminhtml');
+        } catch (\Exception $exception) {};
         parent::__construct();
     }
 
@@ -57,10 +61,10 @@ abstract class AbstractProductCommand extends Command
 
     protected function _getProductCategoryCollection($productId)
     {
-        // todo fix issue with session area not being set when filtering categories
-//        $product = $this->_productFactory->create()->load($productId);
-//        return $product->getCategoryIds();
-        return [];
+        $product = $this->_productFactory->create();
+        $product->load($productId);
+
+        return $product->getCategoryIds();
     }
 
 }
