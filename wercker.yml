@@ -24,7 +24,7 @@ build:
         name: composer
         code: |
           composer install --prefer-source --no-interaction
+      script:
         name: tests
         code: |
           vendor/bin/phpunit Tests
-
