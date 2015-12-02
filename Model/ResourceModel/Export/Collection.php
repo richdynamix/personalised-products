@@ -1,6 +1,6 @@
 <?php
 
-namespace Richdynamix\PersonalisedProducts\ResourceModel\Post;
+namespace Richdynamix\PersonalisedProducts\Model\ResourceModel\Export;
 
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {

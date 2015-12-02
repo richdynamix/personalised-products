@@ -3,10 +3,30 @@
 namespace Richdynamix\PersonalisedProducts\Model;
 
 use \Richdynamix\PersonalisedProducts\Api\Data\ExportInterface;
+use \Magento\Framework\Model\AbstractModel;
+use \Magento\Catalog\Model\ProductFactory as ProductFactory;
 
-
-class Export  extends \Magento\Framework\Model\AbstractModel implements ExportInterface
+class Export extends AbstractModel implements ExportInterface
 {
+    public function __construct(
+        ProductFactory $productFactory,
+        \Magento\Framework\Model\Context $context,
+        \Magento\Framework\Registry $registry,
+        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        array $data = []
+    )
+    {
+        $this->_productFactory = $productFactory;
+
+        parent::__construct(
+            $context,
+            $registry,
+            $resource,
+            $resourceCollection,
+            $data
+        );
+    }
 
     protected function _construct()
     {
@@ -61,6 +81,14 @@ class Export  extends \Magento\Framework\Model\AbstractModel implements ExportIn
     public function setIsExported($isExported)
     {
         return $this->setData(self::IS_ACTIVE, $isExported);
+    }
+
+    public function getCategoryIds()
+    {
+        $product = $this->_productFactory->create();
+        $product->load($this->getData(self::PRODUCT_ID));
+
+        return $product->getCategoryIds();
     }
 
 }
