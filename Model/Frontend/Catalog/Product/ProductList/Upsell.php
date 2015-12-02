@@ -17,11 +17,11 @@ class Upsell
         $this->_customerSession = $customerSession;
     }
 
-    public function getProductCollection($productIds)
+    public function getProductCollection($productIds, $categoryIds)
     {
-        $this->_checkIsGuestCustomer($productIds);
+//        $this->_checkIsGuestCustomer($productIds);
 
-        $products = $this->_similarityEngine->sendQuery($productIds);
+        $products = $this->_similarityEngine->sendQuery($productIds, $categoryIds);
 
         if ($products['itemScores']) {
             return $this->_getProductIds($products['itemScores']);

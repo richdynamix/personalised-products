@@ -80,7 +80,8 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
         }
 
         $product = $this->_coreRegistry->registry('product');
-        $personalisedIds = $this->_upsell->getProductCollection([$product->getId()]);
+        $categoryIds = $this->_getCategoryIds($product);
+        $personalisedIds = $this->_upsell->getProductCollection([$product->getId()], $categoryIds);
 
         if (!$personalisedIds) {
             return parent::_prepareData();
@@ -105,6 +106,17 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
         }
 
         return $this;
+    }
+
+
+    protected function _getCategoryIds($product)
+    {
+        if (!$this->_config->getItem(Config::SIMILARITY_USE_CATEGORY_FILTER)) {
+            return [];
+        }
+
+        return $product->getCategoryIds();
+
     }
 
 }
