@@ -39,10 +39,4 @@ interface EventClientInterface
      */
     public function saveCustomerBuyProduct($customerId, $productId);
 
-    /**
-     * @param array $productIds
-     * @return mixed
-     */
-    public function setOutOfStockItems(array $productIds);
-
 }

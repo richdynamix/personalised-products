@@ -70,11 +70,6 @@ class Client implements EventClientInterface
         return $this->_setCustomerToItemAction('buy', $customerId, $productId);
     }
 
-    public function setOutOfStockItems(array $productIds)
-    {
-        //todo add unavailable items to event server
-    }
-
     protected function _setCustomerToItemAction($action, $customerId, $productId)
     {
         try {
