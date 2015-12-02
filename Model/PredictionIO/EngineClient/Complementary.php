@@ -2,7 +2,7 @@
 
 namespace Richdynamix\PersonalisedProducts\Model\PredictionIO\EngineClient;
 
-use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EngineClient\EngineInterface;
+use \Richdynamix\PersonalisedProducts\Api\Data\EngineInterface;
 use \Richdynamix\PersonalisedProducts\Helper\Config;
 use Richdynamix\PersonalisedProducts\Helper\Urls;
 use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;

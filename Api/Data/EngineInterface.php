@@ -1,6 +1,6 @@
 <?php
 
-namespace Richdynamix\PersonalisedProducts\Model\PredictionIO\EngineClient;
+namespace Richdynamix\PersonalisedProducts\Api\Data;
 
 /**
  * Interface EngineInterface
