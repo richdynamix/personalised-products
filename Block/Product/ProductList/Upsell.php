@@ -23,12 +23,20 @@ use \Richdynamix\PersonalisedProducts\Model\Frontend\Catalog\Product\ProductList
  */
 class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
 {
+    /**
+     * @var Config
+     */
     protected $_config;
 
+    /**
+     * @var ProductFactory
+     */
     protected $_productFactory;
 
+    /**
+     * @var PersonalisedUpsell
+     */
     protected $_upsell;
-
 
     /**
      * Upsell constructor.
@@ -70,6 +78,8 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
     }
 
     /**
+     * Rewrite parent _prepareData method to use PredictionIO results when available
+     *
      * @return $this
      */
     protected function _prepareData()
@@ -108,7 +118,12 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
         return $this;
     }
 
-
+    /**
+     * Get array of category ID's the product belongs to
+     *
+     * @param $product
+     * @return array
+     */
     protected function _getCategoryIds($product)
     {
         if (!$this->_config->getItem(Config::SIMILARITY_USE_CATEGORY_FILTER)) {
@@ -118,5 +133,4 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
         return $product->getCategoryIds();
 
     }
-
 }

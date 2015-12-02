@@ -20,14 +20,33 @@ use \Richdynamix\PersonalisedProducts\Model\Frontend\GuestCustomers;
  */
 class SendProductViews implements ObserverInterface
 {
+    /**
+     * @var Config
+     */
     protected $_config;
 
+    /**
+     * @var CustomerSession
+     */
     protected $_customerSession;
 
+    /**
+     * @var Client
+     */
     protected $_eventClient;
 
+    /**
+     * @var GuestCustomers
+     */
     protected $_guestCustomers;
 
+    /**
+     * SendProductViews constructor.
+     * @param Config $config
+     * @param CustomerSession $customerSession
+     * @param Client $eventClient
+     * @param GuestCustomers $guestCustomers
+     */
     public function __construct(
         Config $config,
         CustomerSession $customerSession,
@@ -41,6 +60,12 @@ class SendProductViews implements ObserverInterface
         $this->_guestCustomers = $guestCustomers;
     }
 
+    /**
+     * Record the logged in customers product viewing actions to PredictionIO
+     * or save the actions to the session for processing later
+     *
+     * @param Observer $observer
+     */
     public function execute(Observer $observer)
     {
         if (!$this->_config->isEnabled()) {

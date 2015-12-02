@@ -7,15 +7,36 @@ use \Magento\Sales\Model\OrderFactory;
 use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventClient\Client;
 use \Symfony\Component\Config\Definition\Exception\Exception;
 
+/**
+ * Class AbstractOrdersCommand
+ *
+ * @category    Richdynamix
+ * @package     PersonalisedProducts
+ * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ */
 abstract class AbstractOrdersCommand extends Command
 {
 
+    /**
+     * @var OrderFactory
+     */
     protected $_orderFactory;
 
+    /**
+     * @var Client
+     */
     protected $_eventClient;
 
+    /**
+     * @var
+     */
     protected $_productCollection;
 
+    /**
+     * AbstractOrdersCommand constructor.
+     * @param OrderFactory $orderFactory
+     * @param Client $eventClient
+     */
     public function __construct(OrderFactory $orderFactory, Client $eventClient)
     {
         $this->_orderFactory = $orderFactory;
@@ -23,6 +44,12 @@ abstract class AbstractOrdersCommand extends Command
         parent::__construct();
     }
 
+    /**
+     * Prepare each order for customer and product data to send to PredictionIO
+     *
+     * @param $collection
+     * @return int
+     */
     protected function _sendCustomerBuyProductData($collection)
     {
         $collectionCount = count($collection);
@@ -43,6 +70,11 @@ abstract class AbstractOrdersCommand extends Command
 
     }
 
+    /**
+     * Get a collection of all completed orders from logged in customers
+     *
+     * @return array
+     */
     protected function _getOrderCollection()
     {
         $order = $this->_orderFactory->create();
@@ -54,6 +86,12 @@ abstract class AbstractOrdersCommand extends Command
         return $ordersCollection->getData();
     }
 
+    /**
+     * Get a collection of all products in the orders
+     *
+     * @param $ordersCollection
+     * @return array
+     */
     protected function _getCustomerProductCollection($ordersCollection)
     {
         $purchasedProducts = [];
@@ -71,11 +109,21 @@ abstract class AbstractOrdersCommand extends Command
         return $purchasedProducts;
     }
 
+    /**
+     * Count the number of customers in all the orders
+     *
+     * @return int
+     */
     protected function _getCustomerCount()
     {
         return count($this->_productCollection);
     }
 
+    /**
+     * Count all the products across all the orders
+     *
+     * @return int
+     */
     protected function _getProductCount()
     {
         $productCount = 0;
@@ -86,6 +134,13 @@ abstract class AbstractOrdersCommand extends Command
         return $productCount;
     }
 
+    /**
+     * Send customer-buys-item events to PredictionIO for all existing orders
+     *
+     * @param $customerId
+     * @param $products
+     * @return bool
+     */
     protected function _sendPurchaseEvent($customerId, $products)
     {
         foreach ($products as $productId) {

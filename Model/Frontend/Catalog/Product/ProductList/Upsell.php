@@ -5,18 +5,43 @@ namespace Richdynamix\PersonalisedProducts\Model\Frontend\Catalog\Product\Produc
 use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EngineClient\Similarity;
 use \Magento\Customer\Model\Session as CustomerSession;
 
+/**
+ * Class Upsell
+ *
+ * @category    Richdynamix
+ * @package     PersonalisedProducts
+ * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ */
 class Upsell
 {
+    /**
+     * @var Similarity
+     */
     protected $_similarityEngine;
 
+    /**
+     * @var CustomerSession
+     */
     protected $_customerSession;
 
+    /**
+     * Upsell constructor.
+     * @param Similarity $similarityEngine
+     * @param CustomerSession $customerSession
+     */
     public function __construct(Similarity $similarityEngine, CustomerSession $customerSession)
     {
         $this->_similarityEngine = $similarityEngine;
         $this->_customerSession = $customerSession;
     }
 
+    /**
+     * Query the PredictionIO engine for product data
+     *
+     * @param $productIds
+     * @param $categoryIds
+     * @return array|bool
+     */
     public function getProductCollection($productIds, $categoryIds)
     {
 //        $this->_checkIsGuestCustomer($productIds);
@@ -31,6 +56,12 @@ class Upsell
 
     }
 
+    /**
+     * Build product ID collection array from PredictionIO engine data
+     *
+     * @param $items
+     * @return array
+     */
     protected function _getProductIds($items)
     {
         $productIds = [];
@@ -41,11 +72,17 @@ class Upsell
         return $productIds;
     }
 
+    /**
+     * Check if the customer is logged in
+     *
+     * // todo get recently viewed products and list together
+     *
+     * @param $productIds
+     */
     protected function _checkIsGuestCustomer(&$productIds)
     {
         if (!$this->_customerSession->isLoggedIn()) {
-            // todo get recently viewed products and list together
-//            $productIds = [];
+
         }
 
     }

@@ -9,15 +9,34 @@ use \Magento\Catalog\Model\ProductFactory as ProductFactory;
 use Magento\CatalogInventory\Helper\Stock as StockHelper;
 use \Magento\Framework\Module\Manager as Manager;
 
+/**
+ * Class Crosssel
+ *
+ * @category    Richdynamix
+ * @package     PersonalisedProducts
+ * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ */
 class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
 {
 
+    /**
+     * @var Config
+     */
     protected $_config;
 
+    /**
+     * @var CrosssellModel
+     */
     protected $_crosssell;
 
+    /**
+     * @var
+     */
     protected $_itemCollection;
 
+    /**
+     * @var Manager
+     */
     protected $_moduleManager;
 
 
@@ -63,6 +82,11 @@ class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
         );
     }
 
+    /**
+     * Get the crossell items for the basket page
+     *
+     * @return array
+     */
     public function getItems()
     {
         if (!$this->_config->isEnabled()) {

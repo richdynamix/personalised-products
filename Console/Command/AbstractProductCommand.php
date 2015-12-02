@@ -8,15 +8,37 @@ use \Magento\Framework\App\State as AppState;
 use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventClient\Client;
 use \Symfony\Component\Config\Definition\Exception\Exception;
 
+/**
+ * Class AbstractProductCommand
+ *
+ * @category    Richdynamix
+ * @package     PersonalisedProducts
+ * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ */
 abstract class AbstractProductCommand extends Command
 {
 
+    /**
+     * Product visibility value
+     */
     const CATALOG_SEARCH_VISIBILITY = 4;
 
+    /**
+     * @var ProductFactory
+     */
     protected $_productFactory;
 
+    /**
+     * @var Client
+     */
     protected $_eventClient;
 
+    /**
+     * AbstractProductCommand constructor.
+     * @param ProductFactory $productFactory
+     * @param Client $eventClient
+     * @param AppState $appState
+     */
     public function __construct(ProductFactory $productFactory, Client $eventClient, AppState $appState)
     {
         $this->_productFactory = $productFactory;
@@ -27,6 +49,12 @@ abstract class AbstractProductCommand extends Command
         parent::__construct();
     }
 
+    /**
+     * Send product data to PredictionIO
+     *
+     * @param $collection
+     * @return int
+     */
     protected function _sendProductData($collection)
     {
         $collectionCount = count($collection);
@@ -50,6 +78,11 @@ abstract class AbstractProductCommand extends Command
 
     }
 
+    /**
+     * Get product collection
+     *
+     * @return array
+     */
     protected function _getProductCollection()
     {
         $product = $this->_productFactory->create();
@@ -59,6 +92,12 @@ abstract class AbstractProductCommand extends Command
         return $collection->getAllIds();
     }
 
+    /**
+     * Get category collection for each product
+     *
+     * @param $productId
+     * @return array
+     */
     protected function _getProductCategoryCollection($productId)
     {
         $product = $this->_productFactory->create();

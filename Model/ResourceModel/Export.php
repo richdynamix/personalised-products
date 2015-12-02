@@ -2,12 +2,26 @@
 
 namespace Richdynamix\PersonalisedProducts\Model\ResourceModel;
 
-
+/**
+ * Class Export
+ *
+ * @category    Richdynamix
+ * @package     PersonalisedProducts
+ * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ */
 class Export extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
-
+    /**
+     * @var \Magento\Framework\Stdlib\DateTime\DateTime
+     */
     protected $_date;
 
+    /**
+     * Export constructor.
+     * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
+     * @param \Magento\Framework\Stdlib\DateTime\DateTime $date
+     * @param null $resourcePrefix
+     */
     public function __construct(
         \Magento\Framework\Model\ResourceModel\Db\Context $context,
         \Magento\Framework\Stdlib\DateTime\DateTime $date,
@@ -17,11 +31,20 @@ class Export extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         $this->_date = $date;
     }
 
+    /**
+     * Export constructor
+     */
     protected function _construct()
     {
         $this->_init('rp_export_products', 'increment_id');
     }
 
+    /**
+     * Before saving the object, add the created or updated times
+     *
+     * @param \Magento\Framework\Model\AbstractModel $object
+     * @return $this
+     */
     protected function _beforeSave(\Magento\Framework\Model\AbstractModel $object)
     {
 
@@ -34,13 +57,21 @@ class Export extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         return parent::_beforeSave($object);
     }
 
+    /**
+     * Default select items not yet exported
+     *
+     * @param string $field
+     * @param mixed $value
+     * @param \Magento\Framework\Model\AbstractModel $object
+     * @return \Magento\Framework\DB\Select
+     */
     protected function _getLoadSelect($field, $value, $object)
     {
         $select = parent::_getLoadSelect($field, $value, $object);
 
         $select->where(
             'is_exported = ?',
-            1
+            0
         )->limit(
             1
         );
@@ -48,6 +79,14 @@ class Export extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         return $select;
     }
 
+    /**
+     * Product ID table lookup
+     *
+     * @param $productId
+     * @param null $isExported
+     * @return \Magento\Framework\DB\Select
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
     protected function _getLoadByProductIdSelect($productId, $isExported = null)
     {
         $select = $this->getConnection()->select()->from(
@@ -63,5 +102,4 @@ class Export extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 
         return $select;
     }
-
 }

@@ -7,10 +7,17 @@ use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
 use Magento\Framework\DB\Ddl\Table;
 
+/**
+ * Class InstallSchema
+ *
+ * @category    Richdynamix
+ * @package     PersonalisedProducts
+ * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ */
 class InstallSchema implements InstallSchemaInterface
 {
     /**
-     * Installs DB schema for a module
+     * Installs DB schema for the module
      *
      * @param SchemaSetupInterface $setup
      * @param ModuleContextInterface $context
@@ -41,5 +48,4 @@ class InstallSchema implements InstallSchemaInterface
 
         $installer->endSetup();
     }
-
 }

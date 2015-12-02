@@ -17,16 +17,38 @@ use \Richdynamix\PersonalisedProducts\Model\PredictionIO\Factory;
  */
 class Client implements EventClientInterface
 {
+    /**
+     * @var Factory
+     */
     protected $_factory;
 
+    /**
+     * @var PersonalisedProductsLogger
+     */
     protected $_logger;
 
+    /**
+     * @var Config
+     */
     protected $_config;
 
+    /**
+     * @var Urls
+     */
     protected $_urls;
 
+    /**
+     * @var null|\predictionio\EngineClient|\predictionio\EventClient
+     */
     protected $_eventClient;
 
+    /**
+     * Client constructor.
+     * @param Factory $factory
+     * @param PersonalisedProductsLogger $logger
+     * @param Config $config
+     * @param Urls $urls
+     */
     public function __construct(
         Factory $factory,
         PersonalisedProductsLogger $logger,
@@ -50,26 +72,61 @@ class Client implements EventClientInterface
 
     }
 
+    /**
+     * Send customer data to PredictionIO
+     *
+     * @param int $customerId
+     * @return bool
+     */
     public function saveCustomerData($customerId)
     {
         return $this->_setEntity('user', $customerId);
     }
 
+    /**
+     * Send product data to PredictionIO
+     *
+     * @param int $productId
+     * @param array $categoryIds
+     * @return bool
+     */
     public function saveProductData($productId, array $categoryIds = [])
     {
         return $this->_setEntity('item', $productId, $categoryIds);
     }
 
+    /**
+     * Send customer-views-product event to PredictionIO
+     *
+     * @param int $customerId
+     * @param int $productId
+     * @return bool
+     */
     public function saveCustomerViewProduct($customerId, $productId)
     {
         return $this->_setCustomerToItemAction('view', $customerId, $productId);
     }
 
+    /**
+     * Send customer-buys-product event to PredictionIO
+     *
+     * @param int $customerId
+     * @param int $productId
+     * @return bool
+     */
     public function saveCustomerBuyProduct($customerId, $productId)
     {
         return $this->_setCustomerToItemAction('buy', $customerId, $productId);
     }
 
+    /**
+     * Method for sending user-action-item events
+     *
+     * @param $action
+     * @param $customerId
+     * @param $productId
+     * @return bool
+     */
     protected function _setCustomerToItemAction($action, $customerId, $productId)
     {
         try {
@@ -90,6 +147,14 @@ class Client implements EventClientInterface
 
     }
 
+    /**
+     * Method to send individual entities
+     *
+     * @param $entityType
+     * @param $entityId
+     * @param null $properties
+     * @return bool
+     */
     protected function _setEntity($entityType, $entityId, $properties = null)
     {
         try {
@@ -110,6 +175,13 @@ class Client implements EventClientInterface
         return false;
     }
 
+    /**
+     * Add properties to query
+     *
+     * @param $data
+     * @param $properties
+     * @return mixed
+     */
     protected function _addProperties($data, $properties)
     {
         if (null !== $properties) {

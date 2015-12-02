@@ -18,12 +18,27 @@ use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventClient\Client;
  */
 class SendProductPurchase implements ObserverInterface
 {
+    /**
+     * @var Config
+     */
     protected $_config;
 
+    /**
+     * @var CustomerSession
+     */
     protected $_customerSession;
 
+    /**
+     * @var
+     */
     protected $_eventServer;
 
+    /**
+     * SendProductPurchase constructor.
+     * @param Config $config
+     * @param CustomerSession $customerSession
+     * @param Client $eventClient
+     */
     public function __construct(
         Config $config,
         CustomerSession $customerSession,
@@ -35,6 +50,12 @@ class SendProductPurchase implements ObserverInterface
         $this->_eventClient = $eventClient;
     }
 
+    /**
+     * Check the customer has an account and send the order product colllection
+     * to PredictionIO
+     *
+     * @param Observer $observer
+     */
     public function execute(Observer $observer)
     {
         if (!$this->_config->isEnabled()) {
@@ -49,6 +70,12 @@ class SendProductPurchase implements ObserverInterface
         }
     }
 
+    /**
+     * Record a customer-buys-product event in PredictionIO when the customer
+     * completes an order
+     *
+     * @param $productCollection
+     */
     private function _sendPurchaseEvent($productCollection)
     {
         foreach ($productCollection as $product) {

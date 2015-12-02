@@ -20,14 +20,33 @@ use \Magento\Customer\Model\Session as CustomerSession;
  */
 class SendGuestActionsCustomLogin implements ObserverInterface
 {
+    /**
+     * @var Config
+     */
     protected $_config;
 
+    /**
+     * @var SessionManager
+     */
     protected $_sessionManager;
 
+    /**
+     * @var CustomerSession
+     */
     protected $_customerSession;
 
+    /**
+     * @var Client
+     */
     protected $_eventClient;
 
+    /**
+     * SendGuestActionsCustomLogin constructor.
+     * @param Config $config
+     * @param SessionManager $sessionManager
+     * @param Client $eventClient
+     * @param CustomerSession $customerSession
+     */
     public function __construct(
         Config $config,
         SessionManager $sessionManager,
@@ -41,6 +60,11 @@ class SendGuestActionsCustomLogin implements ObserverInterface
         $this->_eventClient = $eventClient;
     }
 
+    /**
+     * Check on customer login if they have any product view to capture
+     *
+     * @param Observer $observer
+     */
     public function execute(Observer $observer)
     {
         if ($this->_config->isEnabled()) {
@@ -53,6 +77,11 @@ class SendGuestActionsCustomLogin implements ObserverInterface
         }
     }
 
+    /**
+     * Send all the guest product views to PredictionIO when we get the customers ID
+     *
+     * @param $guestProductViews
+     */
     protected function _sendAllGuestProductViews($guestProductViews)
     {
         foreach ($guestProductViews as $productId) {

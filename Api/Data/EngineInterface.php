@@ -11,6 +11,13 @@ namespace Richdynamix\PersonalisedProducts\Api\Data;
  */
 interface EngineInterface
 {
+    /**
+     * @param array $productIds
+     * @param array $categores
+     * @param array $whitelist
+     * @param array $blacklist
+     * @return mixed
+     */
     public function sendQuery(
         array $productIds,
         array $categores = [],

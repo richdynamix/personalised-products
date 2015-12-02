@@ -11,10 +11,17 @@ use \predictionio\EngineClient;
  * @category    Richdynamix
  * @package     PersonalisedProducts
  * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class Factory
 {
+    /**
+     * Factory create method for getting Event or Engine object
+     *
+     * @param $model
+     * @param $entityUrl
+     * @param null $accessKey
+     * @return null|EngineClient|EventClient
+     */
     public function create($model, $entityUrl, $accessKey = null)
     {
         if ('event' == $model) {

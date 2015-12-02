@@ -7,15 +7,44 @@ use \Richdynamix\PersonalisedProducts\Model\ResourceModel\Export\CollectionFacto
 use \Richdynamix\PersonalisedProducts\Api\Data\ExportInterface;
 use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;
 
+/**
+ * Class Cron
+ *
+ * @category    Richdynamix
+ * @package     PersonalisedProducts
+ * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ */
 class Cron
 {
 
+    /**
+     * @var array
+     */
     protected $_exportedProducts = [];
+    /**
+     * @var Client
+     */
     protected $_eventClient;
+    /**
+     * @var ExportCollection
+     */
     protected $_exportCollection;
+    /**
+     * @var CollectionFactory
+     */
     protected $_exportCollectionFactory;
+    /**
+     * @var PersonalisedProductsLogger
+     */
     protected $_logger;
 
+    /**
+     * Cron constructor.
+     * @param Client $client
+     * @param ExportCollection $exportCollection
+     * @param CollectionFactory $exportCollectionFactory
+     * @param PersonalisedProductsLogger $logger
+     */
     public function __construct(
         Client $client,
         ExportCollection $exportCollection,
@@ -29,6 +58,11 @@ class Cron
         $this->_logger = $logger;
     }
 
+    /**
+     * Method called on the cron to do the export
+     *
+     * @return bool
+     */
     public function export()
     {
         $productExport = $this->_getProductsForExport();
@@ -52,6 +86,11 @@ class Cron
         return true;
     }
 
+    /**
+     * Get product and category collections for export
+     *
+     * @return array
+     */
     protected function _getProductsForExport()
     {
         $productExport = $this->_exportCollectionFactory
@@ -71,14 +110,23 @@ class Cron
 
     }
 
+    /**
+     * Set a list of product successfully exported
+     *
+     * @param $productId
+     */
     protected function _setExportedProducts($productId)
     {
         $this->_exportedProducts[] = $productId;
     }
 
+    /**
+     * Update product successfully exported as is_exported in the database
+     *
+     * todo update all exported products as `is_exported`
+     */
     protected function _updateDatabase()
     {
-        // todo update all exported products as `is_exported`
+
     }
-    
 }

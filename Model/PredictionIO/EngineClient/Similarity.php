@@ -8,19 +8,47 @@ use Richdynamix\PersonalisedProducts\Helper\Urls;
 use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;
 use \Richdynamix\PersonalisedProducts\Model\PredictionIO\Factory;
 
-
+/**
+ * Class Similarity
+ *
+ * @category    Richdynamix
+ * @package     PersonalisedProducts
+ * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ */
 class Similarity implements EngineInterface
 {
+    /**
+     * @var Factory
+     */
     protected $_factory;
 
+    /**
+     * @var PersonalisedProductsLogger
+     */
     protected $_logger;
 
+    /**
+     * @var Config
+     */
     protected $_config;
 
+    /**
+     * @var Urls
+     */
     protected $_urls;
 
+    /**
+     * @var \predictionio\EngineClient
+     */
     protected $_engineClient;
 
+    /**
+     * Similarity constructor.
+     * @param Factory $factory
+     * @param PersonalisedProductsLogger $logger
+     * @param Config $config
+     * @param Urls $urls
+     */
     public function __construct(
         Factory $factory,
         PersonalisedProductsLogger $logger,
@@ -43,6 +71,15 @@ class Similarity implements EngineInterface
 
     }
 
+    /**
+     * Send the query to PredictionIO engine for product data set
+     *
+     * @param array $productIds
+     * @param array $categories
+     * @param array $whitelist
+     * @param array $blacklist
+     * @return array|bool
+     */
     public function sendQuery(array $productIds, array $categories = [], array $whitelist = [], array $blacklist = [])
     {
         try {
@@ -65,6 +102,14 @@ class Similarity implements EngineInterface
 
     }
 
+    /**
+     * Add query properties to the data in the query for PredictionIO engine
+     *
+     * @param $property
+     * @param $data
+     * @param $propertyData
+     * @return $this
+     */
     protected function _addProperties($property, &$data, $propertyData)
     {
         if ($propertyData) {

@@ -29,6 +29,8 @@ class GuestCustomers
     }
 
     /**
+     * Save the product ids to the session for each product the guest has viewed
+     *
      * @param $productId
      */
     public function setGuestCustomerProductView($productId)
