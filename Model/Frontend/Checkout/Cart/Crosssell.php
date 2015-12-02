@@ -29,7 +29,6 @@ class Crosssell
         }
 
         return false;
-
     }
 
     protected function _getPredictedProducts($items)

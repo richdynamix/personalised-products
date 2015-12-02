@@ -2,5 +2,9 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/Module/etc/module.xsd">
     <module name="Richdynamix_PersonalisedProducts" setup_version="1.0.0">
+        <sequence>
+            <module name="Magento_Config"/>
+            <module name="Magento_Catalog"/>
+        </sequence>
     </module>
 </config>
