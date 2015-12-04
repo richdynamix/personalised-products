@@ -1,31 +1,22 @@
-# README #
+# Personalised Products
 
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/a99262925dc04669a67b196a354d72aa)](https://www.codacy.com) [![Build Status](https://semaphoreci.com/api/v1/projects/b4e5a73b-57ae-4b38-8122-4eaa8567d4e2/619367/shields_badge.svg)](https://semaphoreci.com/richdynamix/suggest)
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Using PredictionIO this Magento 2 module will serve realtime predicted suggestions for product upsells on the product page and complimentary suggestions for cross sells on the basket page.
 
-### What is this repository for? ###
+Using the two individual prediction engines the module will serve accurate and popular products to the customers based on the viewing and buys actions of other users.
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+### Requirements
 
-### How do I get set up? ###
+- [PredictionIO](https://prediction.io/ "PredictionIO") +0.9.5
+- [Complementary Purchase](https://templates.prediction.io/PredictionIO/template-scala-parallel-complementarypurchase "Complementary Purchase") engine template v0.3.3
+- [Similar Product](https://templates.prediction.io/PredictionIO/template-scala-parallel-similarproduct "Similar Product") engine template v0.3.3
+- Magento 2.0 GA
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+## Installation
 
-### Contribution guidelines ###
+TBC - Using composer (magento connect)
 
-* Writing tests
-* Code review
-* Other guidelines
+## Configuration
 
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+Go to Stores->Configuration->Richdynamix->Personalised Products
