@@ -5,8 +5,8 @@ namespace Richdynamix\PersonalisedProducts\Api\Plugin;
 use Magento\Catalog\Model\Product;
 use \Magento\Framework\ObjectManagerInterface;
 use \Magento\Framework\Event\ManagerInterface;
-use Richdynamix\PersonalisedProducts\Model\Export;
-use Richdynamix\PersonalisedProducts\Model\ExportFactory;
+use \Richdynamix\PersonalisedProducts\Model\Export;
+use \Richdynamix\PersonalisedProducts\Model\ExportFactory;
 use \Richdynamix\PersonalisedProducts\Helper\Config;
 use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;
 
@@ -85,17 +85,11 @@ class ExportSaveProducts
     private function _saveProductForExport($productId)
     {
         if (!$this->_isReadyForExport($productId)) {
-            $model = $this->_exportFactory->create();
-            $model->setData('product_id', $productId);
-            try {
-                $model->save();
-            } catch(\Exception $e) {
-                $this->_logger->addError($e->getMessage());
-            }
+            $exportItem = $this->_export->saveProductForExport($productId);
 
             $this->_eventManager->dispatch(
                 'personalised_products_export_after_save',
-                ['product' => $model]
+                ['exportItem' => $exportItem]
             );
         }
     }

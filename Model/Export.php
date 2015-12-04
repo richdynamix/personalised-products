@@ -5,6 +5,8 @@ namespace Richdynamix\PersonalisedProducts\Model;
 use \Richdynamix\PersonalisedProducts\Api\Data\ExportInterface;
 use \Magento\Framework\Model\AbstractModel;
 use \Magento\Catalog\Model\ProductFactory as ProductFactory;
+use \Richdynamix\PersonalisedProducts\Model\ExportFactory;
+use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;
 
 /**
  * Class Export
@@ -15,6 +17,21 @@ use \Magento\Catalog\Model\ProductFactory as ProductFactory;
  */
 class Export extends AbstractModel implements ExportInterface
 {
+    /**
+     * @var ProductFactory
+     */
+    private $_productFactory;
+
+    /**
+     * @var \Richdynamix\PersonalisedProducts\Model\ExportFactory
+     */
+    private $_exportFactory;
+
+    /**
+     * @var PersonalisedProductsLogger
+     */
+    private $_logger;
+
     /**
      * Export constructor.
      * @param ProductFactory $productFactory
@@ -30,10 +47,14 @@ class Export extends AbstractModel implements ExportInterface
         \Magento\Framework\Registry $registry,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        ExportFactory $exportFactory,
+        PersonalisedProductsLogger $logger,
         array $data = []
     )
     {
         $this->_productFactory = $productFactory;
+        $this->_exportFactory = $exportFactory;
+        $this->_logger = $logger;
 
         parent::__construct(
             $context,
@@ -168,5 +189,24 @@ class Export extends AbstractModel implements ExportInterface
         $product->load($this->getData(self::PRODUCT_ID));
 
         return $product->getCategoryIds();
+    }
+
+    /**
+     * Save the new export item with Product Id
+     *
+     * @param $productId
+     * @return Export
+     */
+    public function saveProductForExport($productId)
+    {
+        $exportItem = $this->_exportFactory->create();
+        $exportItem->setData('product_id', $productId);
+        try {
+            $exportItem->save();
+        } catch(\Exception $e) {
+            $this->_logger->addError($e->getMessage());
+        }
+
+        return $exportItem;
     }
 }

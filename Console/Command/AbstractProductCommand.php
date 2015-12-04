@@ -7,6 +7,9 @@ use \Magento\Catalog\Model\ProductFactory;
 use \Magento\Framework\App\State as AppState;
 use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventClient\Client;
 use \Symfony\Component\Config\Definition\Exception\Exception;
+use \Richdynamix\PersonalisedProducts\Model\Export;
+use \Richdynamix\PersonalisedProducts\Model\ExportFactory;
+use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;
 
 /**
  * Class AbstractProductCommand
@@ -26,12 +29,27 @@ abstract class AbstractProductCommand extends Command
     /**
      * @var ProductFactory
      */
-    protected $_productFactory;
+    private $_productFactory;
 
     /**
      * @var Client
      */
-    protected $_eventClient;
+    private $_eventClient;
+
+    /**
+     * @var Export
+     */
+    private $_export;
+
+    /**
+     * @var ExportFactory
+     */
+    private $_exportFactory;
+
+    /**
+     * @var PersonalisedProductsLogger
+     */
+    private $_logger;
 
     /**
      * AbstractProductCommand constructor.
@@ -39,10 +57,20 @@ abstract class AbstractProductCommand extends Command
      * @param Client $eventClient
      * @param AppState $appState
      */
-    public function __construct(ProductFactory $productFactory, Client $eventClient, AppState $appState)
+    public function __construct(
+        ProductFactory $productFactory,
+        Client $eventClient,
+        Export $export,
+        ExportFactory $exportFactory,
+        AppState $appState,
+        PersonalisedProductsLogger $logger
+    )
     {
         $this->_productFactory = $productFactory;
         $this->_eventClient = $eventClient;
+        $this->_export = $export;
+        $this->_exportFactory = $exportFactory;
+        $this->_logger = $logger;
         try {
             $appState->setAreaCode('adminhtml');
         } catch (\Exception $exception) {};
@@ -60,10 +88,9 @@ abstract class AbstractProductCommand extends Command
         $collectionCount = count($collection);
         $sentProductCount = 0;
         foreach ($collection as $productId) {
-            $sentProduct = $this->_eventClient->saveProductData(
-                $productId,
-                $this->_getProductCategoryCollection($productId)
-            );
+            $sentProduct = $this->_sendToPredictionIO($productId);
+            $exportItem = $this->_export->saveProductForExport($productId);
+            $this->_setProductExported($exportItem->getId());
 
             if ($sentProduct) {
                 ++$sentProductCount;
@@ -98,12 +125,43 @@ abstract class AbstractProductCommand extends Command
      * @param $productId
      * @return array
      */
-    protected function _getProductCategoryCollection($productId)
+    private function _getProductCategoryCollection($productId)
     {
         $product = $this->_productFactory->create();
         $product->load($productId);
 
         return $product->getCategoryIds();
+    }
+
+
+    /**
+     * Send the new product to PredictionIO
+     *
+     * @param $productId
+     * @return bool
+     */
+    private function _sendToPredictionIO($productId)
+    {
+        return $this->_eventClient->saveProductData(
+            $productId,
+            $this->_getProductCategoryCollection($productId)
+        );
+    }
+
+    /**
+     * Mark product as exported in DB
+     *
+     * @param $exportId
+     */
+    private function _setProductExported($exportId)
+    {
+        $export = $this->_exportFactory->create()->load($exportId);
+        $export->setData('is_exported', '1');
+        try {
+            $export->save();
+        } catch(\Exception $e) {
+            $this->_logger->addCritical($e->getMessage());
+        }
     }
 
 }

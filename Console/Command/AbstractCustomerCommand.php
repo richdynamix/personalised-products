@@ -19,12 +19,12 @@ abstract class AbstractCustomerCommand extends Command
     /**
      * @var CustomerFactory
      */
-    protected $_customerFactory;
+    private $_customerFactory;
 
     /**
      * @var Client
      */
-    protected $_eventClient;
+    private $_eventClient;
 
     /**
      * AbstractCustomerCommand constructor.

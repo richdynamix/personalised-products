@@ -20,17 +20,17 @@ abstract class AbstractOrdersCommand extends Command
     /**
      * @var OrderFactory
      */
-    protected $_orderFactory;
+    private $_orderFactory;
 
     /**
      * @var Client
      */
-    protected $_eventClient;
+    private $_eventClient;
 
     /**
      * @var
      */
-    protected $_productCollection;
+    private $_productCollection;
 
     /**
      * AbstractOrdersCommand constructor.
