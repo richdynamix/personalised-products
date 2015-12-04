@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Cron/etc/crontab.xsd">
-    <group id="personalised_products">
-        <job name="richdynamix_personalisedproducts_export_products" instance="Richdynamix\PersonalisedProducts\\Model\Cron" method="export">
-            <schedule>0 12 * * *</schedule>
-        </job>
-    </group>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+<group id="default">
+    <job name="richdynamix_personalisedproducts_export_products" instance="Richdynamix\PersonalisedProducts\Model\Cron" method="export">
+        <schedule>0 * * * *</schedule>
+    </job>
+</group>
 </config>

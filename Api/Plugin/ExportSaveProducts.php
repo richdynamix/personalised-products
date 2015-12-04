@@ -6,6 +6,7 @@ use Magento\Catalog\Model\Product;
 use \Magento\Framework\ObjectManagerInterface;
 use \Magento\Framework\Event\ManagerInterface;
 use Richdynamix\PersonalisedProducts\Model\Export;
+use Richdynamix\PersonalisedProducts\Model\ExportFactory;
 use \Richdynamix\PersonalisedProducts\Helper\Config;
 use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;
 
@@ -22,14 +23,21 @@ class ExportSaveProducts
      * @var PersonalisedProductsLogger
      */
     private $_logger;
+
     /**
      * @var Config
      */
     private $_config;
+
     /**
      * @var Export
      */
     private $_export;
+
+    /**
+     * @var ExportFactory
+     */
+    private $_exportFactory;
 
     /**
      * ExportSaveProducts constructor.
@@ -43,6 +51,7 @@ class ExportSaveProducts
         PersonalisedProductsLogger $logger,
         Config $config,
         Export $export,
+        ExportFactory $exportFactory,
         ObjectManagerInterface $objectManager,
         ManagerInterface $eventManager
     )
@@ -50,6 +59,7 @@ class ExportSaveProducts
         $this->_logger = $logger;
         $this->_config = $config;
         $this->_export = $export;
+        $this->_exportFactory = $exportFactory;
         $this->_objectManager = $objectManager;
         $this->_eventManager = $eventManager;
     }
@@ -75,7 +85,7 @@ class ExportSaveProducts
     private function _saveProductForExport($productId)
     {
         if (!$this->_isReadyForExport($productId)) {
-            $model = $this->_objectManager->create('Richdynamix\PersonalisedProducts\Model\Export');
+            $model = $this->_exportFactory->create();
             $model->setData('product_id', $productId);
             try {
                 $model->save();
@@ -89,7 +99,6 @@ class ExportSaveProducts
             );
         }
     }
-
 
     /**
      * Check the product exists in the export table
