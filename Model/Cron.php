@@ -20,17 +20,17 @@ class Cron
     /**
      * @var array
      */
-    protected $_exportedProducts = [];
+    private $_exportedProducts = [];
 
     /**
      * @var Client
      */
-    protected $_eventClient;
+    private $_eventClient;
 
     /**
      * @var ExportCollection
      */
-    protected $_exportCollection;
+    private $_exportCollection;
 
     /**
      * @var CollectionFactory
@@ -40,12 +40,12 @@ class Cron
     /**
      * @var \Richdynamix\PersonalisedProducts\Model\ExportFactory
      */
-    protected $_exportFactory;
+    private $_exportFactory;
 
     /**
      * @var PersonalisedProductsLogger
      */
-    protected $_logger;
+    private $_logger;
 
     /**
      * Cron constructor.

@@ -20,27 +20,27 @@ class Complementary implements EngineInterface
     /**
      * @var Factory
      */
-    protected $_factory;
+    private $_factory;
 
     /**
      * @var PersonalisedProductsLogger
      */
-    protected $_logger;
+    private $_logger;
 
     /**
      * @var Config
      */
-    protected $_config;
+    private $_config;
 
     /**
      * @var Urls
      */
-    protected $_urls;
+    private $_urls;
 
     /**
      * @var \predictionio\EngineClient
      */
-    protected $_engineClient;
+    private $_engineClient;
 
     /**
      * Complementary constructor.

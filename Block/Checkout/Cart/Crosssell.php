@@ -22,22 +22,22 @@ class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
     /**
      * @var Config
      */
-    protected $_config;
+    private $_config;
 
     /**
      * @var CrosssellModel
      */
-    protected $_crosssell;
+    private $_crosssell;
 
     /**
      * @var
      */
-    protected $_itemCollection;
+    private $_itemCollection;
 
     /**
      * @var Manager
      */
-    protected $_moduleManager;
+    private $_moduleManager;
 
 
     /**

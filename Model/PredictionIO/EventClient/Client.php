@@ -20,27 +20,27 @@ class Client implements EventClientInterface
     /**
      * @var Factory
      */
-    protected $_factory;
+    private $_factory;
 
     /**
      * @var PersonalisedProductsLogger
      */
-    protected $_logger;
+    private $_logger;
 
     /**
      * @var Config
      */
-    protected $_config;
+    private $_config;
 
     /**
      * @var Urls
      */
-    protected $_urls;
+    private $_urls;
 
     /**
      * @var null|\predictionio\EngineClient|\predictionio\EventClient
      */
-    protected $_eventClient;
+    private $_eventClient;
 
     /**
      * Client constructor.
@@ -127,7 +127,7 @@ class Client implements EventClientInterface
      * @param $productId
      * @return bool
      */
-    protected function _setCustomerToItemAction($action, $customerId, $productId)
+    private function _setCustomerToItemAction($action, $customerId, $productId)
     {
         try {
             $this->_eventClient->createEvent(array(
@@ -155,7 +155,7 @@ class Client implements EventClientInterface
      * @param null $properties
      * @return bool
      */
-    protected function _setEntity($entityType, $entityId, $properties = null)
+    private function _setEntity($entityType, $entityId, $properties = null)
     {
         try {
             $data = $this->_addProperties(
@@ -182,7 +182,7 @@ class Client implements EventClientInterface
      * @param $properties
      * @return mixed
      */
-    protected function _addProperties($data, $properties)
+    private function _addProperties($data, $properties)
     {
         if (null !== $properties) {
             $data['properties'] = ['categories' => $properties];

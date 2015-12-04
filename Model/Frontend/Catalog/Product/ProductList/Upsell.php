@@ -17,12 +17,12 @@ class Upsell
     /**
      * @var Similarity
      */
-    protected $_similarityEngine;
+    private $_similarityEngine;
 
     /**
      * @var CustomerSession
      */
-    protected $_customerSession;
+    private $_customerSession;
 
     /**
      * Upsell constructor.
@@ -62,7 +62,7 @@ class Upsell
      * @param $items
      * @return array
      */
-    protected function _getProductIds($items)
+    private function _getProductIds($items)
     {
         $productIds = [];
         foreach ($items as $item) {
@@ -79,7 +79,7 @@ class Upsell
      *
      * @param $productIds
      */
-    protected function _checkIsGuestCustomer(&$productIds)
+    private function _checkIsGuestCustomer(&$productIds)
     {
         if (!$this->_customerSession->isLoggedIn()) {
 

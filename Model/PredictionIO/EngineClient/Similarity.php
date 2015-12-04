@@ -20,27 +20,27 @@ class Similarity implements EngineInterface
     /**
      * @var Factory
      */
-    protected $_factory;
+    private $_factory;
 
     /**
      * @var PersonalisedProductsLogger
      */
-    protected $_logger;
+    private $_logger;
 
     /**
      * @var Config
      */
-    protected $_config;
+    private $_config;
 
     /**
      * @var Urls
      */
-    protected $_urls;
+    private $_urls;
 
     /**
      * @var \predictionio\EngineClient
      */
-    protected $_engineClient;
+    private $_engineClient;
 
     /**
      * Similarity constructor.
@@ -110,7 +110,7 @@ class Similarity implements EngineInterface
      * @param $propertyData
      * @return $this
      */
-    protected function _addProperties($property, &$data, $propertyData)
+    private function _addProperties($property, &$data, $propertyData)
     {
         if ($propertyData) {
             $data[$property] = $propertyData;

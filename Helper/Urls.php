@@ -29,7 +29,7 @@ class Urls
      * @param $url
      * @return string
      */
-    protected function _checkUrlScheme($url)
+    private function _checkUrlScheme($url)
     {
         $parsed = parse_url($url);
         if (empty($parsed['scheme'])) {

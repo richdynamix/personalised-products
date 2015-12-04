@@ -23,22 +23,22 @@ class SendGuestActionsCustomLogin implements ObserverInterface
     /**
      * @var Config
      */
-    protected $_config;
+    private $_config;
 
     /**
      * @var SessionManager
      */
-    protected $_sessionManager;
+    private $_sessionManager;
 
     /**
      * @var CustomerSession
      */
-    protected $_customerSession;
+    private $_customerSession;
 
     /**
      * @var Client
      */
-    protected $_eventClient;
+    private $_eventClient;
 
     /**
      * SendGuestActionsCustomLogin constructor.
@@ -82,7 +82,7 @@ class SendGuestActionsCustomLogin implements ObserverInterface
      *
      * @param $guestProductViews
      */
-    protected function _sendAllGuestProductViews($guestProductViews)
+    private function _sendAllGuestProductViews($guestProductViews)
     {
         foreach ($guestProductViews as $productId) {
             $this->_eventClient->saveCustomerViewProduct(

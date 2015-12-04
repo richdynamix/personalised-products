@@ -17,17 +17,17 @@ class Crosssell
     /**
      * @var Complementary
      */
-    protected $_complementaryEngine;
+    private $_complementaryEngine;
 
     /**
      * @var CustomerSession
      */
-    protected $_customerSession;
+    private $_customerSession;
 
     /**
      * @var
      */
-    protected $_basketProducts;
+    private $_basketProducts;
 
     /**
      * Crosssell constructor.
@@ -64,7 +64,7 @@ class Crosssell
      * @param $items
      * @return array
      */
-    protected function _getPredictedProducts($items)
+    private function _getPredictedProducts($items)
     {
         $productIds = [];
         foreach ($items as $item) {
@@ -81,7 +81,7 @@ class Crosssell
      * @param $productIds
      * @return $this
      */
-    protected function _getProductIds($items, &$productIds)
+    private function _getProductIds($items, &$productIds)
     {
         foreach ($items as $item) {
             if (!in_array($item['item'], $this->_basketProducts)) {

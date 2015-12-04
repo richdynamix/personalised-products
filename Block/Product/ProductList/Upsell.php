@@ -26,17 +26,17 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
     /**
      * @var Config
      */
-    protected $_config;
+    private $_config;
 
     /**
      * @var ProductFactory
      */
-    protected $_productFactory;
+    private $_productFactory;
 
     /**
      * @var PersonalisedUpsell
      */
-    protected $_upsell;
+    private $_upsell;
 
     /**
      * Upsell constructor.
@@ -124,7 +124,7 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
      * @param $product
      * @return array
      */
-    protected function _getCategoryIds($product)
+    private function _getCategoryIds($product)
     {
         if (!$this->_config->getItem(Config::SIMILARITY_USE_CATEGORY_FILTER)) {
             return [];

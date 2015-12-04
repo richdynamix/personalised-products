@@ -17,7 +17,7 @@ class GuestCustomers
     /**
      * @var SessionManager
      */
-    protected $_sessionManager;
+    private $_sessionManager;
 
     /**
      * GuestCustomers constructor.

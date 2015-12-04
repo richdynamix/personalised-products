@@ -23,22 +23,22 @@ class SendProductViews implements ObserverInterface
     /**
      * @var Config
      */
-    protected $_config;
+    private $_config;
 
     /**
      * @var CustomerSession
      */
-    protected $_customerSession;
+    private $_customerSession;
 
     /**
      * @var Client
      */
-    protected $_eventClient;
+    private $_eventClient;
 
     /**
      * @var GuestCustomers
      */
-    protected $_guestCustomers;
+    private $_guestCustomers;
 
     /**
      * SendProductViews constructor.

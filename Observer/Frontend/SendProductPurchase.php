@@ -21,17 +21,17 @@ class SendProductPurchase implements ObserverInterface
     /**
      * @var Config
      */
-    protected $_config;
+    private $_config;
 
     /**
      * @var CustomerSession
      */
-    protected $_customerSession;
+    private $_customerSession;
 
     /**
      * @var
      */
-    protected $_eventServer;
+    private $_eventServer;
 
     /**
      * SendProductPurchase constructor.

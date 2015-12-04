@@ -14,7 +14,7 @@ class Export extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     /**
      * @var \Magento\Framework\Stdlib\DateTime\DateTime
      */
-    protected $_date;
+    private $_date;
 
     /**
      * Export constructor.
@@ -87,7 +87,7 @@ class Export extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @return \Magento\Framework\DB\Select
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    protected function _getLoadByProductIdSelect($productId, $isExported = null)
+    private function _getLoadByProductIdSelect($productId, $isExported = null)
     {
         $select = $this->getConnection()->select()->from(
             ['rp' => $this->getMainTable()]

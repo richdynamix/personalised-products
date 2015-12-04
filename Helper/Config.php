@@ -18,12 +18,12 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * @var ScopeConfigInterface
      */
-    protected $_scopeConfig;
+    private $_scopeConfig;
 
     /**
      * @var ScopeInterface
      */
-    protected $_storeScope;
+    private $_storeScope;
 
     /**
      * Is the module enabled
