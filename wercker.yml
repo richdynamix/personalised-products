@@ -28,10 +28,12 @@ build:
         name: Get Tools
         code: |-
             curl -sS https://getcomposer.org/installer | php
-    - script:
-        name: Install Dependencies
-        code: |-
-            php composer.phar install
+            wget https://phar.phpunit.de/phpunit.phar
+            php phpunit.phar --version
+#    - script:
+#        name: Install Dependencies
+#        code: |-
+#            php composer.phar install
     - script:
         name: PHPUnit Integration Tests
-        code: phpunit --configuration phpunit.xml
+        code: php phpunit.phar --configuration phpunit.xml
