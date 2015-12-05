@@ -29,10 +29,10 @@ build:
         name: Get Tools
         code: |-
             curl -sS https://getcomposer.org/installer | php
-#    - script:
-#        name: Install Dependencies
-#        code: |-
-#            php composer.phar install
+    - script:
+        name: Install Dependencies
+        code: |-
+            php composer.phar install
     - script:
         name: PHPUnit Integration Tests
         code: php phpunit.phar --configuration phpunit.xml
