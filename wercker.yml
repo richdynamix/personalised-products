@@ -21,6 +21,9 @@ build:
     # http://devcenter.wercker.com/docs/steps/index.html
   steps:
     - script:
-        name: echo
-        code: |
-          echo "hello world!"
+        name: install dependencies
+        code: |-
+            composer install
+    - script:
+        name: PHPUnit integration tests
+        code: phpunit --configuration phpunit.xml
