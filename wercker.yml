@@ -29,9 +29,9 @@ build:
         code: |-
             curl -sS https://getcomposer.org/installer | php
     - script:
-        name: install dependencies
+        name: Install Dependencies
         code: |-
-            composer.phar install
+            php composer.phar install
     - script:
-        name: PHPUnit integration tests
+        name: PHPUnit Integration Tests
         code: phpunit --configuration phpunit.xml
