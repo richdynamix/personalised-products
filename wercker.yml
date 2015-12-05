@@ -21,9 +21,17 @@ build:
     # http://devcenter.wercker.com/docs/steps/index.html
   steps:
     - script:
+        name: Check PHP
+        code: |-
+            php -v
+    - script:
+        name: Get Tools
+        code: |-
+            curl -sS https://getcomposer.org/installer | php
+    - script:
         name: install dependencies
         code: |-
-            composer install
+            composer.phar install
     - script:
         name: PHPUnit integration tests
         code: phpunit --configuration phpunit.xml
