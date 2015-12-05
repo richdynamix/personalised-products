@@ -22,7 +22,7 @@ class Index extends \Magento\Framework\App\Action\Action {
         \Magento\Sales\Model\OrderFactory $orderFactory,
         CustomerSession $customerSession,
         ExportCollection $exportCollection,
-        CollectionFactory $exportCollectionFactory
+        CollectionFactory $ecFactory
     )
     {
         $this->_sessionManager = $sessionManager;
@@ -31,7 +31,7 @@ class Index extends \Magento\Framework\App\Action\Action {
         $this->_orderFactory = $orderFactory;
         $this->_customerSession = $customerSession;
         $this->_exportCollection = $exportCollection;
-        $this->_exportCollectionFactory = $exportCollectionFactory;
+        $this->_ecFactory = $ecFactory;
         parent::__construct($context);
     }
 
@@ -45,7 +45,7 @@ class Index extends \Magento\Framework\App\Action\Action {
 //                ExportCollection::SORT_ORDER_DESC
 //            );
 
-        $exports = $this->_exportCollectionFactory
+        $exports = $this->_ecFactory
             ->create()
             ->addFieldToFilter('is_exported', '0')
             ->addOrder(
@@ -60,7 +60,6 @@ class Index extends \Magento\Framework\App\Action\Action {
 
         $products = [];
         foreach ($exports as $export) {
-
             $products[$export->getProductId()] = $export->getCategoryIds();
 //            var_dump($export->getProductId());
         }
