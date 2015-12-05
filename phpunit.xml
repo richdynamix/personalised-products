@@ -7,17 +7,9 @@
     </testsuites>
 
     <filter>
-        <blacklist>
-            <directory suffix=".php">vendor</directory>
-            <file>./registration.php</file>
-        </blacklist>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">.</directory>
+            <directory suffix=".php">./Tests</directory>
             <file>*</file>
-            <exclude>
-                <directory suffix=".php">vendor</directory>
-                <file>registration.php</file>
-            </exclude>
         </whitelist>
     </filter>
 
