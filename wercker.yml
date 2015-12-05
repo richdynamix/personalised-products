@@ -28,7 +28,7 @@ build:
         name: Get Tools
         code: |-
             curl -sS https://getcomposer.org/installer | php
-            wget https://phar.phpunit.de/phpunit.phar
+            curl -sS https://phar.phpunit.de/phpunit.phar | php
             php phpunit.phar --version
 #    - script:
 #        name: Install Dependencies
