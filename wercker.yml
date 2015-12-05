@@ -36,4 +36,4 @@ build:
 
     - script:
         name: PHPUnit Integration Tests
-        code: php phpunit.phar --configuration phpunit.xml
+        code: vendor/phpunit/phpunit/phpunit --configuration phpunit.xml
