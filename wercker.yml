@@ -28,7 +28,7 @@ build:
         name: Get Tools
         code: |-
             curl -sS https://getcomposer.org/installer | php
-            sudo apt-get install git-all
+            sudo apt-get install -f git-all
 #    - script:
 #        name: Install Dependencies
 #        code: |-
