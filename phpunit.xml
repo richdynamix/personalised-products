@@ -16,7 +16,7 @@
             <file>*</file>
             <exclude>
                 <directory suffix=".php">vendor</directory>
-                <file>*</file>
+                <file>registration.php</file>
             </exclude>
         </whitelist>
     </filter>
