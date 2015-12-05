@@ -28,8 +28,7 @@ build:
         name: Get Tools
         code: |-
             curl -sS https://getcomposer.org/installer | php
-            curl https://phar.phpunit.de/phpunit.phar | php
-            php phpunit.phar --version
+            sudo yum install git-all
 #    - script:
 #        name: Install Dependencies
 #        code: |-
