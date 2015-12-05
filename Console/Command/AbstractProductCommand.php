@@ -73,7 +73,9 @@ abstract class AbstractProductCommand extends Command
         $this->_logger = $logger;
         try {
             $appState->setAreaCode('adminhtml');
-        } catch (\Exception $exception) {};
+        } catch (\Exception $e) {
+            $this->_logger->addCritical($e->getMessage());
+        };
         parent::__construct();
     }
 
@@ -159,7 +161,7 @@ abstract class AbstractProductCommand extends Command
         $export->setData('is_exported', '1');
         try {
             $export->save();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->_logger->addCritical($e->getMessage());
         }
     }

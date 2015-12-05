@@ -78,7 +78,7 @@ interface ExportInterface
      * @param $id
      * @return mixed
      */
-    public function setId($id);
+    public function setId($incrementId);
 
     /**
      * Set the product ID on a row

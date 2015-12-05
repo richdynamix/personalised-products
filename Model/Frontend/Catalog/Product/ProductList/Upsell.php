@@ -82,7 +82,6 @@ class Upsell
     private function _checkIsGuestCustomer(&$productIds)
     {
         if (!$this->_customerSession->isLoggedIn()) {
-
         }
 
     }

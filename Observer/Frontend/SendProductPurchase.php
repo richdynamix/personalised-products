@@ -31,7 +31,7 @@ class SendProductPurchase implements ObserverInterface
     /**
      * @var
      */
-    private $_eventServer;
+    private $_eventClient;
 
     /**
      * SendProductPurchase constructor.

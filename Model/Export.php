@@ -45,10 +45,10 @@ class Export extends AbstractModel implements ExportInterface
         ProductFactory $productFactory,
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         ExportFactory $exportFactory,
         PersonalisedProductsLogger $logger,
+        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     )
     {
@@ -129,9 +129,9 @@ class Export extends AbstractModel implements ExportInterface
      * @param mixed $id
      * @return $this
      */
-    public function setId($id)
+    public function setId($incrementId)
     {
-        return $this->setData(self::INCREMENT_ID, $id);
+        return $this->setData(self::INCREMENT_ID, $incrementId);
     }
 
     /**
@@ -203,7 +203,7 @@ class Export extends AbstractModel implements ExportInterface
         $exportItem->setData('product_id', $productId);
         try {
             $exportItem->save();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->_logger->addError($e->getMessage());
         }
 

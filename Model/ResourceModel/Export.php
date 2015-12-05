@@ -78,28 +78,4 @@ class Export extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 
         return $select;
     }
-
-    /**
-     * Product ID table lookup
-     *
-     * @param $productId
-     * @param null $isExported
-     * @return \Magento\Framework\DB\Select
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
-    private function _getLoadByProductIdSelect($productId, $isExported = null)
-    {
-        $select = $this->getConnection()->select()->from(
-            ['rp' => $this->getMainTable()]
-        )->where(
-            'rp.product_id = ?',
-            $productId
-        );
-
-        if (!is_null($isExported)) {
-            $select->where('rp.is_exported = ?', $isExported);
-        }
-
-        return $select;
-    }
 }

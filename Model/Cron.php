@@ -35,7 +35,7 @@ class Cron
     /**
      * @var CollectionFactory
      */
-    protected $_exportCollectionFactory;
+    protected $_ecFactory;
 
     /**
      * @var \Richdynamix\PersonalisedProducts\Model\ExportFactory
@@ -51,21 +51,20 @@ class Cron
      * Cron constructor.
      * @param Client $client
      * @param ExportCollection $exportCollection
-     * @param CollectionFactory $exportCollectionFactory
+     * @param CollectionFactory $ecFactory
      * @param PersonalisedProductsLogger $logger
      */
     public function __construct(
         Client $client,
         ExportCollection $exportCollection,
-        CollectionFactory $exportCollectionFactory,
-        CollectionFactory $exportCollectionFactory,
+        CollectionFactory $ecFactory,
         ExportFactory $_exportFactory,
         PersonalisedProductsLogger $logger
     )
     {
         $this->_eventClient = $client;
         $this->_exportCollection = $exportCollection;
-        $this->_exportCollectionFactory = $exportCollectionFactory;
+        $this->_ecFactory = $ecFactory;
         $this->_exportFactory = $_exportFactory;
         $this->_logger = $logger;
     }
@@ -105,7 +104,7 @@ class Cron
      */
     private function _getProductsForExport()
     {
-        $productExport = $this->_exportCollectionFactory
+        $productExport = $this->_ecFactory
             ->create()
             ->addFieldToFilter('is_exported', '0')
             ->addOrder(
@@ -152,7 +151,7 @@ class Cron
             $model->setData('is_exported', '1');
             try {
                 $model->save();
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 $this->_logger->addCritical($e->getMessage());
             }
 
