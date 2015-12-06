@@ -30,7 +30,7 @@ class Export extends AbstractModel implements ExportInterface
     /**
      * @var PersonalisedProductsLogger
      */
-    private $_logger;
+    protected $_logger;
 
     /**
      * Export constructor.
