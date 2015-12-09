@@ -6,19 +6,18 @@ use \Magento\Framework\Session\SessionManager;
 
 /**
  * Class GuestCustomers is used for saving customer product views to the session
- * when the customer is not logged int.
+ * when the customer is not logged in.
  *
  * @category    Richdynamix
  * @package     PersonalisedProducts
  * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class GuestCustomers
 {
     /**
      * @var SessionManager
      */
-    protected $_sessionManager;
+    private $_sessionManager;
 
     /**
      * GuestCustomers constructor.
@@ -30,6 +29,8 @@ class GuestCustomers
     }
 
     /**
+     * Save the product ids to the session for each product the guest has viewed
+     *
      * @param $productId
      */
     public function setGuestCustomerProductView($productId)

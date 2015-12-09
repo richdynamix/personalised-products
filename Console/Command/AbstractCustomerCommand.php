@@ -4,28 +4,52 @@ namespace Richdynamix\PersonalisedProducts\Console\Command;
 
 use \Symfony\Component\Console\Command\Command;
 use \Magento\Customer\Model\CustomerFactory;
-use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventServer;
+use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventClient\Client;
 use \Symfony\Component\Config\Definition\Exception\Exception;
 
+/**
+ * Class AbstractCustomerCommand
+ *
+ * @category    Richdynamix
+ * @package     PersonalisedProducts
+ * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ */
 abstract class AbstractCustomerCommand extends Command
 {
-    protected $_customerFactory;
+    /**
+     * @var CustomerFactory
+     */
+    private $_customerFactory;
 
-    protected $_eventServer;
+    /**
+     * @var Client
+     */
+    private $_eventClient;
 
-    public function __construct(CustomerFactory $customerFactory, EventServer $eventServer)
+    /**
+     * AbstractCustomerCommand constructor.
+     * @param CustomerFactory $customerFactory
+     * @param Client $eventClient
+     */
+    public function __construct(CustomerFactory $customerFactory, Client $eventClient)
     {
         $this->_customerFactory = $customerFactory;
-        $this->_eventServer = $eventServer;
+        $this->_eventClient = $eventClient;
         parent::__construct();
     }
 
+    /**
+     * Send the customer data to PredictionIO using the event client
+     *
+     * @param $collection
+     * @return int
+     */
     protected function _sendCustomerData($collection)
     {
         $collectionCount = count($collection);
         $sentCustomersCount = 0;
         foreach ($collection as $customerId) {
-            if ($this->_eventServer->saveCustomerData($customerId)) {
+            if ($this->_eventClient->saveCustomerData($customerId)) {
                 ++$sentCustomersCount;
             }
         }
@@ -38,10 +62,14 @@ abstract class AbstractCustomerCommand extends Command
 
     }
 
+    /**
+     * Get a collection of all customer ID's, regardless if they have been exported before.
+     *
+     * @return array
+     */
     protected function _getCustomerCollection()
     {
         $customer = $this->_customerFactory->create();
         return $customer->getCollection()->getAllIds();
     }
-
 }

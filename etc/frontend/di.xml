@@ -5,4 +5,7 @@
     <preference for="Magento\Catalog\Block\Product\ProductList\Upsell"
                 type="Richdynamix\PersonalisedProducts\Block\Product\ProductList\Upsell" />
 
+    <preference for="Magento\Checkout\Block\Cart\Crosssell"
+                type="Richdynamix\PersonalisedProducts\Block\Checkout\Cart\Crosssell" />
+
 </config>

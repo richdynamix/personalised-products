@@ -1,0 +1,20 @@
+<phpunit>
+
+    <testsuites>
+        <testsuite name="AllTests">
+            <directory>.</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./Tests</directory>
+            <file>*</file>
+        </whitelist>
+    </filter>
+
+    <logging>
+        <log type="coverage-clover" target="clover.xml"/>
+    </logging>
+
+</phpunit>

@@ -6,6 +6,10 @@
             <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
         </arguments>
     </type>
+    <type name="\Magento\Catalog\Model\Product">
+        <plugin name="Richdynamix_PersonalisedProducts/exportSaveProducts"
+                type="\Richdynamix\PersonalisedProducts\Api\Plugin\ExportSaveProducts" />
+    </type>
     <type name="Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger">
         <arguments>
             <argument name="name" xsi:type="string">personalisedProductsLogger</argument>

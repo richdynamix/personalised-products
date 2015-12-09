@@ -3,6 +3,10 @@
 namespace Richdynamix\PersonalisedProducts\Controller\Index;
 
 use \Magento\Framework\Session\SessionManager;
+use \Magento\Customer\Model\Session as CustomerSession;
+use \Richdynamix\PersonalisedProducts\Model\ResourceModel\Export\Collection as ExportCollection;
+use \Richdynamix\PersonalisedProducts\Model\ResourceModel\Export\CollectionFactory;
+use \Richdynamix\PersonalisedProducts\Api\Data\ExportInterface;
 
 class Index extends \Magento\Framework\App\Action\Action {
 
@@ -15,44 +19,53 @@ class Index extends \Magento\Framework\App\Action\Action {
         SessionManager $sessionManager,
         \Magento\Catalog\Model\ProductFactory $productFactory,
         \Magento\Customer\Model\CustomerFactory $customerFactory,
-        \Magento\Sales\Model\OrderFactory $orderFactory
+        \Magento\Sales\Model\OrderFactory $orderFactory,
+        CustomerSession $customerSession,
+        ExportCollection $exportCollection,
+        CollectionFactory $ecFactory
     )
     {
         $this->_sessionManager = $sessionManager;
         $this->_productFactory = $productFactory;
         $this->_customerFactory = $customerFactory;
         $this->_orderFactory = $orderFactory;
+        $this->_customerSession = $customerSession;
+        $this->_exportCollection = $exportCollection;
+        $this->_ecFactory = $ecFactory;
         parent::__construct($context);
     }
 
     public function execute()
     {
 
-        $order = $this->_orderFactory->create();
-        $ordersCollection = $order->getCollection()
-            ->addFieldToSelect(['entity_id', 'customer_id'])
-            ->addFieldToFilter('state', ['eq' => 'complete'])
-            ->getData();
-//        ->loadData(true);
+//        $exports = $this->_exportCollectionFactory
+//            ->create()
+//            ->addOrder(
+//                ExportInterface::CREATION_TIME,
+//                ExportCollection::SORT_ORDER_DESC
+//            );
 
-        print_r($ordersCollection);
+        $exports = $this->_ecFactory
+            ->create()
+            ->addFieldToFilter('is_exported', '0')
+            ->addOrder(
+                ExportInterface::CREATION_TIME,
+                ExportCollection::SORT_ORDER_DESC
+            );
 
-        $purchasedProducts = [];
-        foreach ($ordersCollection as $order) {
 
-            $order = $this->_orderFactory->create()->load($order['entity_id']);
+        echo $exports->getSelect()->__toString();
 
-            $itemCollection = $order->getItemsCollection();
+//        var_dump($exports->getAllIds());
 
-            foreach ($itemCollection as $item) {
-                $purchasedProducts[$order['customer_id']][] = $item->getId();
-            }
-
+        $products = [];
+        foreach ($exports as $export) {
+            $products[$export->getProductId()] = $export->getCategoryIds();
+//            var_dump($export->getProductId());
         }
 
-        print_r($purchasedProducts);
-
-        exit;
-
+        var_dump($products);
     }
+
+
 }

@@ -1,16 +1,15 @@
 <?php
 
-namespace Richdynamix\PersonalisedProducts\Model\PredictionIO;
+namespace Richdynamix\PersonalisedProducts\Api\Data;
 
 /**
- * Interface EventServerInterface
+ * Interface EventClientInterface
  *
  * @category    Richdynamix
  * @package     PersonalisedProducts
  * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-interface EventServerInterface
+interface EventClientInterface
 {
 
     /**
@@ -39,11 +38,5 @@ interface EventServerInterface
      * @return mixed
      */
     public function saveCustomerBuyProduct($customerId, $productId);
-
-    /**
-     * @param array $productIds
-     * @return mixed
-     */
-    public function setOutOfStockItems(array $productIds);
 
 }

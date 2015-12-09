@@ -10,6 +10,8 @@ use \Magento\Checkout\Model\Session as Session;
 use \Magento\Framework\Module\Manager as Manager;
 use Richdynamix\PersonalisedProducts\Helper\Config as Config;
 use \Magento\Catalog\Model\ProductFactory as ProductFactory;
+use \Magento\Customer\Model\Session as CustomerSession;
+use \Richdynamix\PersonalisedProducts\Model\Frontend\Catalog\Product\ProductList\Upsell as PersonalisedUpsell;
 
 /**
  * Rewrite product upsell block to switch out product collection
@@ -18,19 +20,23 @@ use \Magento\Catalog\Model\ProductFactory as ProductFactory;
  * @category    Richdynamix
  * @package     PersonalisedProducts
  * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
 {
     /**
      * @var Config
      */
-    protected $_config;
+    private $_config;
 
     /**
      * @var ProductFactory
      */
-    protected $_productFactory;
+    private $_productFactory;
+
+    /**
+     * @var PersonalisedUpsell
+     */
+    private $_upsell;
 
     /**
      * Upsell constructor.
@@ -41,6 +47,8 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
      * @param Manager $moduleManager
      * @param ProductFactory $productFactory
      * @param Config $config
+     * @param PersonalisedUpsell $upsell
+     * @param CustomerSession $customerSession
      * @param array $data
      */
     public function __construct(
@@ -51,11 +59,14 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
         Manager $moduleManager,
         ProductFactory $productFactory,
         Config $config,
+        PersonalisedUpsell $upsell,
+        CustomerSession $customerSession,
         array $data = []
     ) {
         $this->_config = $config;
         $this->_productFactory = $productFactory;
-
+        $this->_upsell = $upsell;
+        $this->_customerSession = $customerSession;
         parent::__construct(
             $context,
             $checkoutCart,
@@ -67,6 +78,8 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
     }
 
     /**
+     * Rewrite parent _prepareData method to use PredictionIO results when available
+     *
      * @return $this
      */
     protected function _prepareData()
@@ -77,11 +90,15 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
         }
 
         $product = $this->_coreRegistry->registry('product');
+        $categoryIds = $this->_getCategoryIds($product);
+        $personalisedIds = $this->_upsell->getProductCollection([$product->getId()], $categoryIds);
+
+        if (!$personalisedIds) {
+            return parent::_prepareData();
+        }
 
         $collection = $this->_productFactory->create()->getCollection();
-
-        // todo filter collection from predictionio results
-        $collection->addAttributeToFilter('entity_id', ['in', ['6', '7']]);
+        $collection->addAttributeToFilter('entity_id', ['in', $personalisedIds]);
 
         $this->_itemCollection = $collection;
 
@@ -101,4 +118,19 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
         return $this;
     }
 
+    /**
+     * Get array of category ID's the product belongs to
+     *
+     * @param $product
+     * @return array
+     */
+    private function _getCategoryIds($product)
+    {
+        if (!$this->_config->getItem(Config::SIMILARITY_USE_CATEGORY_FILTER)) {
+            return [];
+        }
+
+        return $product->getCategoryIds();
+
+    }
 }

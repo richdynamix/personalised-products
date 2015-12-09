@@ -1,43 +1,80 @@
 <?php
 
-namespace Richdynamix\PersonalisedProducts\Model\PredictionIO;
+namespace Richdynamix\PersonalisedProducts\Model\PredictionIO\EventClient;
 
+use \Richdynamix\PersonalisedProducts\Helper\Config;
+use Richdynamix\PersonalisedProducts\Helper\Urls;
 use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;
-use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventServerInterface;
+use \Richdynamix\PersonalisedProducts\Api\Data\EventClientInterface;
 use \Richdynamix\PersonalisedProducts\Model\PredictionIO\Factory;
 
 /**
- * Class EventServer for sending date and actions to PredictionIO
+ * Class EventClient for sending date and actions to PredictionIO
  *
  * @category    Richdynamix
  * @package     PersonalisedProducts
  * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class EventServer implements EventServerInterface
+class Client implements EventClientInterface
 {
     /**
-     * @var \Richdynamix\PersonalisedProducts\Model\PredictionIO\Factory
+     * @var Factory
      */
-    protected $_factory;
+    private $_factory;
 
     /**
      * @var PersonalisedProductsLogger
      */
-    protected $_logger;
+    private $_logger;
 
     /**
-     * EventServer constructor.
-     * @param \Richdynamix\PersonalisedProducts\Model\PredictionIO\Factory $factory
-     * @param PersonalisedProductsLogger $logger
+     * @var Config
      */
-    public function __construct(Factory $factory, PersonalisedProductsLogger $logger)
+    private $_config;
+
+    /**
+     * @var Urls
+     */
+    private $_urls;
+
+    /**
+     * @var null|\predictionio\EngineClient|\predictionio\EventClient
+     */
+    private $_eventClient;
+
+    /**
+     * Client constructor.
+     * @param Factory $factory
+     * @param PersonalisedProductsLogger $logger
+     * @param Config $config
+     * @param Urls $urls
+     */
+    public function __construct(
+        Factory $factory,
+        PersonalisedProductsLogger $logger,
+        Config $config,
+        Urls $urls
+    )
     {
         $this->_factory = $factory;
         $this->_logger = $logger;
+        $this->_config = $config;
+        $this->_urls = $urls;
+
+        $this->_eventClient = $this->_factory->create(
+            'event',
+            $this->_urls->buildUrl(
+                $this->_config->getItem(Config::EVENT_SERVER_URL),
+                $this->_config->getItem(Config::EVENT_SERVER_PORT)
+            ),
+            $this->_config->getItem(Config::EVENT_SERVER_ACCESS_KEY)
+        );
+
     }
 
     /**
+     * Send customer data to PredictionIO
+     *
      * @param int $customerId
      * @return bool
      */
@@ -47,6 +84,8 @@ class EventServer implements EventServerInterface
     }
 
     /**
+     * Send product data to PredictionIO
+     *
      * @param int $productId
      * @param array $categoryIds
      * @return bool
@@ -57,6 +96,8 @@ class EventServer implements EventServerInterface
     }
 
     /**
+     * Send customer-views-product event to PredictionIO
+     *
      * @param int $customerId
      * @param int $productId
      * @return bool
@@ -67,6 +108,8 @@ class EventServer implements EventServerInterface
     }
 
     /**
+     * Send customer-buys-product event to PredictionIO
+     *
      * @param int $customerId
      * @param int $productId
      * @return bool
@@ -77,24 +120,17 @@ class EventServer implements EventServerInterface
     }
 
     /**
-     * @param array $productIds
-     */
-    public function setOutOfStockItems(array $productIds)
-    {
-        //todo add unaavailable items to event server
-    }
-
-    /**
+     * Method for sending user-action-item events
+     *
      * @param $action
      * @param $customerId
      * @param $productId
      * @return bool
      */
-    protected function _setCustomerToItemAction($action, $customerId, $productId)
+    private function _setCustomerToItemAction($action, $customerId, $productId)
     {
         try {
-            $eventServer = $this->_factory->create('event');
-            $eventServer->createEvent(array(
+            $this->_eventClient->createEvent(array(
                 'event' => $action,
                 'entityType' => 'user',
                 'entityId' => $customerId,
@@ -112,16 +148,16 @@ class EventServer implements EventServerInterface
     }
 
     /**
+     * Method to send individual entities
+     *
      * @param $entityType
      * @param $entityId
      * @param null $properties
      * @return bool
      */
-    protected function _setEntity($entityType, $entityId, $properties = null)
+    private function _setEntity($entityType, $entityId, $properties = null)
     {
         try {
-            $eventServer = $this->_factory->create('event');
-
             $data = $this->_addProperties(
                 [
                     'event' => '$set',
@@ -130,7 +166,7 @@ class EventServer implements EventServerInterface
                 ],
                 $properties
             );
-            $eventServer->createEvent($data);
+            $this->_eventClient->createEvent($data);
             return true;
         } catch (\Exception $e) {
             $this->_logger->addCritical($e);
@@ -140,11 +176,13 @@ class EventServer implements EventServerInterface
     }
 
     /**
+     * Add properties to query
+     *
      * @param $data
      * @param $properties
      * @return mixed
      */
-    protected function _addProperties($data, $properties)
+    private function _addProperties($data, $properties)
     {
         if (null !== $properties) {
             $data['properties'] = ['categories' => $properties];

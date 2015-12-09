@@ -12,80 +12,73 @@ use \Magento\Framework\App\Helper\Context as Context;
  * @category    Richdynamix
  * @package     PersonalisedProducts
  * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class Config extends \Magento\Framework\App\Helper\AbstractHelper
 {
     /**
      * @var ScopeConfigInterface
      */
-    protected $_scopeConfig;
+    private $_scopeConfig;
 
     /**
      * @var ScopeInterface
      */
-    protected $_storeScope;
+    private $_storeScope;
 
     /**
-     * On/Off switch for the module
+     * Is the module enabled
      */
     const ENABLED = 'personalised_products/general/enabled';
 
     /**
-     * Determines the number of products to be returned from PredictionIO
+     * The event server access key
      */
-    const PRODUCT_COUNT = 'personalised_products/general/product_count';
+    const EVENT_SERVER_ACCESS_KEY = 'personalised_products/general/access_key';
 
     /**
-     * UpSell (ecommerce) template engine URL
+     * The event server URL
      */
-    const UPSELL_TEMPLATE_ENGINE_URL = 'personalised_products/upsell_template/engine_url';
+    const EVENT_SERVER_URL = 'personalised_products/general/url';
 
     /**
-     * UpSell (ecommerce) template engine port (default: 7070)
+     * The event server port
      */
-    const UPSELL_TEMPLATE_ENGINE_PORT = 'personalised_products/upsell_template/engine_port';
+    const EVENT_SERVER_PORT = 'personalised_products/general/port';
 
     /**
-     * UpSell (ecommerce) template event server's access key
+     * Similarity engine URL (Upsell engine)
      */
-    const UPSELL_TEMPLATE_SERVER_ACCESS_KEY = 'personalised_products/upsell_template/access_key';
+    const SIMILARITY_ENGINE_URL = 'personalised_products/similarity_engine/url';
 
     /**
-     * UpSell (ecommerce) template event server URL
+     * Similarity engine port (Upsell engine)
      */
-    const UPSELL_TEMPLATE_SERVER_URL = 'personalised_products/upsell_template/event_url';
+    const SIMILARITY_ENGINE_PORT = 'personalised_products/similarity_engine/port';
 
     /**
-     * UpSell (ecommerce) template event server port (default: 8000)
+     * Similarity engine products to return count
      */
-    const UPSELL_TEMPLATE_SERVER_PORT = 'personalised_products/upsell_template/event_port';
+    const SIMILARITY_PRODUCT_COUNT = 'personalised_products/similarity_engine/product_count';
 
     /**
-     * Product ranking template engine URL
+     * Similarity engine category filter check
      */
-    const RANKING_TEMPLATE_ENGINE_URL = 'personalised_products/product_ranking/engine_url';
+    const SIMILARITY_USE_CATEGORY_FILTER = 'personalised_products/similarity_engine/use_categories';
 
     /**
-     * Product ranking template engine port (default: 7070)
+     * Complementary engine URL (Crosssell engine)
      */
-    const RANKING_TEMPLATE_ENGINE_PORT = 'personalised_products/product_ranking/engine_port';
+    const COMPLEMENTARY_ENGINE_URL = 'personalised_products/complementary_engine/url';
 
     /**
-     * Product ranking template event server's access key
+     * Complementary engine port (Crosssell engine)
      */
-    const RANKING_TEMPLATE_SERVER_ACCESS_KEY = 'personalised_products/product_ranking/access_key';
+    const COMPLEMENTARY_ENGINE_PORT = 'personalised_products/complementary_engine/port';
 
     /**
-     * Product ranking template event server URL
+     * Complementary engine product to return count
      */
-    const RANKING_TEMPLATE_SERVER_URL = 'personalised_products/product_ranking/event_url';
-
-    /**
-     * Product ranking template event server port (default: 8000)
-     */
-    const RANKING_TEMPLATE_SERVER_PORT = 'personalised_products/product_ranking/event_port';
-
+    const COMPLEMENTARY_PRODUCT_COUNT = 'personalised_products/complementary_engine/product_count';
 
     /**
      * Config constructor.
@@ -100,19 +93,34 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
+     * Global method for getting configuration value
+     *
      * @param $itemPath
      * @return mixed
      */
-    public function getConfigItem($itemPath)
+    public function getItem($itemPath)
     {
         return $this->scopeConfig->getValue($itemPath, $this->_storeScope);
     }
 
     /**
+     * Check the module is enabled
+     *
      * @return mixed
      */
     public function isEnabled()
     {
-        return $this->getConfigItem(self::ENABLED);
+        return $this->getItem(self::ENABLED);
+    }
+
+    /**
+     * Get a product count for the engine (default to 4)
+     *
+     * @param $engineProductCount
+     * @return mixed|string
+     */
+    public function getProductCount($engineProductCount)
+    {
+        return $this->getItem($engineProductCount) ? $this->getItem($engineProductCount) : '4';
     }
 }

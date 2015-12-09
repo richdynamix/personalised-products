@@ -6,7 +6,7 @@ use \Magento\Framework\Event\Observer;
 use \Magento\Framework\Event\ObserverInterface;
 use \Richdynamix\PersonalisedProducts\Helper\Config;
 use \Magento\Framework\Session\SessionManager;
-use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventServer;
+use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventClient\Client;
 use \Magento\Customer\Model\Session as CustomerSession;
 
 /**
@@ -17,57 +17,58 @@ use \Magento\Customer\Model\Session as CustomerSession;
  * @category    Richdynamix
  * @package     PersonalisedProducts
  * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class SendGuestActionsCustomLogin implements ObserverInterface
 {
     /**
      * @var Config
      */
-    protected $_config;
+    private $_config;
 
     /**
      * @var SessionManager
      */
-    protected $_sessionManager;
+    private $_sessionManager;
 
     /**
      * @var CustomerSession
      */
-    protected $_customerSession;
+    private $_customerSession;
 
     /**
-     * @var EventServer
+     * @var Client
      */
-    protected $_eventServer;
+    private $_eventClient;
 
     /**
      * SendGuestActionsCustomLogin constructor.
      * @param Config $config
      * @param SessionManager $sessionManager
-     * @param EventServer $eventServer
+     * @param Client $eventClient
      * @param CustomerSession $customerSession
      */
     public function __construct(
         Config $config,
         SessionManager $sessionManager,
-        EventServer $eventServer,
+        Client $eventClient,
         CustomerSession $customerSession
     )
     {
         $this->_config = $config;
         $this->_sessionManager = $sessionManager;
         $this->_customerSession = $customerSession;
-        $this->_eventServer = $eventServer;
+        $this->_eventClient = $eventClient;
     }
 
     /**
+     * Check on customer login if they have any product view to capture
+     *
      * @param Observer $observer
      */
     public function execute(Observer $observer)
     {
         if ($this->_config->isEnabled()) {
-            $this->_eventServer->saveCustomerData($this->_customerSession->getCustomerId());
+            $this->_eventClient->saveCustomerData($this->_customerSession->getCustomerId());
 
             $guestProductViews = $this->_sessionManager->getGuestProductViews();
             if ($guestProductViews) {
@@ -77,12 +78,14 @@ class SendGuestActionsCustomLogin implements ObserverInterface
     }
 
     /**
+     * Send all the guest product views to PredictionIO when we get the customers ID
+     *
      * @param $guestProductViews
      */
-    protected function _sendAllGuestProductViews($guestProductViews)
+    private function _sendAllGuestProductViews($guestProductViews)
     {
         foreach ($guestProductViews as $productId) {
-            $this->_eventServer->saveCustomerViewProduct(
+            $this->_eventClient->saveCustomerViewProduct(
                 $this->_customerSession->getCustomerId(),
                 $productId
             );
