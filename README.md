@@ -1,6 +1,6 @@
 # Personalised Products
 
-[![Codacy Badge](https://api.codacy.com/project/badge/grade/a99262925dc04669a67b196a354d72aa)](https://www.codacy.com) [![Codacy Badge](https://api.codacy.com/project/badge/coverage/a99262925dc04669a67b196a354d72aa)](https://www.codacy.com) [![wercker status](https://app.wercker.com/status/ec11fc3d794a9c893f076cab1e0b6775/s "wercker status")](https://app.wercker.com/project/bykey/ec11fc3d794a9c893f076cab1e0b6775)
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/a99262925dc04669a67b196a354d72aa)](https://www.codacy.com) [![Codacy Badge](https://api.codacy.com/project/badge/coverage/a99262925dc04669a67b196a354d72aa)](https://www.codacy.com) [![wercker status](https://app.wercker.com/status/e2ee89848265ca1a965b39b0fc04896a/s "wercker status")](https://app.wercker.com/project/bykey/e2ee89848265ca1a965b39b0fc04896a)
 
 Personalised Products is a Magento 2 module that will serve realtime predicted suggestions for product upsells on the product page and complimentary suggestions for cross sells on the basket page. All powered by PredictionIO.
 
