@@ -17,7 +17,8 @@ Using the two individual prediction engines the module will serve accurate and p
 - Magento 2.0 GA
 
 ## Installation
-//TBC - Using composer (magento connect)
+
+`composer require richdynamix/personalised-products`
 
 ## Configuration
 
