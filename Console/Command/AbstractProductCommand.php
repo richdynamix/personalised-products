@@ -14,9 +14,9 @@ use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;
 /**
  * Class AbstractProductCommand
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category Richdynamix
+ * @package  PersonalisedProducts
+ * @author   Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 abstract class AbstractProductCommand extends Command
 {
@@ -29,27 +29,27 @@ abstract class AbstractProductCommand extends Command
     /**
      * @var ProductFactory
      */
-    private $_productFactory;
+    private $productFactory;
 
     /**
      * @var Client
      */
-    private $_eventClient;
+    private $eventClient;
 
     /**
      * @var Export
      */
-    private $_export;
+    private $export;
 
     /**
      * @var ExportFactory
      */
-    private $_exportFactory;
+    private $exportFactory;
 
     /**
      * @var PersonalisedProductsLogger
      */
-    private $_logger;
+    private $logger;
 
     /**
      * AbstractProductCommand constructor.
@@ -64,17 +64,16 @@ abstract class AbstractProductCommand extends Command
         ExportFactory $exportFactory,
         AppState $appState,
         PersonalisedProductsLogger $logger
-    )
-    {
-        $this->_productFactory = $productFactory;
-        $this->_eventClient = $eventClient;
-        $this->_export = $export;
-        $this->_exportFactory = $exportFactory;
-        $this->_logger = $logger;
+    ) {
+        $this->productFactory = $productFactory;
+        $this->eventClient = $eventClient;
+        $this->export = $export;
+        $this->exportFactory = $exportFactory;
+        $this->logger = $logger;
         try {
             $appState->setAreaCode('adminhtml');
         } catch (\Exception $e) {
-            $this->_logger->addCritical($e->getMessage());
+            $this->logger->addCritical($e->getMessage());
         };
         parent::__construct();
     }
@@ -85,14 +84,14 @@ abstract class AbstractProductCommand extends Command
      * @param $collection
      * @return int
      */
-    protected function _sendProductData($collection)
+    protected function sendProductData($collection)
     {
         $collectionCount = count($collection);
         $sentProductCount = 0;
         foreach ($collection as $productId) {
-            $sentProduct = $this->_sendToPredictionIO($productId);
-            $exportItem = $this->_export->saveProductForExport($productId);
-            $this->_setProductExported($exportItem->getId());
+            $sentProduct = $this->sendToPredictionIO($productId);
+            $exportItem = $this->export->saveProductForExport($productId);
+            $this->setProductExported($exportItem->getId());
 
             if ($sentProduct) {
                 ++$sentProductCount;
@@ -100,7 +99,9 @@ abstract class AbstractProductCommand extends Command
         }
 
         if ($collectionCount != $sentProductCount) {
-            throw new Exception('There was a problem sending the product data, check the log file for more information');
+            throw new Exception(
+                'There was a problem sending the product data, check the log file for more information'
+            );
         }
 
         return $sentProductCount;
@@ -112,9 +113,9 @@ abstract class AbstractProductCommand extends Command
      *
      * @return array
      */
-    protected function _getProductCollection()
+    protected function getProductCollection()
     {
-        $product = $this->_productFactory->create();
+        $product = $this->productFactory->create();
         $collection = $product->getCollection()
             ->addAttributeToFilter('visibility', self::CATALOG_SEARCH_VISIBILITY);
 
@@ -127,9 +128,9 @@ abstract class AbstractProductCommand extends Command
      * @param $productId
      * @return array
      */
-    private function _getProductCategoryCollection($productId)
+    private function getProductCategoryCollection($productId)
     {
-        $product = $this->_productFactory->create();
+        $product = $this->productFactory->create();
         $product->load($productId);
 
         return $product->getCategoryIds();
@@ -142,11 +143,11 @@ abstract class AbstractProductCommand extends Command
      * @param $productId
      * @return bool
      */
-    private function _sendToPredictionIO($productId)
+    private function sendToPredictionIO($productId)
     {
-        return $this->_eventClient->saveProductData(
+        return $this->eventClient->saveProductData(
             $productId,
-            $this->_getProductCategoryCollection($productId)
+            $this->getProductCategoryCollection($productId)
         );
     }
 
@@ -155,14 +156,14 @@ abstract class AbstractProductCommand extends Command
      *
      * @param $exportId
      */
-    private function _setProductExported($exportId)
+    private function setProductExported($exportId)
     {
-        $export = $this->_exportFactory->create()->load($exportId);
+        $export = $this->exportFactory->create()->load($exportId);
         $export->setData('is_exported', '1');
         try {
             $export->save();
         } catch (\Exception $e) {
-            $this->_logger->addCritical($e->getMessage());
+            $this->logger->addCritical($e->getMessage());
         }
     }
 

@@ -10,9 +10,9 @@ use \Symfony\Component\Config\Definition\Exception\Exception;
 /**
  * Class SendProductsCommand
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category Richdynamix
+ * @package  PersonalisedProducts
+ * @author   Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class SendProductsCommand extends AbstractProductCommand
 {
@@ -34,11 +34,11 @@ class SendProductsCommand extends AbstractProductCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $collection = $this->_getProductCollection();
+        $collection = $this->getProductCollection();
         $output->writeln('Preparing to send '. count($collection) .' products');
 
         try {
-            $sentCount = $this->_sendProductData($collection);
+            $sentCount = $this->sendProductData($collection);
             $output->writeln('Successfully sent '. $sentCount .' customers to the PredictionIO event server');
         } catch (Exception $e) {
             $output->writeln('Error: ' . $e->getMessage());

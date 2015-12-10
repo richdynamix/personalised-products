@@ -10,9 +10,9 @@ use \Symfony\Component\Config\Definition\Exception\Exception;
 /**
  * Class AbstractOrdersCommand
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category Richdynamix
+ * @package  PersonalisedProducts
+ * @author   Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 abstract class AbstractOrdersCommand extends Command
 {
@@ -20,17 +20,17 @@ abstract class AbstractOrdersCommand extends Command
     /**
      * @var OrderFactory
      */
-    private $_orderFactory;
+    private $orderFactory;
 
     /**
      * @var Client
      */
-    private $_eventClient;
+    private $eventClient;
 
     /**
      * @var
      */
-    private $_productCollection;
+    private $productCollection;
 
     /**
      * AbstractOrdersCommand constructor.
@@ -39,8 +39,8 @@ abstract class AbstractOrdersCommand extends Command
      */
     public function __construct(OrderFactory $orderFactory, Client $eventClient)
     {
-        $this->_orderFactory = $orderFactory;
-        $this->_eventClient = $eventClient;
+        $this->orderFactory = $orderFactory;
+        $this->eventClient = $eventClient;
         parent::__construct();
     }
 
@@ -50,13 +50,13 @@ abstract class AbstractOrdersCommand extends Command
      * @param $collection
      * @return int
      */
-    protected function _sendCustomerBuyProductData($collection)
+    protected function sendCustomerBuyProductData($collection)
     {
         $collectionCount = count($collection);
         $sentEventCount = 0;
 
         foreach ($collection as $customerId => $products) {
-            $sentEvent = $this->_sendPurchaseEvent($customerId, $products);
+            $sentEvent = $this->sendPurchaseEvent($customerId, $products);
             if ($sentEvent) {
                 ++$sentEventCount;
             }
@@ -67,7 +67,6 @@ abstract class AbstractOrdersCommand extends Command
         }
 
         return $sentEventCount;
-
     }
 
     /**
@@ -75,9 +74,9 @@ abstract class AbstractOrdersCommand extends Command
      *
      * @return array
      */
-    protected function _getOrderCollection()
+    protected function getOrderCollection()
     {
-        $order = $this->_orderFactory->create();
+        $order = $this->orderFactory->create();
         $ordersCollection = $order->getCollection()
             ->addFieldToSelect(['entity_id', 'customer_id'])
             ->addFieldToFilter('state', ['eq' => 'complete'])
@@ -92,11 +91,11 @@ abstract class AbstractOrdersCommand extends Command
      * @param $ordersCollection
      * @return array
      */
-    protected function _getCustomerProductCollection($ordersCollection)
+    protected function getCustomerProductCollection($ordersCollection)
     {
         $purchasedProducts = [];
         foreach ($ordersCollection as $order) {
-            $order = $this->_orderFactory->create()->load($order['entity_id']);
+            $order = $this->orderFactory->create()->load($order['entity_id']);
             $itemCollection = $order->getItemsCollection();
 
             foreach ($itemCollection as $item) {
@@ -104,7 +103,7 @@ abstract class AbstractOrdersCommand extends Command
             }
         }
 
-        $this->_productCollection = $purchasedProducts;
+        $this->productCollection = $purchasedProducts;
 
         return $purchasedProducts;
     }
@@ -114,9 +113,9 @@ abstract class AbstractOrdersCommand extends Command
      *
      * @return int
      */
-    protected function _getCustomerCount()
+    protected function getCustomerCount()
     {
-        return count($this->_productCollection);
+        return count($this->productCollection);
     }
 
     /**
@@ -124,10 +123,10 @@ abstract class AbstractOrdersCommand extends Command
      *
      * @return int
      */
-    protected function _getProductCount()
+    protected function getProductCount()
     {
         $productCount = 0;
-        foreach ($this->_productCollection as $products) {
+        foreach ($this->productCollection as $products) {
             $productCount += count($products);
         }
 
@@ -141,10 +140,10 @@ abstract class AbstractOrdersCommand extends Command
      * @param $products
      * @return bool
      */
-    protected function _sendPurchaseEvent($customerId, $products)
+    protected function sendPurchaseEvent($customerId, $products)
     {
         foreach ($products as $productId) {
-            if (!$this->_eventClient->saveCustomerBuyProduct($customerId, $productId)) {
+            if (!$this->eventClient->saveCustomerBuyProduct($customerId, $productId)) {
                 return false;
             }
         }

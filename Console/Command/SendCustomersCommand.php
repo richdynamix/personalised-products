@@ -9,9 +9,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class SendCustomersCommand
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category Richdynamix
+ * @package  PersonalisedProducts
+ * @author   Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class SendCustomersCommand extends AbstractCustomerCommand
 {
@@ -33,11 +33,11 @@ class SendCustomersCommand extends AbstractCustomerCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $collection = $this->_getCustomerCollection();
+        $collection = $this->getCustomerCollection();
         $output->writeln('Preparing to send '. count($collection) .' customers');
 
         try {
-            $sentCount = $this->_sendCustomerData($collection);
+            $sentCount = $this->sendCustomerData($collection);
             $output->writeln('Successfully sent '. $sentCount .' customers to the PredictionIO event server');
         } catch (\Exception $e) {
             $output->writeln('Error: ' . $e->getMessage());

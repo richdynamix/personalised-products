@@ -10,21 +10,21 @@ use \Symfony\Component\Config\Definition\Exception\Exception;
 /**
  * Class AbstractCustomerCommand
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category Richdynamix
+ * @package  PersonalisedProducts
+ * @author   Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 abstract class AbstractCustomerCommand extends Command
 {
     /**
      * @var CustomerFactory
      */
-    private $_customerFactory;
+    private $customerFactory;
 
     /**
      * @var Client
      */
-    private $_eventClient;
+    private $eventClient;
 
     /**
      * AbstractCustomerCommand constructor.
@@ -33,8 +33,8 @@ abstract class AbstractCustomerCommand extends Command
      */
     public function __construct(CustomerFactory $customerFactory, Client $eventClient)
     {
-        $this->_customerFactory = $customerFactory;
-        $this->_eventClient = $eventClient;
+        $this->customerFactory = $customerFactory;
+        $this->eventClient = $eventClient;
         parent::__construct();
     }
 
@@ -44,18 +44,20 @@ abstract class AbstractCustomerCommand extends Command
      * @param $collection
      * @return int
      */
-    protected function _sendCustomerData($collection)
+    protected function sendCustomerData($collection)
     {
         $collectionCount = count($collection);
         $sentCustomersCount = 0;
         foreach ($collection as $customerId) {
-            if ($this->_eventClient->saveCustomerData($customerId)) {
+            if ($this->eventClient->saveCustomerData($customerId)) {
                 ++$sentCustomersCount;
             }
         }
 
         if ($collectionCount != $sentCustomersCount) {
-            throw new Exception('There was a problem sending the customer data, check the log file for more information');
+            throw new Exception(
+                'There was a problem sending the customer data, check the log file for more information'
+            );
         }
 
         return $sentCustomersCount;
@@ -67,9 +69,9 @@ abstract class AbstractCustomerCommand extends Command
      *
      * @return array
      */
-    protected function _getCustomerCollection()
+    protected function getCustomerCollection()
     {
-        $customer = $this->_customerFactory->create();
+        $customer = $this->customerFactory->create();
         return $customer->getCollection()->getAllIds();
     }
 }
