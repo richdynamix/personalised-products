@@ -1,5 +1,7 @@
 <?php
 
+// @codingStandardsIgnoreFile
+
 namespace Richdynamix\PersonalisedProducts\Model;
 
 use \Richdynamix\PersonalisedProducts\Api\Data\ExportInterface;
@@ -7,54 +9,59 @@ use \Magento\Framework\Model\AbstractModel;
 use \Magento\Catalog\Model\ProductFactory as ProductFactory;
 use \Richdynamix\PersonalisedProducts\Model\ExportFactory;
 use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;
+use \Magento\Framework\Model\Context;
+use \Magento\Framework\Registry;
+use \Magento\Framework\Model\ResourceModel\AbstractResource;
+use \Magento\Framework\Data\Collection\AbstractDb;
 
 /**
  * Class Export
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category Richdynamix
+ * @package  PersonalisedProducts
+ * @author   Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class Export extends AbstractModel implements ExportInterface
 {
     /**
      * @var ProductFactory
      */
-    private $_productFactory;
+    private $productFactory;
 
     /**
      * @var \Richdynamix\PersonalisedProducts\Model\ExportFactory
      */
-    private $_exportFactory;
+    private $exportFactory;
 
     /**
      * @var PersonalisedProductsLogger
      */
-    protected $_logger;
+    protected $logger;
 
     /**
      * Export constructor.
      * @param ProductFactory $productFactory
-     * @param \Magento\Framework\Model\Context $context
-     * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
+     * @param Context $context
+     * @param Registry $registry
+     * @param \Richdynamix\PersonalisedProducts\Model\ExportFactory $exportFactory
+     * @param PersonalisedProductsLogger $logger
+     * @param AbstractResource|null $resource
+     * @param AbstractDb|null $resourceCollection
      * @param array $data
      */
     public function __construct(
         ProductFactory $productFactory,
-        \Magento\Framework\Model\Context $context,
-        \Magento\Framework\Registry $registry,
+        Context $context,
+        Registry $registry,
         ExportFactory $exportFactory,
         PersonalisedProductsLogger $logger,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        AbstractResource $resource = null,
+        AbstractDb $resourceCollection = null,
         array $data = []
-    )
-    {
-        $this->_productFactory = $productFactory;
-        $this->_exportFactory = $exportFactory;
-        $this->_logger = $logger;
+    ) {
+        $this->productFactory = $productFactory;
+        $this->exportFactory = $exportFactory;
+        $this->logger = $logger;
 
         parent::__construct(
             $context,
@@ -126,7 +133,7 @@ class Export extends AbstractModel implements ExportInterface
     /**
      * Set table row increment ID
      *
-     * @param mixed $id
+     * @param mixed $incrementId
      * @return $this
      */
     public function setId($incrementId)
@@ -185,7 +192,7 @@ class Export extends AbstractModel implements ExportInterface
      */
     public function getCategoryIds()
     {
-        $product = $this->_productFactory->create();
+        $product = $this->productFactory->create();
         $product->load($this->getData(self::PRODUCT_ID));
 
         return $product->getCategoryIds();
@@ -199,12 +206,12 @@ class Export extends AbstractModel implements ExportInterface
      */
     public function saveProductForExport($productId)
     {
-        $exportItem = $this->_exportFactory->create();
+        $exportItem = $this->exportFactory->create();
         $exportItem->setData('product_id', $productId);
         try {
             $exportItem->save();
         } catch (\Exception $e) {
-            $this->_logger->addError($e->getMessage());
+            $this->logger->addError($e->getMessage());
         }
 
         return $exportItem;

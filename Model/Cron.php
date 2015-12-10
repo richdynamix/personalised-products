@@ -11,47 +11,43 @@ use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;
 /**
  * Class Cron
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category Richdynamix
+ * @package  PersonalisedProducts
+ * @author   Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class Cron
 {
     /**
      * @var array
      */
-    private $_exportedProducts = [];
+    private $exportedProducts = [];
 
     /**
      * @var Client
      */
-    private $_eventClient;
+    private $eventClient;
 
     /**
      * @var ExportCollection
      */
-    private $_exportCollection;
+    private $exportCollection;
 
     /**
      * @var CollectionFactory
      */
-    protected $_ecFactory;
+    protected $ecFactory;
 
     /**
      * @var \Richdynamix\PersonalisedProducts\Model\ExportFactory
      */
-    private $_exportFactory;
-
-    /**
-     * @var PersonalisedProductsLogger
-     */
-    private $_logger;
+    private $exportFactory;
 
     /**
      * Cron constructor.
      * @param Client $client
      * @param ExportCollection $exportCollection
      * @param CollectionFactory $ecFactory
+     * @param \Richdynamix\PersonalisedProducts\Model\ExportFactory $_exportFactory
      * @param PersonalisedProductsLogger $logger
      */
     public function __construct(
@@ -60,14 +56,18 @@ class Cron
         CollectionFactory $ecFactory,
         ExportFactory $_exportFactory,
         PersonalisedProductsLogger $logger
-    )
-    {
-        $this->_eventClient = $client;
-        $this->_exportCollection = $exportCollection;
-        $this->_ecFactory = $ecFactory;
-        $this->_exportFactory = $_exportFactory;
-        $this->_logger = $logger;
+    ) {
+        $this->eventClient = $client;
+        $this->exportCollection = $exportCollection;
+        $this->ecFactory = $ecFactory;
+        $this->exportFactory = $_exportFactory;
+        $this->logger = $logger;
     }
+
+    /**
+     * @var PersonalisedProductsLogger
+     */
+    private $logger;
 
     /**
      * Method called on the cron to do the export
@@ -76,24 +76,24 @@ class Cron
      */
     public function export()
     {
-        $productExport = $this->_getProductsForExport();
+        $productExport = $this->getProductsForExport();
         $productCount = count($productExport);
         $exportCount = 0;
 
         foreach ($productExport as $productId => $categories) {
             try {
-                $this->_eventClient->saveProductData($productId, $categories);
-                $this->_setExportedProducts($productId);
+                $this->eventClient->saveProductData($productId, $categories);
+                $this->setExportedProducts($productId);
                 ++$exportCount;
             } catch (\Exception $e) {
-                $this->_logger->addCritical("Product ID - $productId failed to export: " . $e);
+                $this->logger->addCritical("Product ID - $productId failed to export: " . $e);
                 return false;
             }
         }
 
-        $this->_updateDatabase();
+        $this->updateDatabase();
 
-        $this->_logger->addInfo("Successfully exported " . $exportCount . " out " . $productCount . " products ");
+        $this->logger->addInfo("Successfully exported " . $exportCount . " out " . $productCount . " products ");
         return true;
     }
 
@@ -102,9 +102,9 @@ class Cron
      *
      * @return array
      */
-    private function _getProductsForExport()
+    private function getProductsForExport()
     {
-        $productExport = $this->_ecFactory
+        $productExport = $this->ecFactory
             ->create()
             ->addFieldToFilter('is_exported', '0')
             ->addOrder(
@@ -126,9 +126,9 @@ class Cron
      *
      * @param $productId
      */
-    private function _setExportedProducts($productId)
+    private function setExportedProducts($productId)
     {
-        $this->_exportedProducts[] = $productId;
+        $this->exportedProducts[] = $productId;
     }
 
     /**
@@ -136,23 +136,23 @@ class Cron
      *
      * @return array
      */
-    private function _getExportedProducts()
+    private function getExportedProducts()
     {
-        return $this->_exportedProducts;
+        return $this->exportedProducts;
     }
 
     /**
      * Update the database row with the `is_exported` as 1
      */
-    private function _updateDatabase()
+    private function updateDatabase()
     {
-        foreach ($this->_getExportedProducts() as $productId) {
-            $model = $this->_getItemModel($productId);
+        foreach ($this->getExportedProducts() as $productId) {
+            $model = $this->getItemModel($productId);
             $model->setData('is_exported', '1');
             try {
                 $model->save();
             } catch (\Exception $e) {
-                $this->_logger->addCritical($e->getMessage());
+                $this->logger->addCritical($e->getMessage());
             }
 
         }
@@ -166,12 +166,11 @@ class Cron
      * @param $productId
      * @return $this
      */
-    private function _getItemModel($productId)
+    private function getItemModel($productId)
     {
-        $item = $this->_exportFactory->create()->getCollection()
+        $item = $this->exportFactory->create()->getCollection()
             ->addFieldToFilter('product_id', $productId)->getFirstItem();
 
-        return $this->_exportFactory->create()->load($item->getId());
+        return $this->exportFactory->create()->load($item->getId());
     }
-
 }

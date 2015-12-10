@@ -6,39 +6,37 @@ use \Magento\Catalog\Block\Product\Context as Context;
 use \Richdynamix\PersonalisedProducts\Helper\Config as Config;
 use \Richdynamix\PersonalisedProducts\Model\Frontend\Checkout\Cart\Crosssell as CrosssellModel;
 use \Magento\Catalog\Model\ProductFactory as ProductFactory;
-use Magento\CatalogInventory\Helper\Stock as StockHelper;
+use \Magento\CatalogInventory\Helper\Stock as StockHelper;
 use \Magento\Framework\Module\Manager as Manager;
+use \Magento\Catalog\Model\Product\Visibility;
+use \Magento\Checkout\Model\Session;
+use \Magento\Checkout\Block\Cart\Crosssell as CartCrossell;
+use \Magento\Catalog\Model\Product\LinkFactory;
+use \Magento\Quote\Model\Quote\Item\RelatedProducts;
 
 /**
  * Class Crosssel
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category Richdynamix
+ * @package  PersonalisedProducts
+ * @author   Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
-class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
+class Crosssell extends CartCrossell
 {
-
     /**
      * @var Config
      */
-    private $_config;
+    private $config;
 
     /**
      * @var CrosssellModel
      */
-    private $_crosssell;
-
-    /**
-     * @var
-     */
-    private $_itemCollection;
+    private $crosssell;
 
     /**
      * @var Manager
      */
-    private $_moduleManager;
-
+    private $moduleManager;
 
     /**
      * Crosssell constructor.
@@ -47,10 +45,10 @@ class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
      * @param CrosssellModel $crosssell
      * @param ProductFactory $productFactory
      * @param Manager $moduleManager
-     * @param \Magento\Catalog\Model\Product\Visibility $productVisibility
-     * @param \Magento\Checkout\Model\Session $checkoutSession
-     * @param \Magento\Catalog\Model\Product\LinkFactory $productLinkFactory
-     * @param \Magento\Quote\Model\Quote\Item\RelatedProducts $itemRelationsList
+     * @param Visibility $productVisibility
+     * @param Session $checkoutSession
+     * @param LinkFactory $productLinkFactory
+     * @param RelatedProducts $itemRelationsList
      * @param StockHelper $stockHelper
      * @param array $data
      */
@@ -60,17 +58,17 @@ class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
         CrosssellModel $crosssell,
         ProductFactory $productFactory,
         Manager $moduleManager,
-        \Magento\Catalog\Model\Product\Visibility $productVisibility,
-        \Magento\Checkout\Model\Session $checkoutSession,
-        \Magento\Catalog\Model\Product\LinkFactory $productLinkFactory,
-        \Magento\Quote\Model\Quote\Item\RelatedProducts $itemRelationsList,
+        Visibility $productVisibility,
+        Session $checkoutSession,
+        LinkFactory $productLinkFactory,
+        RelatedProducts $itemRelationsList,
         StockHelper $stockHelper,
         array $data = []
     ) {
-        $this->_config = $config;
-        $this->_crosssell = $crosssell;
-        $this->_productFactory = $productFactory;
-        $this->_moduleManager = $moduleManager;
+        $this->config = $config;
+        $this->crosssell = $crosssell;
+        $this->productFactory = $productFactory;
+        $this->moduleManager = $moduleManager;
         parent::__construct(
             $context,
             $checkoutSession,
@@ -89,24 +87,22 @@ class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
      */
     public function getItems()
     {
-        if (!$this->_config->isEnabled()) {
+        if (!$this->config->isEnabled()) {
             return parent::getItems();
         }
 
         $ninProductIds = $this->_getCartProductIds();
-        $personalisedIds = $this->_crosssell->getProductCollection($ninProductIds);
+        $personalisedIds = $this->crosssell->getProductCollection($ninProductIds);
 
         if (!$personalisedIds) {
             return parent::getItems();
         }
 
-        $collection = $this->_productFactory->create()->getCollection();
+        $collection = $this->productFactory->create()->getCollection();
         $collection->addAttributeToFilter('entity_id', ['in', $personalisedIds]);
 
-        $this->_itemCollection = $collection;
-
-        if ($this->_moduleManager->isEnabled('Magento_Checkout')) {
-            $this->_addProductAttributesAndPrices($this->_itemCollection);
+        if ($this->moduleManager->isEnabled('Magento_Checkout')) {
+            $this->_addProductAttributesAndPrices($collection);
         }
 
         $items = [];

@@ -12,9 +12,9 @@ use \Symfony\Component\Config\Definition\Exception\Exception;
 /**
  * Class SendOrdersCommand
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category Richdynamix
+ * @package  PersonalisedProducts
+ * @author   Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class SendOrdersCommand extends AbstractOrdersCommand
 {
@@ -36,18 +36,18 @@ class SendOrdersCommand extends AbstractOrdersCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $customerProducts = $this->_getCustomerProductCollection($this->_getOrderCollection());
+        $customerProducts = $this->getCustomerProductCollection($this->getOrderCollection());
         $output->writeln('Preparing to send '. count($customerProducts) .' orders');
         $output->writeln(
-            'Preparing ' . $this->_getCustomerCount() . ' customers with a total of ' .
-            $this->_getProductCount() . ' products'
+            'Preparing ' . $this->getCustomerCount() . ' customers with a total of ' .
+            $this->getProductCount() . ' products'
         );
 
         try {
-            $sentCount = $this->_sendCustomerBuyProductData($customerProducts);
+            $sentCount = $this->sendCustomerBuyProductData($customerProducts);
             $output->writeln(
-                'Successfully set a total of ' . $this->_getProductCount()
-                . ' product purchases to ' . $this->_getCustomerCount() . ' customers' .
+                'Successfully set a total of ' . $this->getProductCount()
+                . ' product purchases to ' . $this->getCustomerCount() . ' customers' .
                 ' on a total of ' . $sentCount . ' orders'
             );
         } catch (Exception $e) {

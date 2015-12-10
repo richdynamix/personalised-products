@@ -8,26 +8,26 @@ use \Magento\Customer\Model\Session as CustomerSession;
 /**
  * Class Crosssell
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category Richdynamix
+ * @package  PersonalisedProducts
+ * @author   Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class Crosssell
 {
     /**
      * @var Complementary
      */
-    private $_complementaryEngine;
+    private $complementaryEngine;
 
     /**
      * @var CustomerSession
      */
-    private $_customerSession;
+    private $customerSession;
 
     /**
      * @var
      */
-    private $_basketProducts;
+    private $basketProducts;
 
     /**
      * Crosssell constructor.
@@ -36,8 +36,8 @@ class Crosssell
      */
     public function __construct(Complementary $complementaryEngine, CustomerSession $customerSession)
     {
-        $this->_complementaryEngine = $complementaryEngine;
-        $this->_customerSession = $customerSession;
+        $this->complementaryEngine = $complementaryEngine;
+        $this->customerSession = $customerSession;
     }
 
     /**
@@ -48,11 +48,11 @@ class Crosssell
      */
     public function getProductCollection($productIds)
     {
-        $this->_basketProducts = $productIds;
-        $products = $this->_complementaryEngine->sendQuery($productIds);
+        $this->basketProducts = $productIds;
+        $products = $this->complementaryEngine->sendQuery($productIds);
 
         if ($products['rules']) {
-            return $this->_getPredictedProducts($products['rules']);
+            return $this->getPredictedProducts($products['rules']);
         }
 
         return false;
@@ -64,11 +64,11 @@ class Crosssell
      * @param $items
      * @return array
      */
-    private function _getPredictedProducts($items)
+    private function getPredictedProducts($items)
     {
         $productIds = [];
         foreach ($items as $item) {
-            $this->_getProductIds($item['itemScores'], $productIds);
+            $this->getProductIds($item['itemScores'], $productIds);
         }
 
         return $productIds;
@@ -81,10 +81,10 @@ class Crosssell
      * @param $productIds
      * @return $this
      */
-    private function _getProductIds($items, &$productIds)
+    private function getProductIds($items, &$productIds)
     {
         foreach ($items as $item) {
-            if (!in_array($item['item'], $this->_basketProducts)) {
+            if (!in_array($item['item'], $this->basketProducts)) {
                 $productIds[] = $item['item'];
             }
         }

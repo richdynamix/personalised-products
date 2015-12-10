@@ -14,31 +14,31 @@ use \Richdynamix\PersonalisedProducts\Model\Frontend\GuestCustomers;
  * server if the customer is logged in. If the customer is a guest then we record the
  * product views in the session to process later.
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category Richdynamix
+ * @package  PersonalisedProducts
+ * @author   Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class SendProductViews implements ObserverInterface
 {
     /**
      * @var Config
      */
-    private $_config;
+    private $config;
 
     /**
      * @var CustomerSession
      */
-    private $_customerSession;
+    private $customerSession;
 
     /**
      * @var Client
      */
-    private $_eventClient;
+    private $eventClient;
 
     /**
      * @var GuestCustomers
      */
-    private $_guestCustomers;
+    private $guestCustomers;
 
     /**
      * SendProductViews constructor.
@@ -52,12 +52,11 @@ class SendProductViews implements ObserverInterface
         CustomerSession $customerSession,
         Client $eventClient,
         GuestCustomers $guestCustomers
-    )
-    {
-        $this->_config = $config;
-        $this->_customerSession = $customerSession;
-        $this->_eventClient = $eventClient;
-        $this->_guestCustomers = $guestCustomers;
+    ) {
+        $this->config = $config;
+        $this->customerSession = $customerSession;
+        $this->eventClient = $eventClient;
+        $this->guestCustomers = $guestCustomers;
     }
 
     /**
@@ -68,20 +67,20 @@ class SendProductViews implements ObserverInterface
      */
     public function execute(Observer $observer)
     {
-        if (!$this->_config->isEnabled()) {
+        if (!$this->config->isEnabled()) {
             return;
         }
 
         $product = $observer->getProduct();
-        if ($this->_customerSession->isLoggedIn()) {
-            $this->_eventClient->saveCustomerViewProduct(
-                $this->_customerSession->getCustomerId(),
+        if ($this->customerSession->isLoggedIn()) {
+            $this->eventClient->saveCustomerViewProduct(
+                $this->customerSession->getCustomerId(),
                 $product->getId()
             );
             return;
         }
 
-        $this->_guestCustomers->setGuestCustomerProductView($product->getId());
+        $this->guestCustomers->setGuestCustomerProductView($product->getId());
 
     }
 }

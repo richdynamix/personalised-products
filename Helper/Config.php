@@ -5,25 +5,26 @@ namespace Richdynamix\PersonalisedProducts\Helper;
 use \Magento\Framework\App\Config\ScopeConfigInterface as ScopeConfigInterface;
 use \Magento\Store\Model\ScopeInterface as ScopeInterface;
 use \Magento\Framework\App\Helper\Context as Context;
+use \Magento\Framework\App\Helper\AbstractHelper;
 
 /**
  * Configuration class to retrieve module options from the database
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category Richdynamix
+ * @package  PersonalisedProducts
+ * @author   Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
-class Config extends \Magento\Framework\App\Helper\AbstractHelper
+class Config extends AbstractHelper
 {
     /**
      * @var ScopeConfigInterface
      */
-    private $_scopeConfig;
+    private $scopeConfig;
 
     /**
      * @var ScopeInterface
      */
-    private $_storeScope;
+    private $storeScope;
 
     /**
      * Is the module enabled
@@ -87,8 +88,8 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function __construct(ScopeConfigInterface $scopeConfig, Context $context)
     {
-        $this->_scopeConfig = $scopeConfig;
-        $this->_storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+        $this->scopeConfig = $scopeConfig;
+        $this->storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
         parent::__construct($context);
     }
 
@@ -100,7 +101,7 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getItem($itemPath)
     {
-        return $this->scopeConfig->getValue($itemPath, $this->_storeScope);
+        return $this->scopeConfig->getValue($itemPath, $this->storeScope);
     }
 
     /**

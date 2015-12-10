@@ -11,36 +11,36 @@ use \Richdynamix\PersonalisedProducts\Model\PredictionIO\Factory;
 /**
  * Class Complementary
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category Richdynamix
+ * @package  PersonalisedProducts
+ * @author   Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class Complementary implements EngineInterface
 {
     /**
      * @var Factory
      */
-    private $_factory;
+    private $factory;
 
     /**
      * @var PersonalisedProductsLogger
      */
-    private $_logger;
+    private $logger;
 
     /**
      * @var Config
      */
-    private $_config;
+    private $config;
 
     /**
      * @var Urls
      */
-    private $_urls;
+    private $urls;
 
     /**
      * @var \predictionio\EngineClient
      */
-    private $_engineClient;
+    private $engineClient;
 
     /**
      * Complementary constructor.
@@ -54,18 +54,17 @@ class Complementary implements EngineInterface
         PersonalisedProductsLogger $logger,
         Config $config,
         Urls $urls
-    )
-    {
-        $this->_factory = $factory;
-        $this->_logger = $logger;
-        $this->_config = $config;
-        $this->_urls = $urls;
+    ) {
+        $this->factory = $factory;
+        $this->logger = $logger;
+        $this->config = $config;
+        $this->urls = $urls;
 
-        $this->_engineClient = $this->_factory->create(
+        $this->engineClient = $this->factory->create(
             'engine',
-            $this->_urls->buildUrl(
-                $this->_config->getItem(Config::COMPLEMENTARY_ENGINE_URL),
-                $this->_config->getItem(Config::COMPLEMENTARY_ENGINE_PORT)
+            $this->urls->buildUrl(
+                $this->config->getItem(Config::COMPLEMENTARY_ENGINE_URL),
+                $this->config->getItem(Config::COMPLEMENTARY_ENGINE_PORT)
             )
         );
 
@@ -84,17 +83,15 @@ class Complementary implements EngineInterface
     {
         try {
             $data = [
-
                 'items' => $productIds,
-                'num' => (int) $this->_config->getProductCount(Config::COMPLEMENTARY_PRODUCT_COUNT),
+                'num' => (int) $this->config->getProductCount(Config::COMPLEMENTARY_PRODUCT_COUNT),
             ];
 
-            return $this->_engineClient->sendQuery($data);
+            return $this->engineClient->sendQuery($data);
         } catch (\Exception $e) {
-            $this->_logger->addCritical($e);
+            $this->logger->addCritical($e);
         }
 
         return false;
-
     }
 }

@@ -14,31 +14,31 @@ use \Magento\Customer\Model\Session as CustomerSession;
  * to PredictionIO. We then check if the customer viewed any products before logging in
  * and then record these actions also.
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category Richdynamix
+ * @package  PersonalisedProducts
+ * @author   Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class SendGuestActionsCustomLogin implements ObserverInterface
 {
     /**
      * @var Config
      */
-    private $_config;
+    private $config;
 
     /**
      * @var SessionManager
      */
-    private $_sessionManager;
+    private $sessionManager;
 
     /**
      * @var CustomerSession
      */
-    private $_customerSession;
+    private $customerSession;
 
     /**
      * @var Client
      */
-    private $_eventClient;
+    private $eventClient;
 
     /**
      * SendGuestActionsCustomLogin constructor.
@@ -52,12 +52,11 @@ class SendGuestActionsCustomLogin implements ObserverInterface
         SessionManager $sessionManager,
         Client $eventClient,
         CustomerSession $customerSession
-    )
-    {
-        $this->_config = $config;
-        $this->_sessionManager = $sessionManager;
-        $this->_customerSession = $customerSession;
-        $this->_eventClient = $eventClient;
+    ) {
+        $this->config = $config;
+        $this->sessionManager = $sessionManager;
+        $this->customerSession = $customerSession;
+        $this->eventClient = $eventClient;
     }
 
     /**
@@ -67,12 +66,12 @@ class SendGuestActionsCustomLogin implements ObserverInterface
      */
     public function execute(Observer $observer)
     {
-        if ($this->_config->isEnabled()) {
-            $this->_eventClient->saveCustomerData($this->_customerSession->getCustomerId());
+        if ($this->config->isEnabled()) {
+            $this->eventClient->saveCustomerData($this->customerSession->getCustomerId());
 
-            $guestProductViews = $this->_sessionManager->getGuestProductViews();
+            $guestProductViews = $this->sessionManager->getGuestProductViews();
             if ($guestProductViews) {
-                $this->_sendAllGuestProductViews($guestProductViews);
+                $this->sendAllGuestProductViews($guestProductViews);
             }
         }
     }
@@ -82,16 +81,15 @@ class SendGuestActionsCustomLogin implements ObserverInterface
      *
      * @param $guestProductViews
      */
-    private function _sendAllGuestProductViews($guestProductViews)
+    private function sendAllGuestProductViews($guestProductViews)
     {
         foreach ($guestProductViews as $productId) {
-            $this->_eventClient->saveCustomerViewProduct(
-                $this->_customerSession->getCustomerId(),
+            $this->eventClient->saveCustomerViewProduct(
+                $this->customerSession->getCustomerId(),
                 $productId
             );
         }
 
-        $this->_sessionManager->setGuestProductViews(null);
+        $this->sessionManager->setGuestProductViews(null);
     }
-
 }

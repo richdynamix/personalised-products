@@ -5,9 +5,9 @@ namespace Richdynamix\PersonalisedProducts\Helper;
 /**
  * Class Urls
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category Richdynamix
+ * @package  PersonalisedProducts
+ * @author   Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class Urls
 {
@@ -20,7 +20,7 @@ class Urls
      */
     public function buildUrl($url, $port)
     {
-        return trim($this->_checkUrlScheme($url), '/') . ":" . $port;
+        return trim($this->checkUrlScheme($url), '/') . ":" . $port;
     }
 
     /**
@@ -29,7 +29,7 @@ class Urls
      * @param $url
      * @return string
      */
-    private function _checkUrlScheme($url)
+    private function checkUrlScheme($url)
     {
         $parsed = parse_url($url);
         if (empty($parsed['scheme'])) {
@@ -38,5 +38,4 @@ class Urls
 
         return $url;
     }
-
 }

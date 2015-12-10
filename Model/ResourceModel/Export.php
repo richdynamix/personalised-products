@@ -1,5 +1,7 @@
 <?php
 
+// @codingStandardsIgnoreFile
+
 namespace Richdynamix\PersonalisedProducts\Model\ResourceModel;
 
 /**
@@ -14,7 +16,7 @@ class Export extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     /**
      * @var \Magento\Framework\Stdlib\DateTime\DateTime
      */
-    private $_date;
+    private $date;
 
     /**
      * Export constructor.
@@ -28,7 +30,7 @@ class Export extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         $resourcePrefix = null
     ) {
         parent::__construct($context, $resourcePrefix);
-        $this->_date = $date;
+        $this->date = $date;
     }
 
     /**
@@ -49,10 +51,10 @@ class Export extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     {
 
         if ($object->isObjectNew() && !$object->hasCreationTime()) {
-            $object->setCreationTime($this->_date->gmtDate());
+            $object->setCreationTime($this->date->gmtDate());
         }
 
-        $object->setUpdateTime($this->_date->gmtDate());
+        $object->setUpdateTime($this->date->gmtDate());
 
         return parent::_beforeSave($object);
     }
