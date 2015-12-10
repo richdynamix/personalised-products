@@ -1,5 +1,7 @@
 <?php
 
+// @codingStandardsIgnoreFile
+
 namespace Richdynamix\PersonalisedProducts\Block\Product\ProductList;
 
 use \Magento\Framework\View\Element\Template;

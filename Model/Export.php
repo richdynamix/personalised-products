@@ -1,5 +1,7 @@
 <?php
 
+// @codingStandardsIgnoreFile
+
 namespace Richdynamix\PersonalisedProducts\Model;
 
 use \Richdynamix\PersonalisedProducts\Api\Data\ExportInterface;
@@ -190,7 +192,7 @@ class Export extends AbstractModel implements ExportInterface
      */
     public function getCategoryIds()
     {
-        $product = $this->_productFactory->create();
+        $product = $this->productFactory->create();
         $product->load($this->getData(self::PRODUCT_ID));
 
         return $product->getCategoryIds();
@@ -204,12 +206,12 @@ class Export extends AbstractModel implements ExportInterface
      */
     public function saveProductForExport($productId)
     {
-        $exportItem = $this->_exportFactory->create();
+        $exportItem = $this->exportFactory->create();
         $exportItem->setData('product_id', $productId);
         try {
             $exportItem->save();
         } catch (\Exception $e) {
-            $this->_logger->addError($e->getMessage());
+            $this->logger->addError($e->getMessage());
         }
 
         return $exportItem;

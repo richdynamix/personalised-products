@@ -1,5 +1,7 @@
 <?php
 
+// @codingStandardsIgnoreFile
+
 namespace Richdynamix\PersonalisedProducts\Model\ResourceModel;
 
 /**
