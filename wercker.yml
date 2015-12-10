@@ -17,7 +17,7 @@ build:
     - script:
         name: PHPCS
         code: |-
-            $WERCKER_SOURCE_DIR/vendor/bin/phpcs --standard=$WERCKER_SOURCE_DIR/rulset.xml --ignore=$WERCKER_SOURCE_DIR/vendor .
+            $WERCKER_SOURCE_DIR/vendor/bin/phpcs --standard=$WERCKER_SOURCE_DIR/ruleset.xml --ignore=$WERCKER_SOURCE_DIR/vendor .
 #    - script:
 #        name: PHPUnit Integration Tests
 #        code: vendor/phpunit/phpunit/phpunit --configuration phpunit.xml
