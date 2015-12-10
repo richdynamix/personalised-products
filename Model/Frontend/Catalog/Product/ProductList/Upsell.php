@@ -8,21 +8,21 @@ use \Magento\Customer\Model\Session as CustomerSession;
 /**
  * Class Upsell
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category Richdynamix
+ * @package  PersonalisedProducts
+ * @author   Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class Upsell
 {
     /**
      * @var Similarity
      */
-    private $_similarityEngine;
+    private $similarityEngine;
 
     /**
      * @var CustomerSession
      */
-    private $_customerSession;
+    private $customerSession;
 
     /**
      * Upsell constructor.
@@ -31,8 +31,8 @@ class Upsell
      */
     public function __construct(Similarity $similarityEngine, CustomerSession $customerSession)
     {
-        $this->_similarityEngine = $similarityEngine;
-        $this->_customerSession = $customerSession;
+        $this->similarityEngine = $similarityEngine;
+        $this->customerSession = $customerSession;
     }
 
     /**
@@ -44,12 +44,10 @@ class Upsell
      */
     public function getProductCollection($productIds, $categoryIds)
     {
-//        $this->_checkIsGuestCustomer($productIds);
-
-        $products = $this->_similarityEngine->sendQuery($productIds, $categoryIds);
+        $products = $this->similarityEngine->sendQuery($productIds, $categoryIds);
 
         if ($products['itemScores']) {
-            return $this->_getProductIds($products['itemScores']);
+            return $this->getProductIds($products['itemScores']);
         }
         
         return false;
@@ -62,7 +60,7 @@ class Upsell
      * @param $items
      * @return array
      */
-    private function _getProductIds($items)
+    private function getProductIds($items)
     {
         $productIds = [];
         foreach ($items as $item) {
@@ -71,19 +69,4 @@ class Upsell
 
         return $productIds;
     }
-
-    /**
-     * Check if the customer is logged in
-     *
-     * // todo get recently viewed products and list together
-     *
-     * @param $productIds
-     */
-    private function _checkIsGuestCustomer(&$productIds)
-    {
-        if (!$this->_customerSession->isLoggedIn()) {
-        }
-
-    }
-
 }
