@@ -11,9 +11,9 @@ use \Richdynamix\PersonalisedProducts\Model\PredictionIO\Factory;
 /**
  * Class EventClient for sending date and actions to PredictionIO
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category  Richdynamix
+ * @package   PersonalisedProducts
+ * @author    Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class Client implements EventClientInterface
 {

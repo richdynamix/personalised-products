@@ -8,9 +8,9 @@ use \Magento\Customer\Model\Session as CustomerSession;
 /**
  * Class Crosssell
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category  Richdynamix
+ * @package   PersonalisedProducts
+ * @author    Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class Crosssell
 {

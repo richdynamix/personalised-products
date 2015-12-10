@@ -12,9 +12,9 @@ use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventClient\Client;
  * Listen for sales order event and record the customer-buy-product action in
  * PredictionIO.
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category  Richdynamix
+ * @package   PersonalisedProducts
+ * @author    Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class SendProductPurchase implements ObserverInterface
 {

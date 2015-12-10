@@ -11,9 +11,9 @@ use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;
 /**
  * Class Export
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category  Richdynamix
+ * @package   PersonalisedProducts
+ * @author    Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class Export extends AbstractModel implements ExportInterface
 {

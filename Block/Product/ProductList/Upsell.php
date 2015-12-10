@@ -17,9 +17,9 @@ use \Richdynamix\PersonalisedProducts\Model\Frontend\Catalog\Product\ProductList
  * Rewrite product upsell block to switch out product collection
  * for one returned from PredictionIO
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category  Richdynamix
+ * @package   PersonalisedProducts
+ * @author    Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
 {

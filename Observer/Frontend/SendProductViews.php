@@ -14,9 +14,9 @@ use \Richdynamix\PersonalisedProducts\Model\Frontend\GuestCustomers;
  * server if the customer is logged in. If the customer is a guest then we record the
  * product views in the session to process later.
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category  Richdynamix
+ * @package   PersonalisedProducts
+ * @author    Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class SendProductViews implements ObserverInterface
 {

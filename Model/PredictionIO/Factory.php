@@ -8,9 +8,9 @@ use \predictionio\EngineClient;
 /**
  * PredictionIO factory to return ready to use engine or event server objects
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category  Richdynamix
+ * @package   PersonalisedProducts
+ * @author    Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class Factory
 {

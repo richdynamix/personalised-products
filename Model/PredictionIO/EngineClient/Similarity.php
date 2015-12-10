@@ -11,9 +11,9 @@ use \Richdynamix\PersonalisedProducts\Model\PredictionIO\Factory;
 /**
  * Class Similarity
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category  Richdynamix
+ * @package   PersonalisedProducts
+ * @author    Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class Similarity implements EngineInterface
 {

@@ -10,9 +10,9 @@ use \Symfony\Component\Config\Definition\Exception\Exception;
 /**
  * Class AbstractCustomerCommand
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category  Richdynamix
+ * @package   PersonalisedProducts
+ * @author    Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 abstract class AbstractCustomerCommand extends Command
 {

@@ -10,9 +10,9 @@ use Magento\Framework\DB\Ddl\Table;
 /**
  * Class InstallSchema
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category  Richdynamix
+ * @package   PersonalisedProducts
+ * @author    Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class InstallSchema implements InstallSchemaInterface
 {
