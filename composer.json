@@ -1,5 +1,5 @@
 {
-  "name": "Richdynamix/PersonalisedProducts",
+  "name": "richdynamix/personalised-products",
   "description": "Personalised products using PredictionIO Machine Learning",
   "type": "magento2-module",
   "version": "1.0.0",
@@ -13,7 +13,8 @@
   },
   "require-dev": {
     "phpunit/phpunit": "4.1.0",
-    "codacy/coverage": "dev-master"
+    "codacy/coverage": "dev-master",
+    "squizlabs/php_codesniffer": "2.*"
   },
   "extra": {
     "map": [
@@ -26,7 +27,7 @@
   "autoload": {
     "files": [ "registration.php" ],
     "psr-4": {
-      "Richdynamix\\Suggest\\": ""
+      "Richdynamix\\PersonalisedProducts\\": ""
     }
   }
 }

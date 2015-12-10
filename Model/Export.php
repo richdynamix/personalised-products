@@ -11,9 +11,9 @@ use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;
 /**
  * Class Export
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category  Richdynamix
+ * @package   PersonalisedProducts
+ * @author    Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class Export extends AbstractModel implements ExportInterface
 {
@@ -50,8 +50,7 @@ class Export extends AbstractModel implements ExportInterface
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
-    )
-    {
+    ) {
         $this->_productFactory = $productFactory;
         $this->_exportFactory = $exportFactory;
         $this->_logger = $logger;

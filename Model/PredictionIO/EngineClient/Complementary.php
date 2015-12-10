@@ -11,9 +11,9 @@ use \Richdynamix\PersonalisedProducts\Model\PredictionIO\Factory;
 /**
  * Class Complementary
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category  Richdynamix
+ * @package   PersonalisedProducts
+ * @author    Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class Complementary implements EngineInterface
 {
@@ -54,8 +54,7 @@ class Complementary implements EngineInterface
         PersonalisedProductsLogger $logger,
         Config $config,
         Urls $urls
-    )
-    {
+    ) {
         $this->_factory = $factory;
         $this->_logger = $logger;
         $this->_config = $config;

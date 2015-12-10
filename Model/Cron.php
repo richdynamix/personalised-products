@@ -11,9 +11,9 @@ use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;
 /**
  * Class Cron
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category  Richdynamix
+ * @package   PersonalisedProducts
+ * @author    Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class Cron
 {
@@ -60,8 +60,7 @@ class Cron
         CollectionFactory $ecFactory,
         ExportFactory $_exportFactory,
         PersonalisedProductsLogger $logger
-    )
-    {
+    ) {
         $this->_eventClient = $client;
         $this->_exportCollection = $exportCollection;
         $this->_ecFactory = $ecFactory;

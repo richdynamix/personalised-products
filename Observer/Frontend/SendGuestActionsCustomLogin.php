@@ -14,9 +14,9 @@ use \Magento\Customer\Model\Session as CustomerSession;
  * to PredictionIO. We then check if the customer viewed any products before logging in
  * and then record these actions also.
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category  Richdynamix
+ * @package   PersonalisedProducts
+ * @author    Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class SendGuestActionsCustomLogin implements ObserverInterface
 {
@@ -52,8 +52,7 @@ class SendGuestActionsCustomLogin implements ObserverInterface
         SessionManager $sessionManager,
         Client $eventClient,
         CustomerSession $customerSession
-    )
-    {
+    ) {
         $this->_config = $config;
         $this->_sessionManager = $sessionManager;
         $this->_customerSession = $customerSession;

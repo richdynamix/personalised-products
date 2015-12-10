@@ -14,9 +14,9 @@ use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;
 /**
  * Class AbstractProductCommand
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category  Richdynamix
+ * @package   PersonalisedProducts
+ * @author    Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 abstract class AbstractProductCommand extends Command
 {
@@ -64,8 +64,7 @@ abstract class AbstractProductCommand extends Command
         ExportFactory $exportFactory,
         AppState $appState,
         PersonalisedProductsLogger $logger
-    )
-    {
+    ) {
         $this->_productFactory = $productFactory;
         $this->_eventClient = $eventClient;
         $this->_export = $export;
@@ -100,7 +99,9 @@ abstract class AbstractProductCommand extends Command
         }
 
         if ($collectionCount != $sentProductCount) {
-            throw new Exception('There was a problem sending the product data, check the log file for more information');
+            throw new Exception(
+                'There was a problem sending the product data, check the log file for more information'
+            );
         }
 
         return $sentProductCount;

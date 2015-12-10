@@ -10,9 +10,9 @@ use \Symfony\Component\Config\Definition\Exception\Exception;
 /**
  * Class AbstractCustomerCommand
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category  Richdynamix
+ * @package   PersonalisedProducts
+ * @author    Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 abstract class AbstractCustomerCommand extends Command
 {
@@ -55,7 +55,9 @@ abstract class AbstractCustomerCommand extends Command
         }
 
         if ($collectionCount != $sentCustomersCount) {
-            throw new Exception('There was a problem sending the customer data, check the log file for more information');
+            throw new Exception(
+                'There was a problem sending the customer data, check the log file for more information'
+            );
         }
 
         return $sentCustomersCount;

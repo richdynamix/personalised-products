@@ -13,9 +13,9 @@ use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;
 /**
  * Class ExportSaveProducts
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category  Richdynamix
+ * @package   PersonalisedProducts
+ * @author    Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class ExportSaveProducts
 {
@@ -54,8 +54,7 @@ class ExportSaveProducts
         ExportFactory $exportFactory,
         ObjectManagerInterface $objectManager,
         ManagerInterface $eventManager
-    )
-    {
+    ) {
         $this->_logger = $logger;
         $this->_config = $config;
         $this->_export = $export;

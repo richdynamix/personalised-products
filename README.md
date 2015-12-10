@@ -1,6 +1,6 @@
 # Personalised Products
 
-[![Codacy Badge](https://api.codacy.com/project/badge/grade/4d50510f1d7248bbb98a9104fd99917a)](https://www.codacy.com/app/steven_4/personalised-products) [![Codacy Badge](https://api.codacy.com/project/badge/coverage/a99262925dc04669a67b196a354d72aa)](https://www.codacy.com) [![wercker status](https://app.wercker.com/status/e2ee89848265ca1a965b39b0fc04896a/s "wercker status")](https://app.wercker.com/project/bykey/e2ee89848265ca1a965b39b0fc04896a)
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/a3a65aaab04249468edbac783c5ae16d)](https://www.codacy.com/app/steven_4/personalised-products) [![wercker status](https://app.wercker.com/status/e2ee89848265ca1a965b39b0fc04896a/s "wercker status")](https://app.wercker.com/project/bykey/e2ee89848265ca1a965b39b0fc04896a)
 
 Personalised Products is a Magento 2 module that will serve realtime predicted suggestions for product upsells on the product page and complimentary suggestions for cross sells on the basket page. All powered by PredictionIO.
 
@@ -13,11 +13,12 @@ Using the two individual prediction engines the module will serve accurate and p
 
 - [PredictionIO](https://prediction.io/ "PredictionIO") +0.9.5
 - [Complementary Purchase](https://templates.prediction.io/PredictionIO/template-scala-parallel-complementarypurchase "Complementary Purchase") engine template v0.3.3
-- [Similar Product](https://templates.prediction.io/PredictionIO/template-scala-parallel-similarproduct "Similar Product") engine template v0.3.3
+- [Similar Product](https://templates.prediction.io/PredictionIO/template-scala-parallel-similarproduct "Similar Product") engine template v0.3.2
 - Magento 2.0 GA
 
 ## Installation
-//TBC - Using composer (magento connect)
+
+`composer require richdynamix/personalised-products`
 
 ## Configuration
 

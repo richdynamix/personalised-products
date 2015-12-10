@@ -12,9 +12,9 @@ use \Magento\Framework\Module\Manager as Manager;
 /**
  * Class Crosssel
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category  Richdynamix
+ * @package   PersonalisedProducts
+ * @author    Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
 {

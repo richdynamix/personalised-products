@@ -9,9 +9,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class SendCustomersCommand
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category  Richdynamix
+ * @package   PersonalisedProducts
+ * @author    Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class SendCustomersCommand extends AbstractCustomerCommand
 {

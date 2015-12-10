@@ -9,9 +9,9 @@ use \Magento\Framework\App\Helper\Context as Context;
 /**
  * Configuration class to retrieve module options from the database
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category  Richdynamix
+ * @package   PersonalisedProducts
+ * @author    Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class Config extends \Magento\Framework\App\Helper\AbstractHelper
 {
