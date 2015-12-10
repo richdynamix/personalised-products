@@ -54,8 +54,7 @@ class ExportSaveProducts
         ExportFactory $exportFactory,
         ObjectManagerInterface $objectManager,
         ManagerInterface $eventManager
-    )
-    {
+    ) {
         $this->_logger = $logger;
         $this->_config = $config;
         $this->_export = $export;

@@ -39,7 +39,13 @@ class InstallSchema implements InstallSchemaInterface
                 'Increment ID'
             )
             ->addColumn('product_id', Table::TYPE_INTEGER, 11, ['nullable' => false])
-            ->addColumn('is_exported', Table::TYPE_SMALLINT, null, ['nullable' => false, 'default' => '0'], 'Has the product been exported?')
+            ->addColumn(
+                'is_exported',
+                Table::TYPE_SMALLINT,
+                null,
+                ['nullable' => false, 'default' => '0'],
+                'Has the product been exported?'
+            )
             ->addColumn('creation_time', Table::TYPE_DATETIME, null, ['nullable' => false], 'Creation Time')
             ->addColumn('update_time', Table::TYPE_DATETIME, null, ['nullable' => false], 'Update Time')
             ->setComment('Personalised Products export to PredictionIO');

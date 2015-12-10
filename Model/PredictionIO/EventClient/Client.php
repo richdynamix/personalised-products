@@ -54,8 +54,7 @@ class Client implements EventClientInterface
         PersonalisedProductsLogger $logger,
         Config $config,
         Urls $urls
-    )
-    {
+    ) {
         $this->_factory = $factory;
         $this->_logger = $logger;
         $this->_config = $config;

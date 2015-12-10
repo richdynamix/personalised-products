@@ -55,7 +55,9 @@ abstract class AbstractCustomerCommand extends Command
         }
 
         if ($collectionCount != $sentCustomersCount) {
-            throw new Exception('There was a problem sending the customer data, check the log file for more information');
+            throw new Exception(
+                'There was a problem sending the customer data, check the log file for more information'
+            );
         }
 
         return $sentCustomersCount;

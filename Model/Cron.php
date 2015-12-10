@@ -60,8 +60,7 @@ class Cron
         CollectionFactory $ecFactory,
         ExportFactory $_exportFactory,
         PersonalisedProductsLogger $logger
-    )
-    {
+    ) {
         $this->_eventClient = $client;
         $this->_exportCollection = $exportCollection;
         $this->_ecFactory = $ecFactory;

@@ -43,8 +43,7 @@ class SendProductPurchase implements ObserverInterface
         Config $config,
         CustomerSession $customerSession,
         Client $eventClient
-    )
-    {
+    ) {
         $this->_config = $config;
         $this->_customerSession = $customerSession;
         $this->_eventClient = $eventClient;

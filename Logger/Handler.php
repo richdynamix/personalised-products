@@ -1,4 +1,6 @@
 <?php
+// @codingStandardsIgnoreFile
+
 namespace Richdynamix\PersonalisedProducts\Logger;
 
 use \Monolog\Logger;

@@ -44,8 +44,6 @@ class Upsell
      */
     public function getProductCollection($productIds, $categoryIds)
     {
-//        $this->_checkIsGuestCustomer($productIds);
-
         $products = $this->_similarityEngine->sendQuery($productIds, $categoryIds);
 
         if ($products['itemScores']) {
@@ -53,7 +51,6 @@ class Upsell
         }
         
         return false;
-
     }
 
     /**
@@ -71,19 +68,4 @@ class Upsell
 
         return $productIds;
     }
-
-    /**
-     * Check if the customer is logged in
-     *
-     * // todo get recently viewed products and list together
-     *
-     * @param $productIds
-     */
-    private function _checkIsGuestCustomer(&$productIds)
-    {
-        if (!$this->_customerSession->isLoggedIn()) {
-        }
-
-    }
-
 }

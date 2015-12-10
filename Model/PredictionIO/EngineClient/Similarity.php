@@ -54,8 +54,7 @@ class Similarity implements EngineInterface
         PersonalisedProductsLogger $logger,
         Config $config,
         Urls $urls
-    )
-    {
+    ) {
         $this->_factory = $factory;
         $this->_logger = $logger;
         $this->_config = $config;

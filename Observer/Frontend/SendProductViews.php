@@ -52,8 +52,7 @@ class SendProductViews implements ObserverInterface
         CustomerSession $customerSession,
         Client $eventClient,
         GuestCustomers $guestCustomers
-    )
-    {
+    ) {
         $this->_config = $config;
         $this->_customerSession = $customerSession;
         $this->_eventClient = $eventClient;

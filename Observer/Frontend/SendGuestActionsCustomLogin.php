@@ -52,8 +52,7 @@ class SendGuestActionsCustomLogin implements ObserverInterface
         SessionManager $sessionManager,
         Client $eventClient,
         CustomerSession $customerSession
-    )
-    {
+    ) {
         $this->_config = $config;
         $this->_sessionManager = $sessionManager;
         $this->_customerSession = $customerSession;
