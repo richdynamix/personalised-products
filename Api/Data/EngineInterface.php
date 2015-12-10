@@ -1,5 +1,4 @@
 <?php
-
 namespace Richdynamix\PersonalisedProducts\Api\Data;
 
 /**
