@@ -13,31 +13,31 @@ use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;
 /**
  * Class ExportSaveProducts
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category Richdynamix
+ * @package  PersonalisedProducts
+ * @author   Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class ExportSaveProducts
 {
     /**
      * @var PersonalisedProductsLogger
      */
-    private $_logger;
+    private $logger;
 
     /**
      * @var Config
      */
-    private $_config;
+    private $config;
 
     /**
      * @var Export
      */
-    private $_export;
+    private $export;
 
     /**
      * @var ExportFactory
      */
-    private $_exportFactory;
+    private $exportFactory;
 
     /**
      * ExportSaveProducts constructor.
@@ -54,14 +54,13 @@ class ExportSaveProducts
         ExportFactory $exportFactory,
         ObjectManagerInterface $objectManager,
         ManagerInterface $eventManager
-    )
-    {
-        $this->_logger = $logger;
-        $this->_config = $config;
-        $this->_export = $export;
-        $this->_exportFactory = $exportFactory;
-        $this->_objectManager = $objectManager;
-        $this->_eventManager = $eventManager;
+    ) {
+        $this->logger = $logger;
+        $this->config = $config;
+        $this->export = $export;
+        $this->exportFactory = $exportFactory;
+        $this->objectManager = $objectManager;
+        $this->eventManager = $eventManager;
     }
 
     /**
@@ -73,7 +72,7 @@ class ExportSaveProducts
      */
     public function afterAfterSave(Product $product, $result)
     {
-        $this->_saveProductForExport($product->getId());
+        $this->saveProductForExport($product->getId());
         return $result;
     }
 
@@ -82,12 +81,12 @@ class ExportSaveProducts
      *
      * @param $productId
      */
-    private function _saveProductForExport($productId)
+    private function saveProductForExport($productId)
     {
-        if (!$this->_isReadyForExport($productId)) {
-            $exportItem = $this->_export->saveProductForExport($productId);
+        if (!$this->isReadyForExport($productId)) {
+            $exportItem = $this->export->saveProductForExport($productId);
 
-            $this->_eventManager->dispatch(
+            $this->eventManager->dispatch(
                 'personalised_products_export_after_save',
                 ['exportItem' => $exportItem]
             );
@@ -100,9 +99,9 @@ class ExportSaveProducts
      * @param $productId
      * @return bool
      */
-    private function _isReadyForExport($productId)
+    private function isReadyForExport($productId)
     {
-        $product = $this->_export->getCollection()
+        $product = $this->export->getCollection()
             ->addFieldToFilter('product_id', $productId)
             ->getFirstItem();
 
