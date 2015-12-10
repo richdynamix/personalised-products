@@ -17,7 +17,7 @@ build:
     - mbrevda/phpcs:
         directory: $WERCKER_SOURCE_DIR
         standard: PSR2
-        ignore: /pipeline/build/vendor/
+        ignore: $WERCKER_ROOT/vendor
         report: full
 #    - script:
 #        name: PHPUnit Integration Tests
