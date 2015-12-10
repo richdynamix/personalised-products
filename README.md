@@ -13,7 +13,7 @@ Using the two individual prediction engines the module will serve accurate and p
 
 - [PredictionIO](https://prediction.io/ "PredictionIO") +0.9.5
 - [Complementary Purchase](https://templates.prediction.io/PredictionIO/template-scala-parallel-complementarypurchase "Complementary Purchase") engine template v0.3.3
-- [Similar Product](https://templates.prediction.io/PredictionIO/template-scala-parallel-similarproduct "Similar Product") engine template v0.3.3
+- [Similar Product](https://templates.prediction.io/PredictionIO/template-scala-parallel-similarproduct "Similar Product") engine template v0.3.2
 - Magento 2.0 GA
 
 ## Installation
