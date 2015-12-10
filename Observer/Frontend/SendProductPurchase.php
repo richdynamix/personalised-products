@@ -12,26 +12,26 @@ use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventClient\Client;
  * Listen for sales order event and record the customer-buy-product action in
  * PredictionIO.
  *
- * @category    Richdynamix
- * @package     PersonalisedProducts
- * @author 		Steven Richardson (steven@richdynamix.com) @mage_gizmo
+ * @category Richdynamix
+ * @package  PersonalisedProducts
+ * @author   Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
 class SendProductPurchase implements ObserverInterface
 {
     /**
      * @var Config
      */
-    private $_config;
+    private $config;
 
     /**
      * @var CustomerSession
      */
-    private $_customerSession;
+    private $customerSession;
 
     /**
      * @var
      */
-    private $_eventClient;
+    private $eventClient;
 
     /**
      * SendProductPurchase constructor.
@@ -43,11 +43,10 @@ class SendProductPurchase implements ObserverInterface
         Config $config,
         CustomerSession $customerSession,
         Client $eventClient
-    )
-    {
-        $this->_config = $config;
-        $this->_customerSession = $customerSession;
-        $this->_eventClient = $eventClient;
+    ) {
+        $this->config = $config;
+        $this->customerSession = $customerSession;
+        $this->eventClient = $eventClient;
     }
 
     /**
@@ -58,14 +57,14 @@ class SendProductPurchase implements ObserverInterface
      */
     public function execute(Observer $observer)
     {
-        if (!$this->_config->isEnabled()) {
+        if (!$this->config->isEnabled()) {
             return;
         }
 
         $order = $observer->getOrder();
         $productCollection = $order->getItemsCollection();
-        if ($this->_customerSession->isLoggedIn()) {
-            $this->_sendPurchaseEvent($productCollection);
+        if ($this->customerSession->isLoggedIn()) {
+            $this->sendPurchaseEvent($productCollection);
             return;
         }
     }
@@ -76,11 +75,11 @@ class SendProductPurchase implements ObserverInterface
      *
      * @param $productCollection
      */
-    private function _sendPurchaseEvent($productCollection)
+    private function sendPurchaseEvent($productCollection)
     {
         foreach ($productCollection as $product) {
-            $this->_eventClient->saveCustomerBuyProduct(
-                $this->_customerSession->getCustomerId(),
+            $this->eventClient->saveCustomerBuyProduct(
+                $this->customerSession->getCustomerId(),
                 $product->getId()
             );
         }
