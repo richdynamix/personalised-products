@@ -16,14 +16,6 @@
     "codacy/coverage": "dev-master",
     "squizlabs/php_codesniffer": "2.*"
   },
-  "extra": {
-    "map": [
-      [
-        "*",
-        "Richdynamix/PersonalisedProducts"
-      ]
-    ]
-  },
   "autoload": {
     "files": [ "registration.php" ],
     "psr-4": {
