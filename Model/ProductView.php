@@ -1,24 +1,20 @@
 <?php
 
-namespace Richdynamix\PersonalisedProducts\Observer\Frontend;
+namespace Richdynamix\PersonalisedProducts\Model;
 
-use \Magento\Framework\Event\Observer;
-use \Magento\Framework\Event\ObserverInterface;
 use \Richdynamix\PersonalisedProducts\Helper\Config;
 use \Magento\Customer\Model\Session as CustomerSession;
 use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventClient\Client;
 use \Richdynamix\PersonalisedProducts\Model\Frontend\GuestCustomers;
 
 /**
- * Listen for product view events and log the customer actions in the PredictionIO
- * server if the customer is logged in. If the customer is a guest then we record the
- * product views in the session to process later.
+ * Class ProductView
  *
  * @category  Richdynamix
  * @package   PersonalisedProducts
  * @author    Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
-class SendProductViews implements ObserverInterface
+class ProductView
 {
     /**
      * @var Config
@@ -41,7 +37,7 @@ class SendProductViews implements ObserverInterface
     private $_guestCustomers;
 
     /**
-     * SendProductViews constructor.
+     * ProductView constructor.
      * @param Config $config
      * @param CustomerSession $customerSession
      * @param Client $eventClient
@@ -60,27 +56,22 @@ class SendProductViews implements ObserverInterface
     }
 
     /**
-     * Record the logged in customers product viewing actions to PredictionIO
-     * or save the actions to the session for processing later
-     *
-     * @param Observer $observer
+     * @param $productId
+     * @return bool|void
      */
-    public function execute(Observer $observer)
+    public function processViews($productId)
     {
         if (!$this->_config->isEnabled()) {
-            return;
+            return false;
         }
 
-        $product = $observer->getProduct();
         if ($this->_customerSession->isLoggedIn()) {
-            $this->_eventClient->saveCustomerViewProduct(
+            return $this->_eventClient->saveCustomerViewProduct(
                 $this->_customerSession->getCustomerId(),
-                $product->getId()
+                $productId
             );
-            return;
         }
 
-        $this->_guestCustomers->setGuestCustomerProductView($product->getId());
-
+        return $this->_guestCustomers->setGuestCustomerProductView($productId);
     }
 }
