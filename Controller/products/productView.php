@@ -18,7 +18,8 @@ use \Richdynamix\PersonalisedProducts\Model\ProductView as ProductViewModel;
  * @package   PersonalisedProducts
  * @author    Steven Richardson (steven@richdynamix.com) @mage_gizmo
  */
-class ProductView extends Action {
+class ProductView extends Action
+{
 
     /**
      * @var SessionManager
