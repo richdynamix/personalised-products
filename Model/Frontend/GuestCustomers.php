@@ -39,6 +39,8 @@ class GuestCustomers
         $guestProductViews[] = $productId;
 
         $this->_sessionManager->setGuestProductViews($guestProductViews);
+
+        return $guestProductViews;
     }
 
 }

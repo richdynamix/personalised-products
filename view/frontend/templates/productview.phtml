@@ -1,0 +1,14 @@
+<?php
+/**
+ * @var \Richdynamix\PersonalisedProducts\Block\Product\View $block
+ */
+?>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "productview": {
+                "productId": "<?php echo $block->getProductId(); ?>"
+            }
+        }
+    }
+</script>

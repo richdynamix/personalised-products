@@ -5,6 +5,7 @@
         <observer name="customer_login_send_guest_actions"
                   instance="Richdynamix\PersonalisedProducts\Observer\Frontend\SendGuestActionsCustomLogin" />
     </event>
+
     <event name="catalog_controller_product_view">
         <observer name="send_catalog_controller_product_views"
                   instance="Richdynamix\PersonalisedProducts\Observer\Frontend\SendProductViews" />
