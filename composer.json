@@ -1,6 +1,6 @@
 {
   "name": "richdynamix/personalised-products",
-  "description": "Personalised products using PredictionIO Machine Learning",
+  "description": "Personalised products module for Magento 2 using PredictionIO Machine Learning",
   "type": "magento2-module",
   "version": "1.0.0",
   "license": [
