@@ -3,7 +3,7 @@
 namespace Richdynamix\PersonalisedProducts\Model\PredictionIO\EventClient;
 
 use \Richdynamix\PersonalisedProducts\Helper\Config;
-use Richdynamix\PersonalisedProducts\Helper\Urls;
+use \Richdynamix\PersonalisedProducts\Helper\Urls;
 use \Richdynamix\PersonalisedProducts\Logger\PersonalisedProductsLogger;
 use \Richdynamix\PersonalisedProducts\Api\Data\EventClientInterface;
 use \Richdynamix\PersonalisedProducts\Model\PredictionIO\Factory;
