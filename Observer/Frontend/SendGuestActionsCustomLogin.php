@@ -8,6 +8,7 @@ use \Richdynamix\PersonalisedProducts\Helper\Config;
 use \Magento\Framework\Session\SessionManager;
 use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventClient\Client;
 use \Magento\Customer\Model\Session as CustomerSession;
+use \Magento\Framework\App\Action\Context;
 
 /**
  * Class SendGuestActionsCustomLogin listens to customer logins and records the customer
@@ -26,6 +27,11 @@ class SendGuestActionsCustomLogin implements ObserverInterface
     private $_config;
 
     /**
+     * @var Context
+     */
+    private $_context;
+
+    /**
      * @var SessionManager
      */
     private $_sessionManager;
@@ -42,17 +48,20 @@ class SendGuestActionsCustomLogin implements ObserverInterface
 
     /**
      * SendGuestActionsCustomLogin constructor.
+     * @param Context $context
      * @param Config $config
      * @param SessionManager $sessionManager
      * @param Client $eventClient
      * @param CustomerSession $customerSession
      */
     public function __construct(
+        Context $context,
         Config $config,
         SessionManager $sessionManager,
         Client $eventClient,
         CustomerSession $customerSession
     ) {
+        $this->_context = $context;
         $this->_config = $config;
         $this->_sessionManager = $sessionManager;
         $this->_customerSession = $customerSession;
@@ -69,7 +78,7 @@ class SendGuestActionsCustomLogin implements ObserverInterface
         if ($this->_config->isEnabled()) {
             $this->_eventClient->saveCustomerData($this->_customerSession->getCustomerId());
 
-            $guestProductViews = $this->_sessionManager->getGuestProductViews();
+            $guestProductViews = $this->_getGuestCustomerProductViews();
             if ($guestProductViews) {
                 $this->_sendAllGuestProductViews($guestProductViews);
             }
@@ -89,8 +98,27 @@ class SendGuestActionsCustomLogin implements ObserverInterface
                 $productId
             );
         }
-
-        $this->_sessionManager->setGuestProductViews(null);
     }
 
+    /**
+     * Get all product ID's that were saved in the cookie during this session.
+     *
+     * @return array
+     */
+    private function _getGuestCustomerProductViews()
+    {
+        $guestProductViews = rtrim($this->_getCookie('productviews'), ',');
+        return explode(',', $guestProductViews);
+    }
+
+    /**
+     * Helper method to read the cookie information
+     *
+     * @param $name
+     * @return null|string
+     */
+    private function _getCookie($name)
+    {
+        return $this->_context->getRequest()->getCookie($name, '');
+    }
 }

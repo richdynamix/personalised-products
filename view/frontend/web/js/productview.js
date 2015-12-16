@@ -1,20 +1,15 @@
 define(['jquery'], function($) {
-    function processProductView(baseUrl) {
+    function processProductView(productId) {
+        var productviews = [];
+        if ($.cookie('productviews')) {
+            productviews = $.cookie('productviews');
+        }
 
-        $.ajax({
-            type: 'GET',
-            cache: false,
-            url: baseUrl,
-            success: function(data) {
-                console.log(data);
-            },
-            error: function() {
-                console.log('An error occurred recording the product view');
-            }
-        });
+        productviews += productId + ',';
+        $.cookie('productviews', productviews);
     }
 
     return function (config, element) {
-        processProductView(config.productViewUrl);
+        processProductView(config.productId);
     };
 });

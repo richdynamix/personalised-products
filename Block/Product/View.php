@@ -44,13 +44,13 @@ class View extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * Build product view URL for making AJAX calls
+     * Get the current products ID for recording the product view
      *
-     * @return string
+     * @return mixed
      */
-    public function getProductViewUrl()
+    public function getProductId()
     {
-        return $this->getBaseUrl() . self::ROUTE . "/products/productView/id/" . $this->getProduct()->getId();
+        return $this->getProduct()->getId();
     }
 
 }
