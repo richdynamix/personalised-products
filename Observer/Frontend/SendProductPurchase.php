@@ -61,8 +61,8 @@ class SendProductPurchase implements ObserverInterface
             return;
         }
 
-        $order = $observer->getOrder();
-        $productCollection = $order->getItemsCollection();
+        $order = $observer->getEvent()->getOrder();
+        $productCollection = $order->getItems();
         if ($this->_customerSession->isLoggedIn()) {
             $this->_sendPurchaseEvent($productCollection);
             return;
@@ -77,11 +77,13 @@ class SendProductPurchase implements ObserverInterface
      */
     private function _sendPurchaseEvent($productCollection)
     {
-        foreach ($productCollection as $product) {
-            $this->_eventClient->saveCustomerBuyProduct(
-                $this->_customerSession->getCustomerId(),
-                $product->getId()
-            );
+        foreach ($productCollection as $item) {
+            for ($i = 0; $i < $item->getQtyOrdered(); $i++) {
+                $this->_eventClient->saveCustomerBuyProduct(
+                    $this->_customerSession->getCustomerId(),
+                    $item->getProductId()
+                );
+            }
         }
 
         return;
