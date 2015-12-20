@@ -8,10 +8,11 @@ use \Magento\Checkout\Model\ResourceModel\Cart as Cart;
 use \Magento\Catalog\Model\Product\Visibility as Visibility;
 use \Magento\Checkout\Model\Session as Session;
 use \Magento\Framework\Module\Manager as Manager;
-use Richdynamix\PersonalisedProducts\Helper\Config as Config;
+use \Richdynamix\PersonalisedProducts\Helper\Config as Config;
 use \Magento\Catalog\Model\ProductFactory as ProductFactory;
 use \Magento\Customer\Model\Session as CustomerSession;
 use \Richdynamix\PersonalisedProducts\Model\Frontend\Catalog\Product\ProductList\Upsell as PersonalisedUpsell;
+use \Richdynamix\PersonalisedProducts\Model\Products;
 
 /**
  * Rewrite product upsell block to switch out product collection
@@ -39,6 +40,11 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
     private $_upsell;
 
     /**
+     * @var Products
+     */
+    private $_products;
+
+    /**
      * Upsell constructor.
      * @param Context $context
      * @param Cart $checkoutCart
@@ -49,6 +55,7 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
      * @param Config $config
      * @param PersonalisedUpsell $upsell
      * @param CustomerSession $customerSession
+     * @param Products $products
      * @param array $data
      */
     public function __construct(
@@ -61,12 +68,14 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
         Config $config,
         PersonalisedUpsell $upsell,
         CustomerSession $customerSession,
+        Products $products,
         array $data = []
     ) {
         $this->_config = $config;
         $this->_productFactory = $productFactory;
         $this->_upsell = $upsell;
         $this->_customerSession = $customerSession;
+        $this->_products = $products;
         parent::__construct(
             $context,
             $checkoutCart,
@@ -97,7 +106,7 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
             return parent::_prepareData();
         }
 
-        $collection = $this->_getPersonalisedProductCollection($personalisedIds);
+        $collection = $this->_products->getPersonalisedProductCollection($personalisedIds);
 
         $this->_itemCollection = $collection;
 
@@ -131,20 +140,5 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
 
         return $product->getCategoryIds();
 
-    }
-
-    /**
-     * We only want to show visible and enabled products.
-     *
-     * @param $personalisedIds
-     * @return $this
-     */
-    private function _getPersonalisedProductCollection($personalisedIds)
-    {
-        $collection = $this->_productFactory->create()->getCollection()
-            ->addAttributeToFilter('entity_id', ['in', $personalisedIds])
-            ->addAttributeToFilter('visibility', Visibility::VISIBILITY_BOTH)
-            ->addAttributeToFilter('status', array('eq' => 1));
-        return $collection;
     }
 }

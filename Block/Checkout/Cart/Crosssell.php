@@ -12,6 +12,7 @@ use \Magento\Catalog\Model\Product\Visibility;
 use \Magento\Checkout\Model\Session;
 use \Magento\Catalog\Model\Product\LinkFactory;
 use \Magento\Quote\Model\Quote\Item\RelatedProducts;
+use \Richdynamix\PersonalisedProducts\Model\Products;
 
 /**
  * Class Crosssel
@@ -43,6 +44,11 @@ class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
     private $_moduleManager;
 
     /**
+     * @var Products
+     */
+    private $_products;
+
+    /**
      * Crosssell constructor.
      * @param Context $context
      * @param Config $config
@@ -54,6 +60,7 @@ class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
      * @param LinkFactory $productLinkFactory
      * @param RelatedProducts $itemRelationsList
      * @param StockHelper $stockHelper
+     * @param Products $products
      * @param array $data
      */
     public function __construct(
@@ -67,12 +74,14 @@ class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
         LinkFactory $productLinkFactory,
         RelatedProducts $itemRelationsList,
         StockHelper $stockHelper,
+        Products $products,
         array $data = []
     ) {
         $this->_config = $config;
         $this->_crosssell = $crosssell;
         $this->_productFactory = $productFactory;
         $this->_moduleManager = $moduleManager;
+        $this->_products = $products;
         parent::__construct(
             $context,
             $checkoutSession,
@@ -102,7 +111,7 @@ class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
             return parent::getItems();
         }
 
-        $collection = $this->_getPersonalisedProductCollection($personalisedIds);
+        $collection = $this->_products->getPersonalisedProductCollection($personalisedIds);
 
         $this->_itemCollection = $collection;
 
@@ -116,20 +125,5 @@ class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
         }
 
         return $items;
-    }
-
-    /**
-     * We only want to show visible and enabled products.
-     *
-     * @param $personalisedIds
-     * @return $this
-     */
-    private function _getPersonalisedProductCollection($personalisedIds)
-    {
-        $collection = $this->_productFactory->create()->getCollection()
-            ->addAttributeToFilter('entity_id', ['in', $personalisedIds])
-            ->addAttributeToFilter('visibility', Visibility::VISIBILITY_BOTH)
-            ->addAttributeToFilter('status', array('eq' => 1));
-        return $collection;
     }
 }
