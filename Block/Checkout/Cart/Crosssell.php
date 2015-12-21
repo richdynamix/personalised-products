@@ -6,8 +6,12 @@ use \Magento\Catalog\Block\Product\Context as Context;
 use \Richdynamix\PersonalisedProducts\Helper\Config as Config;
 use \Richdynamix\PersonalisedProducts\Model\Frontend\Checkout\Cart\Crosssell as CrosssellModel;
 use \Magento\Catalog\Model\ProductFactory as ProductFactory;
-use Magento\CatalogInventory\Helper\Stock as StockHelper;
+use \Magento\CatalogInventory\Helper\Stock as StockHelper;
 use \Magento\Framework\Module\Manager as Manager;
+use \Magento\Catalog\Model\Product\Visibility;
+use \Magento\Checkout\Model\Session;
+use \Magento\Catalog\Model\Product\LinkFactory;
+use \Magento\Quote\Model\Quote\Item\RelatedProducts;
 
 /**
  * Class Crosssel
@@ -18,7 +22,6 @@ use \Magento\Framework\Module\Manager as Manager;
  */
 class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
 {
-
     /**
      * @var Config
      */
@@ -39,7 +42,6 @@ class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
      */
     private $_moduleManager;
 
-
     /**
      * Crosssell constructor.
      * @param Context $context
@@ -47,10 +49,10 @@ class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
      * @param CrosssellModel $crosssell
      * @param ProductFactory $productFactory
      * @param Manager $moduleManager
-     * @param \Magento\Catalog\Model\Product\Visibility $productVisibility
-     * @param \Magento\Checkout\Model\Session $checkoutSession
-     * @param \Magento\Catalog\Model\Product\LinkFactory $productLinkFactory
-     * @param \Magento\Quote\Model\Quote\Item\RelatedProducts $itemRelationsList
+     * @param Visibility $productVisibility
+     * @param Session $checkoutSession
+     * @param LinkFactory $productLinkFactory
+     * @param RelatedProducts $itemRelationsList
      * @param StockHelper $stockHelper
      * @param array $data
      */
@@ -60,10 +62,10 @@ class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
         CrosssellModel $crosssell,
         ProductFactory $productFactory,
         Manager $moduleManager,
-        \Magento\Catalog\Model\Product\Visibility $productVisibility,
-        \Magento\Checkout\Model\Session $checkoutSession,
-        \Magento\Catalog\Model\Product\LinkFactory $productLinkFactory,
-        \Magento\Quote\Model\Quote\Item\RelatedProducts $itemRelationsList,
+        Visibility $productVisibility,
+        Session $checkoutSession,
+        LinkFactory $productLinkFactory,
+        RelatedProducts $itemRelationsList,
         StockHelper $stockHelper,
         array $data = []
     ) {
@@ -100,8 +102,7 @@ class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
             return parent::getItems();
         }
 
-        $collection = $this->_productFactory->create()->getCollection();
-        $collection->addAttributeToFilter('entity_id', ['in', $personalisedIds]);
+        $collection = $this->_getPersonalisedProductCollection($personalisedIds);
 
         $this->_itemCollection = $collection;
 
@@ -115,5 +116,20 @@ class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
         }
 
         return $items;
+    }
+
+    /**
+     * We only want to show visible and enabled products.
+     *
+     * @param $personalisedIds
+     * @return $this
+     */
+    private function _getPersonalisedProductCollection($personalisedIds)
+    {
+        $collection = $this->_productFactory->create()->getCollection()
+            ->addAttributeToFilter('entity_id', ['in', $personalisedIds])
+            ->addAttributeToFilter('visibility', Visibility::VISIBILITY_BOTH)
+            ->addAttributeToFilter('status', array('eq' => 1));
+        return $collection;
     }
 }

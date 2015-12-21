@@ -97,10 +97,10 @@ abstract class AbstractOrdersCommand extends Command
         $purchasedProducts = [];
         foreach ($ordersCollection as $order) {
             $order = $this->_orderFactory->create()->load($order['entity_id']);
-            $itemCollection = $order->getItemsCollection();
+            $itemCollection = $order->getItems();
 
             foreach ($itemCollection as $item) {
-                $purchasedProducts[$order['customer_id']][] = $item->getId();
+                $purchasedProducts[$order['customer_id']][] = $item->getProductId();
             }
         }
 
