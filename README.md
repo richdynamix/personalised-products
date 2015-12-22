@@ -1,6 +1,6 @@
 # Personalised Products for Magento 2
 
-[![Codacy Badge](https://api.codacy.com/project/badge/grade/a3a65aaab04249468edbac783c5ae16d)](https://www.codacy.com/app/steven_4/personalised-products) [![Build Status](https://scrutinizer-ci.com/g/richdynamix/personalised-products/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/richdynamix/personalised-products/build-status/develop) [![Quality Score](https://scrutinizer-ci.com/g/richdynamix/personalised-products/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/richdynamix/personalised-products/build-status/develop) [![Packagist Version](https://img.shields.io/badge/packagist-0.1.1-green.svg)](https://packagist.org/packages/richdynamix/personalised-products#0.1.1)
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/a3a65aaab04249468edbac783c5ae16d)](https://www.codacy.com/app/steven_4/personalised-products) [![Build Status](https://scrutinizer-ci.com/g/richdynamix/personalised-products/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/richdynamix/personalised-products/build-status/develop) [![Quality Score](https://scrutinizer-ci.com/g/richdynamix/personalised-products/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/richdynamix/personalised-products/build-status/develop) [![Packagist Version](https://img.shields.io/badge/packagist-0.2.0-green.svg)](https://packagist.org/packages/richdynamix/personalised-products#0.2.0)
 
 Personalised Products is a Magento 2 module that will serve realtime predicted suggestions for product upsells on the product page and complimentary suggestions for cross sells on the basket page. All powered by PredictionIO.
 
@@ -14,7 +14,7 @@ Using the two individual prediction engines the module will serve accurate and p
 - [PredictionIO](https://prediction.io/ "PredictionIO") +0.9.5
 - [Complementary Purchase](https://templates.prediction.io/PredictionIO/template-scala-parallel-complementarypurchase "Complementary Purchase") engine template v0.3.3
 - [Similar Product](https://templates.prediction.io/PredictionIO/template-scala-parallel-similarproduct "Similar Product") engine template v0.3.2
-- [Magento 2.0](https://www.magentocommerce.com/download, "Magento 2.0")
+- [Magento 2.0](https://www.magentocommerce.com/download, "Magento 2.0") Community Edition or Enterprise Edition
 
 ## Installation
 
