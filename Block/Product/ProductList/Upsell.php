@@ -90,14 +90,14 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
         }
 
         $product = $this->_coreRegistry->registry('product');
-        $categoryIds = $this->_getCategoryIds($product);
+        $categoryIds = $this->_upsell->getCategoryIds($product);
         $personalisedIds = $this->_upsell->getProductCollection([$product->getId()], $categoryIds);
 
         if (!$personalisedIds) {
             return parent::_prepareData();
         }
 
-        $collection = $this->_getPersonalisedProductCollection($personalisedIds);
+        $collection = $this->_upsell->getPersonalisedProductCollection($personalisedIds);
 
         $this->_itemCollection = $collection;
 
@@ -115,36 +115,5 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
         }
 
         return $this;
-    }
-
-    /**
-     * Get array of category ID's the product belongs to
-     *
-     * @param $product
-     * @return array
-     */
-    private function _getCategoryIds($product)
-    {
-        if (!$this->_config->getItem(Config::SIMILARITY_USE_CATEGORY_FILTER)) {
-            return [];
-        }
-
-        return $product->getCategoryIds();
-
-    }
-
-    /**
-     * We only want to show visible and enabled products.
-     *
-     * @param $personalisedIds
-     * @return $this
-     */
-    private function _getPersonalisedProductCollection($personalisedIds)
-    {
-        $collection = $this->_productFactory->create()->getCollection()
-            ->addAttributeToFilter('entity_id', ['in', $personalisedIds])
-            ->addAttributeToFilter('visibility', Visibility::VISIBILITY_BOTH)
-            ->addAttributeToFilter('status', array('eq' => 1));
-        return $collection;
     }
 }

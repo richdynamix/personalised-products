@@ -30,4 +30,8 @@
             </argument>
         </arguments>
     </type>
+    <preference for="Magento\TargetRule\Block\Checkout\Cart\Crosssell"
+                type="Richdynamix\PersonalisedProducts\Block\Checkout\Cart\TargetCrosssell" />
+    <preference for="Magento\TargetRule\Block\Catalog\Product\ProductList\Upsell"
+                type="Richdynamix\PersonalisedProducts\Block\Product\ProductList\TargetUpsell" />
 </config>
