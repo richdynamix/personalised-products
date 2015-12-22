@@ -7,6 +7,14 @@
     "OSL-3.0",
     "AFL-3.0"
   ],
+  "authors": [
+    {
+      "name": "Steven Richardson",
+      "email": "steven@richdynamix.com",
+      "homepage": "http://www.richdynamix.com",
+      "role": "Software Engineer"
+    }
+  ],
   "require": {
     "php": "~5.5.0|~5.6.0|~7.0.0",
     "predictionio/predictionio": "~0.8.2"
