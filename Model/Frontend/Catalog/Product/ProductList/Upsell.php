@@ -33,18 +33,21 @@ class Upsell
     private $_config;
 
     /**
+     * @var ProductFactory
+     */
+    private $_productFactory;
+
+    /**
      * Upsell constructor.
      * @param Similarity $similarityEngine
      * @param CustomerSession $customerSession
      * @param Config $config
-     * @param Visibility $productVisibility
      * @param ProductFactory $productFactory
      */
     public function __construct(
         Similarity $similarityEngine,
         CustomerSession $customerSession,
         Config $config,
-        Visibility $productVisibility,
         ProductFactory $productFactory
     ) {
         $this->_similarityEngine = $similarityEngine;

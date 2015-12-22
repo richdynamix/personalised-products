@@ -52,14 +52,12 @@ class Crosssell
      * @param Complementary $complementaryEngine
      * @param CustomerSession $customerSession
      * @param ProductFactory $productFactory
-     * @param Visibility $visibility
      * @param Session $session
      */
     public function __construct(
         Complementary $complementaryEngine,
         CustomerSession $customerSession,
         ProductFactory $productFactory,
-        Visibility $visibility,
         Session $session
     ) {
         $this->_complementaryEngine = $complementaryEngine;
