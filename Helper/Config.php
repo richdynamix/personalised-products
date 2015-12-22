@@ -66,6 +66,11 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     const SIMILARITY_USE_CATEGORY_FILTER = 'personalised_products/similarity_engine/use_categories';
 
     /**
+     * Switch to replace Rule Based Upsells (enterprise edition only)
+     */
+    const SIMILARITY_REPLACE_RULES = 'personalised_products/similarity_engine/replace_rules';
+
+    /**
      * Complementary engine URL (Crosssell engine)
      */
     const COMPLEMENTARY_ENGINE_URL = 'personalised_products/complementary_engine/url';
@@ -79,6 +84,11 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      * Complementary engine product to return count
      */
     const COMPLEMENTARY_PRODUCT_COUNT = 'personalised_products/complementary_engine/product_count';
+
+    /**
+     * Switch to replace Rule Based Cross sells (enterprise edition only)
+     */
+    const COMPLEMENTARY_REPLACE_RULES = 'personalised_products/complementary_engine/replace_rules';
 
     /**
      * Config constructor.

@@ -44,6 +44,11 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Products returned will match current category</comment>
                 </field>
+                <field id="replace_rules" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Replace Rule Based Upsell</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Enterprise Edition Only</comment>
+                </field>
             </group>
             <group id="complementary_engine" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>Complementary Purchase Engine Template</label>
@@ -57,6 +62,11 @@
                 <field id="product_count" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Product Count</label>
                     <comment>Determine how many products to show.</comment>
+                </field>
+                <field id="replace_rules" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Replace Rule Based Crosssell</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Enterprise Edition Only</comment>
                 </field>
             </group>
         </section>

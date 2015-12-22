@@ -2,8 +2,11 @@
 
 namespace Richdynamix\PersonalisedProducts\Model\Frontend\Checkout\Cart;
 
+use Magento\Catalog\Model\Product\Visibility;
+use \Magento\Catalog\Model\ProductFactory as ProductFactory;
 use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EngineClient\Complementary;
 use \Magento\Customer\Model\Session as CustomerSession;
+use \Magento\Checkout\Model\Session;
 
 /**
  * Class Crosssell
@@ -25,31 +28,55 @@ class Crosssell
     private $_customerSession;
 
     /**
-     * @var
+     * @var array
      */
     private $_basketProducts;
+
+    /**
+     * @var ProductFactory
+     */
+    private $_productFactory;
+
+    /**
+     * @var array
+     */
+    protected $_products;
+
+    /**
+     * @var Session
+     */
+    protected $_checkoutSession;
 
     /**
      * Crosssell constructor.
      * @param Complementary $complementaryEngine
      * @param CustomerSession $customerSession
+     * @param ProductFactory $productFactory
+     * @param Visibility $visibility
+     * @param Session $session
      */
-    public function __construct(Complementary $complementaryEngine, CustomerSession $customerSession)
-    {
+    public function __construct(
+        Complementary $complementaryEngine,
+        CustomerSession $customerSession,
+        ProductFactory $productFactory,
+        Visibility $visibility,
+        Session $session
+    ) {
         $this->_complementaryEngine = $complementaryEngine;
         $this->_customerSession = $customerSession;
+        $this->_productFactory = $productFactory;
+        $this->_checkoutSession = $session;
     }
 
     /**
      * Query the PredictionIO engine for product data
      *
-     * @param $productIds
      * @return array|bool
      */
-    public function getProductCollection($productIds)
+    public function getProductCollection()
     {
-        $this->_basketProducts = $productIds;
-        $products = $this->_complementaryEngine->sendQuery($productIds);
+        $this->_basketProducts = $this->_getCartProductIds();
+        $products = $this->_complementaryEngine->sendQuery($this->_basketProducts);
 
         if ($products['rules']) {
             return $this->_getPredictedProducts($products['rules']);
@@ -61,10 +88,10 @@ class Crosssell
     /**
      * Loop over each of the rules in the returned data from PredictionIO
      *
-     * @param $items
+     * @param array $items
      * @return array
      */
-    private function _getPredictedProducts($items)
+    private function _getPredictedProducts(array $items)
     {
         $productIds = [];
         foreach ($items as $item) {
@@ -77,11 +104,11 @@ class Crosssell
     /**
      * Build product ID collection array from PredictionIO engine data
      *
-     * @param $items
+     * @param array $items
      * @param $productIds
      * @return $this
      */
-    private function _getProductIds($items, &$productIds)
+    private function _getProductIds(array $items, &$productIds)
     {
         foreach ($items as $item) {
             if (!in_array($item['item'], $this->_basketProducts)) {
@@ -90,5 +117,49 @@ class Crosssell
         }
 
         return $this;
+    }
+
+    /**
+     * Get a new product collection from prediction IO result set
+     *
+     * @param array $personalisedIds
+     * @return $this
+     */
+    public function getPersonalisedProductCollection(array $personalisedIds)
+    {
+        $collection = $this->_productFactory->create()->getCollection()
+            ->addAttributeToFilter('entity_id', ['in', $personalisedIds])
+            ->addAttributeToFilter('visibility', Visibility::VISIBILITY_BOTH)
+            ->addAttributeToFilter('status', array('eq' => 1));
+        return $collection;
+    }
+
+    /**
+     * Get all product ids in the cart
+     *
+     * @return array
+     */
+    private function _getCartProductIds()
+    {
+        if ($this->_products === null) {
+            $this->_products = [];
+            foreach ($this->getQuote()->getAllItems() as $quoteItem) {
+                /* @var $quoteItem \Magento\Quote\Model\Quote\Item */
+                $product = $quoteItem->getProduct();
+                $this->_products[] = $product->getEntityId();
+            }
+        }
+
+        return $this->_products;
+    }
+
+    /**
+     * Get the quote from the session
+     *
+     * @return \Magento\Quote\Model\Quote
+     */
+    public function getQuote()
+    {
+        return $this->_checkoutSession->getQuote();
     }
 }

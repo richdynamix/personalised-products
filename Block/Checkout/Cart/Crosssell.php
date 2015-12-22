@@ -33,11 +33,6 @@ class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
     private $_crosssell;
 
     /**
-     * @var
-     */
-    private $_itemCollection;
-
-    /**
      * @var Manager
      */
     private $_moduleManager;
@@ -95,19 +90,14 @@ class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
             return parent::getItems();
         }
 
-        $ninProductIds = $this->_getCartProductIds();
-        $personalisedIds = $this->_crosssell->getProductCollection($ninProductIds);
-
+        $personalisedIds = $this->_crosssell->getProductCollection();
         if (!$personalisedIds) {
             return parent::getItems();
         }
 
-        $collection = $this->_getPersonalisedProductCollection($personalisedIds);
-
-        $this->_itemCollection = $collection;
-
+        $collection = $this->_crosssell->getPersonalisedProductCollection($personalisedIds);
         if ($this->_moduleManager->isEnabled('Magento_Checkout')) {
-            $this->_addProductAttributesAndPrices($this->_itemCollection);
+            $this->_addProductAttributesAndPrices($collection);
         }
 
         $items = [];
@@ -116,20 +106,5 @@ class Crosssell extends \Magento\Checkout\Block\Cart\Crosssell
         }
 
         return $items;
-    }
-
-    /**
-     * We only want to show visible and enabled products.
-     *
-     * @param $personalisedIds
-     * @return $this
-     */
-    private function _getPersonalisedProductCollection($personalisedIds)
-    {
-        $collection = $this->_productFactory->create()->getCollection()
-            ->addAttributeToFilter('entity_id', ['in', $personalisedIds])
-            ->addAttributeToFilter('visibility', Visibility::VISIBILITY_BOTH)
-            ->addAttributeToFilter('status', array('eq' => 1));
-        return $collection;
     }
 }
