@@ -10,8 +10,7 @@ define(['jquery'], function($) {
     }
 
     function processProductView(viewUrl) {
-        $.ajax({url: viewUrl, success: function(data){
-        }});
+        $.ajax({url: viewUrl});
     }
 
     return function (config, element) {

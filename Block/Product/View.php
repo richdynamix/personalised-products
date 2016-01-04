@@ -14,11 +14,6 @@ use \Magento\Catalog\Block\Product\Context;
 class View extends \Magento\Framework\View\Element\Template
 {
     /**
-     * Route frontname used in URL
-     */
-    const ROUTE = "personalised";
-
-    /**
      * @var \Magento\Framework\Registry
      */
     protected $_coreRegistry;
@@ -60,6 +55,6 @@ class View extends \Magento\Framework\View\Element\Template
      */
     public function getProductViewUrl()
     {
-        return $this->getBaseUrl() . self::ROUTE . "/products/productView/id/" . $this->getProductId();
+        return $this->getBaseUrl() . "personalised/products/productView/id/" . $this->getProductId();
     }
 }
