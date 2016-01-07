@@ -4,10 +4,8 @@ namespace Richdynamix\PersonalisedProducts\Controller\Products;
 
 use \Magento\Framework\App\Action\Action;
 use \Magento\Framework\Session\SessionManager;
-use \Magento\Customer\Model\Session as CustomerSession;
 use \Magento\Framework\Controller\Result\JsonFactory;
 use \Magento\Framework\App\Action\Context;
-use \Richdynamix\PersonalisedProducts\Model\PredictionIO\EventClient\Client;
 use \Richdynamix\PersonalisedProducts\Model\ProductView as ProductViewModel;
 
 /**
@@ -34,22 +32,16 @@ class ProductView extends Action {
      * @param Context $context
      * @param JsonFactory $resultJsonFactory
      * @param SessionManager $sessionManager
-     * @param CustomerSession $customerSession
-     * @param Client $eventClient
      * @param ProductViewModel $productView
      */
     public function __construct(
         Context $context,
         JsonFactory $resultJsonFactory,
         SessionManager $sessionManager,
-        CustomerSession $customerSession,
-        Client $eventClient,
         ProductViewModel $productView
     ) {
         $this->_resultJsonFactory = $resultJsonFactory;
         $this->_sessionManager = $sessionManager;
-        $this->_customerSession = $customerSession;
-        $this->_eventClient = $eventClient;
         $this->_productView = $productView;
         parent::__construct($context);
     }
