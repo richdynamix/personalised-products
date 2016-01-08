@@ -3,7 +3,6 @@
 namespace Richdynamix\PersonalisedProducts\Controller\Products;
 
 use \Magento\Framework\App\Action\Action;
-use \Magento\Framework\Session\SessionManager;
 use \Magento\Framework\Controller\Result\JsonFactory;
 use \Magento\Framework\App\Action\Context;
 use \Richdynamix\PersonalisedProducts\Model\ProductView as ProductViewModel;
@@ -18,11 +17,6 @@ use \Richdynamix\PersonalisedProducts\Model\ProductView as ProductViewModel;
 class ProductView extends Action {
 
     /**
-     * @var SessionManager
-     */
-    protected $_sessionManager;
-
-    /**
      * @var JsonFactory
      */
     protected $_resultJsonFactory;
@@ -31,17 +25,14 @@ class ProductView extends Action {
      * ProductView constructor.
      * @param Context $context
      * @param JsonFactory $resultJsonFactory
-     * @param SessionManager $sessionManager
      * @param ProductViewModel $productView
      */
     public function __construct(
         Context $context,
         JsonFactory $resultJsonFactory,
-        SessionManager $sessionManager,
         ProductViewModel $productView
     ) {
         $this->_resultJsonFactory = $resultJsonFactory;
-        $this->_sessionManager = $sessionManager;
         $this->_productView = $productView;
         parent::__construct($context);
     }
@@ -51,8 +42,6 @@ class ProductView extends Action {
      */
     public function execute()
     {
-        $this->_sessionManager->start();
-
         $result = $this->_resultJsonFactory->create();
 
         $productId = $this->getRequest()->getParam('id');
