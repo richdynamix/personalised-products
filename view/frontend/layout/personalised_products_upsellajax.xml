@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
     <container name="root">
-        <block class="Richdynamix\PersonalisedProducts\Block\Product\ProductList\Upsell" name="product.info.personalised.upsell" template="Magento_Catalog::product/list/items.phtml">
+        <block class="Richdynamix\PersonalisedProducts\Block\Product\ProductList\Upsell"
+               name="product.info.personalised.upsell"
+               template="Richdynamix_PersonalisedProducts::items.phtml">
             <arguments>
                 <argument name="type" xsi:type="string">upsell</argument>
             </arguments>
