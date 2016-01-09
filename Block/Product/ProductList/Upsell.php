@@ -116,4 +116,14 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
 
         return $this;
     }
+
+    /**
+     * Get the URL for product upsells block via ajax
+     *
+     * @return string
+     */
+    public function getUpsellAjaxUrl()
+    {
+        return $this->getBaseUrl() . "personalised/products/upsellAjax/id/" . $this->getProduct()->getId();
+    }
 }

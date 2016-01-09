@@ -1,11 +1,16 @@
 <?xml version="1.0"?>
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
-      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-<body>
-    <referenceContainer name="content">
-        <block class="Richdynamix\PersonalisedProducts\Block\Product\View"
-               name="personalised.product.view"
-               template="Richdynamix_PersonalisedProducts::productview.phtml" />
-    </referenceContainer>
-</body>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Richdynamix\PersonalisedProducts\Block\Product\View"
+                   name="personalised.product.view"
+                   template="Richdynamix_PersonalisedProducts::productview.phtml" />
+        </referenceContainer>
+        <referenceBlock name="product.info.upsell" remove="true" />
+        <referenceContainer name="content.aside">
+            <block class="Richdynamix\PersonalisedProducts\Block\Product\ProductList\Upsell"
+                   name="personalised.product.upsell"
+                   template="Richdynamix_PersonalisedProducts::upsell.phtml" />
+        </referenceContainer>
+    </body>
 </page>

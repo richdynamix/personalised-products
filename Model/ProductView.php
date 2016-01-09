@@ -62,5 +62,7 @@ class ProductView
                 $productId
             );
         }
+
+        return false;
     }
 }
