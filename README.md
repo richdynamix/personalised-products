@@ -1,6 +1,6 @@
 # Personalised Products for Magento 2
 
-[![Codacy Badge](https://api.codacy.com/project/badge/grade/a3a65aaab04249468edbac783c5ae16d)](https://www.codacy.com/app/steven_4/personalised-products) [![Build Status](https://scrutinizer-ci.com/g/richdynamix/personalised-products/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/richdynamix/personalised-products/build-status/develop) [![Quality Score](https://scrutinizer-ci.com/g/richdynamix/personalised-products/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/richdynamix/personalised-products/build-status/develop) [![Packagist Version](https://img.shields.io/badge/packagist-0.2.0-green.svg)](https://packagist.org/packages/richdynamix/personalised-products#0.2.0)
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/a3a65aaab04249468edbac783c5ae16d)](https://www.codacy.com/app/steven_4/personalised-products) [![Build Status](https://scrutinizer-ci.com/g/richdynamix/personalised-products/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/richdynamix/personalised-products/build-status/develop) [![Quality Score](https://scrutinizer-ci.com/g/richdynamix/personalised-products/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/richdynamix/personalised-products/build-status/develop) [![Packagist Version](https://img.shields.io/badge/packagist-1.0.0-green.svg)](https://packagist.org/packages/richdynamix/personalised-products#1.0.0)
 
 Personalised Products is a Magento 2 module that will serve realtime predicted suggestions for product upsells on the product page and complimentary suggestions for cross sells on the basket page. All powered by PredictionIO.
 
@@ -65,13 +65,18 @@ When you add a new product to the site the product is put into a queue table rea
 As the customers browse the site the module will record the product view action in your PredictionIO event server. Since the action of user-view-item requires a customer ID we can only do this when the customer is logged in. When the customer is not logged in, we record the products viewed using a cookie and push to PredictionIO when the customer does login.
 
 When the customer creates a new order each of the items in the basket are sent to your PredictionIO event server with the user-buy-item action. 
+
 _This action event is only recorded for orders where the customer has an account_
 
 ## Data Output
 
 On product pages the products upsell block will get the product collection from the returned dataset in PredictionIO. This is an ordered list or product ID’s based on the predicted score of those products. This collection of product ID’s is then used to retrieve a new collection for the upsells.
 
+_Please note that due to the replacement of the default upsell block the `Target Rule` block for Enterprise Edtion will not work when Personalise Products is enabled._
+
 The basket page cross sells works in a a similar way to product page upsells. The only real difference is you cannot filter those results by category. Instead, the complementary engine will use a list of all products in the basket and return a scored ordered list of products to display. If products in the returned list are already present in the basket then these are removed from the returned collection.
+
+_Enterprise Edition installations can choose to use `Target Rules` instead of PredictionIO results via the System Configuration_
 
 ## Console Commands
 

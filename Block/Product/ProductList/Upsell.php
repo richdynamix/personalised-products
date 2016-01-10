@@ -39,6 +39,11 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
     private $_upsell;
 
     /**
+     * @var bool
+     */
+    protected $_isPredictedResults = false;
+
+    /**
      * Upsell constructor.
      * @param Context $context
      * @param Cart $checkoutCart
@@ -97,6 +102,8 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
             return parent::_prepareData();
         }
 
+        $this->_isPredictedResults = true;
+
         $collection = $this->_upsell->getPersonalisedProductCollection($personalisedIds);
 
         $this->_itemCollection = $collection;
@@ -115,5 +122,25 @@ class Upsell extends \Magento\Catalog\Block\Product\ProductList\Upsell
         }
 
         return $this;
+    }
+
+    /**
+     * Get the URL for product upsells block via ajax
+     *
+     * @return string
+     */
+    public function getUpsellAjaxUrl()
+    {
+        return $this->getBaseUrl() . "personalised/products/upsellAjax/id/" . $this->getProduct()->getId();
+    }
+
+    /**
+     * Check if the displayed results are from PredictionIO
+     *
+     * @return bool
+     */
+    public function isPredictedResults()
+    {
+        return $this->_isPredictedResults;
     }
 }

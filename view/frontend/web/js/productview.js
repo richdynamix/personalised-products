@@ -1,5 +1,5 @@
 define(['jquery'], function($) {
-    function processProductView(productId) {
+    function processGuestProductView(productId) {
         var productviews = [];
         if ($.cookie('productviews')) {
             productviews = $.cookie('productviews');
@@ -9,7 +9,12 @@ define(['jquery'], function($) {
         $.cookie('productviews', productviews);
     }
 
+    function processProductView(viewUrl) {
+        $.ajax({url: viewUrl});
+    }
+
     return function (config, element) {
-        processProductView(config.productId);
+        processGuestProductView(config.productId);
+        processProductView(config.productViewUrl);
     };
 });

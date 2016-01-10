@@ -1,0 +1,65 @@
+<?php /* @var $block \Magento\Catalog\Block\Product\AbstractProduct */ ?>
+
+<?php
+/** @var \Magento\Catalog\Block\Product\ProductList\Upsell $block */
+if ($exist = count($block->getItemCollection()->getItems())) {
+    $type = 'upsell';
+    $class = $type;
+
+    $image = 'upsell_products_list';
+    $title = ($this->isPredictedResults()) ? __('Customers Who Viewed This Product Also Viewed...') : __('We found other products you might like!');
+    $items = $block->getItemCollection()->getItems();
+    $limit = $block->getItemLimit('upsell');
+    $shuffle = 0;
+
+    $showWishlist = false;
+    $showCompare = false;
+    $showCart = false;
+    $templateType = null;
+    $description = false;
+    $canItemsAddToCart = false;
+}
+?>
+<?php if ($exist):?>
+
+    <div class="block <?php echo $class; ?>" data-mage-init='{"upsellProducts":{}}' data-limit="<?php echo $limit; ?>" data-shuffle="<?php echo $shuffle; ?>">
+    <div class="block-title title">
+        <strong id="block-<?php echo $class?>-heading" role="heading" aria-level="2"><?php echo $title; ?></strong>
+    </div>
+    <div class="block-content content" aria-labelledby="block-<?php echo $class?>-heading">
+        <div class="products wrapper grid products-grid products-<?php echo $type; ?>">
+            <ol class="products list items product-items">
+                <?php $iterator = 1; ?>
+                <?php foreach ($items as $_item): ?>
+                <?php $available = ''; ?>
+                <?php echo($iterator++ == 1) ? '<li class="item product product-item" style="display: none;">' : '</li><li class="item product product-item" style="display: none;">' ?>
+                <div class="product-item-info <?php echo $available; ?>">
+                    <?php echo '<!-- ' . $image . '-->' ?>
+                    <a href="<?php echo $block->getProductUrl($_item) ?>" class="product photo product-item-photo">
+                        <?php echo $block->getImage($_item, $image)->toHtml(); ?>
+                    </a>
+                    <div class="product details product-item-details">
+                        <strong class="product name product-item-name"><a class="product-item-link" title="<?php echo $block->escapeHtml($_item->getName()) ?>" href="<?php echo $block->getProductUrl($_item) ?>">
+                            <?php echo $block->escapeHtml($_item->getName()) ?></a>
+                        </strong>
+
+                        <div class="price-box price-final_price" data-role="priceBox" data-product-id="7">
+                            <span class="price-container price-final_price tax weee">
+                                <span id="product-price-<?php echo $_item->getData('product_id'); ?>" data-price-amount="<?php echo $_item->getData('final_price'); ?>"
+                                      data-price-type="finalPrice" class="price-wrapper ">
+                                    <span class="price">
+                                        <?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')
+                                            ->currency(number_format($_item->getData('final_price'),2),true,false); ?>
+                                    </span>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                    <?php echo($iterator == count($items)+1) ? '</li>' : '' ?>
+                <?php endforeach ?>
+            </ol>
+        </div>
+    </div>
+</div>
+<?php endif;?>
