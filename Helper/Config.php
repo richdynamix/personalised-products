@@ -91,13 +91,12 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     const COMPLEMENTARY_REPLACE_RULES = 'personalised_products/complementary_engine/replace_rules';
 
     /**
-     * Config constructor.
-     * @param ScopeConfigInterface $scopeConfig
+     * Config constructor
      * @param Context $context
      */
     public function __construct(ScopeConfigInterface $scopeConfig, Context $context)
     {
-        $this->_scopeConfig = $scopeConfig;
+        $this->_scopeConfig = $context->getScopeConfig();
         $this->_storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
         parent::__construct($context);
     }
