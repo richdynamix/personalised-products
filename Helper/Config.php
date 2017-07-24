@@ -94,7 +94,7 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
      * Config constructor
      * @param Context $context
      */
-    public function __construct(ScopeConfigInterface $scopeConfig, Context $context)
+    public function __construct(Context $context)
     {
         $this->_scopeConfig = $context->getScopeConfig();
         $this->_storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
